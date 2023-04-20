@@ -6,6 +6,7 @@ public class Cliente {
 
     private String nomeDeUsuario;
     private String senha;
+
     private List<Serie> listaParaVer;
     private List<Serie> listaJaVistas;
 
@@ -85,5 +86,13 @@ public class Cliente {
 
     public void registrarAudiencia(Serie serie){
         serie.registrarAudiencia();
+    }
+
+    public String getNomeDeUsuario() {
+        return nomeDeUsuario;
+    }
+
+    public String getSenha() {
+        return senha;
     }
 }
