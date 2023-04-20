@@ -7,7 +7,7 @@ public class Serie {
     private String genero;
     private String idioma;
     private int quantidadeEpisodios;
-    private int audiencia = 0;
+    private int audiencia;
 
     // CONSTRUTOR
     public Serie(String nome, String genero, String idioma, int quantidadeEpisodios) {
@@ -54,5 +54,10 @@ public class Serie {
     public Integer getQuantidadeEpisodios()
     {
         return this.quantidadeEpisodios;
+    }
+
+    public int getAudiencia() 
+    {
+        return this.audiencia;
     }
 }
