@@ -36,28 +36,27 @@ public class Serie {
         this.audiencia++;
     }
 
-    public String getName()
-    {
+    public String getName() {
         return this.nome;
     }
 
-    public String getGenero()
-    {
+    public String getGenero() {
         return this.genero;
     }
 
-    public String getIdioma()
-    {
+    public String getIdioma() {
         return this.idioma;
     }
 
-    public Integer getQuantidadeEpisodios()
-    {
+    public Integer getQuantidadeEpisodios() {
         return this.quantidadeEpisodios;
     }
 
-    public int getAudiencia() 
-    {
+    public int getAudiencia() {
         return this.audiencia;
+    }
+
+    public int getId() {
+        return 0;
     }
 }
