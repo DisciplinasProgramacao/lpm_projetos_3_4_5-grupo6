@@ -9,13 +9,11 @@ public class ClienteTest {
     @Test
     @BeforeEach
     public void init() {
-
         novoCliente = new Cliente("Cliente Teste");
-
     }
 
     @Test
-    public void adicionarSerieNaListaParaVer(){
+    public void adicionarSerieNaListaParaVer() {
         int tamanhoDaListaParaVer = getListaParaVer().size();
         Serie s = new Serie("Bla Bla Bla");
         novoCliente.adicionarNaLista(s.getId());

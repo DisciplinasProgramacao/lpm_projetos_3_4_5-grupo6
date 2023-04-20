@@ -35,4 +35,24 @@ public class Serie {
     public void registrarAudiencia() {
         this.audiencia++;
     }
+
+    public String getName()
+    {
+        return this.nome;
+    }
+
+    public String getGenero()
+    {
+        return this.genero;
+    }
+
+    public String getIdioma()
+    {
+        return this.idioma;
+    }
+
+    public Integer getQuantidadeEpisodios()
+    {
+        return this.quantidadeEpisodios;
+    }
 }
