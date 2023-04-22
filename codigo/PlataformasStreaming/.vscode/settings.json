@@ -1,5 +1,23 @@
 {
   "java.project.sourcePaths": ["src"],
   "java.project.outputPath": "bin",
-  "java.project.referencedLibraries": ["lib/**/*.jar"]
+  "java.project.referencedLibraries": ["lib/**/*.jar"],
+
+  "editor.tabSize": 2,
+  "editor.wordWrap": "on",
+  "editor.formatOnSave": true,
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 2000,
+  "editor.insertSpaces": false,
+  "editor.formatOnPaste": true,
+  "editor.formatOnType": true,
+  "git.autofetch": true,
+  "[java]": {
+    "editor.defaultFormatter": "redhat.java"
+  },
+  "git.openRepositoryInParentFolders": "always",
+  "java.saveActions.organizeImports": true,
+  "gitlens.views.commits.avatars": false,
+  "redhat.telemetry.enabled": false,
+  "files.insertFinalNewline": true
 }
