@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -8,6 +9,13 @@ public class PlataformaStreaming {
   private HashMap<Integer, Serie> series;
   private HashMap<String, Cliente> clientes;
   private Cliente clienteAtual;
+
+  public PlataformaStreaming(String nome) {
+    this.nome = nome;
+
+    series = new HashMap<>();
+    clientes = new HashMap<>();
+  }
 
   public Cliente login(String nomeUsuario, String senha) throws NameNotFoundException {
     for (HashMap.Entry<String, Cliente> cl : this.clientes.entrySet()) {
@@ -24,8 +32,19 @@ public class PlataformaStreaming {
     this.series.put(serie.getId(), serie);
   }
 
+  public void adicionarSeries(ArrayList<Serie> series) {
+    for (Serie serie : series)
+      adicionarSerie(serie);
+  }
+
   public void adicionarCliente(Cliente cliente) {
     this.clientes.put(cliente.getLogin(), cliente);
+  }
+
+  public void adicionarClientes(ArrayList<Cliente> clientes) {
+    for (Cliente cliente : clientes) {
+      adicionarCliente(cliente);
+    }
   }
 
   public LinkedList<Serie> filtrarPorGenero(String genero) {
