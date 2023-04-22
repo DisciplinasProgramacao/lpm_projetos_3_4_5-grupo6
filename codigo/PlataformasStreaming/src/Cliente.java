@@ -1,19 +1,44 @@
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Cliente {
-
-  private String nomeDeUsuario;
+  private String nome;
+  private String login;
   private String senha;
 
   private List<Serie> listaParaVer;
   private List<Serie> listaJaVistas;
 
-  public Cliente(String nomeDeUsuario, String senha) {
-    this.nomeDeUsuario = nomeDeUsuario;
+  public void init(String nome, String login, String senha) {
+    if (nome.length() < 1 || nome == null) {
+      throw new InvalidParameterException("Erro ao criar cliente: O nome deve ter pelo menos um caractere!");
+    }
+    if (login.length() < 1 || login == null) {
+      throw new InvalidParameterException("Erro ao criar cliente: O login deve ter pelo menos um caractere!");
+    }
+    if (senha.length() < 1 || senha == null) {
+      throw new InvalidParameterException("Erro ao criar cliente: A senha deve ter pelo menos um caractere!");
+    }
+
+    this.nome = nome;
+    this.login = login;
     this.senha = senha;
     listaParaVer = new ArrayList<Serie>();
     listaJaVistas = new ArrayList<Serie>();
+  }
+
+  public Cliente(String parametros) {
+    String[] listaParametros = parametros.split(";");
+
+    if (listaParametros.length != 3)
+      throw new InvalidParameterException("Erro ao criar cliente: Não foram informados todos os campos!");
+
+    String nome = listaParametros[0];
+    String login = listaParametros[1];
+    String senha = listaParametros[2];
+
+    init(nome, login, senha);
   }
 
   public void adicionarNaLista(Serie serie) {
@@ -21,6 +46,7 @@ public class Cliente {
   }
 
   public void retirarDaLista(String nomeSerie) {
+
     for (Serie serie : listaParaVer) {
       if (serie.getName().equals(nomeSerie)) {
         listaParaVer.remove(serie);
@@ -87,11 +113,15 @@ public class Cliente {
     serie.registrarAudiencia();
   }
 
-  public String getNomeDeUsuario() {
-    return nomeDeUsuario;
+  public String getLogin() {
+    return login;
   }
 
   public String getSenha() {
     return senha;
+  }
+
+  public String getNome() {
+    return nome;
   }
 }
