@@ -9,15 +9,8 @@ public class SerieTest {
   @Test
   @BeforeEach
   public void init() {
-    novaSerie = new Serie("Serie Teste");
+    // TODO
   }
-
-  // @Test
-  // public void naoPodeCriarSerieSemNome(){
-  // assertThrows(InvalidParameterException.class, ()-> new SerieTest('') )
-  // assertEquals(0, getAudiencia());
-  // assertTrue(novaSerie.getQuantidadeEpisodios()>0);
-  // }
 
   @Test
   public void registrarNovoPontoDeAudiencia() {
@@ -25,5 +18,4 @@ public class SerieTest {
     novaSerie.registrarAudiencia();
     assertEquals(estadoAudienciaAntesDaModificacao + 1, novaSerie.getAudiencia());
   }
-
 }

@@ -42,5 +42,4 @@ public class PlataformaStreamingTest {
 	public void naoEPermitidoAdicionarClienteComNomeDeUsuarioNulo() {
 		// TODO
 	}
-
 }

@@ -12,13 +12,11 @@ public class PlataformaStreaming {
   public Cliente login(String nomeUsuario, String senha) throws NameNotFoundException {
     for (HashMap.Entry<String, Cliente> cl : this.clientes.entrySet()) {
       Cliente cliente = cl.getValue();
-
       if (cliente.getNomeDeUsuario().equals(nomeUsuario) && cliente.getSenha().equals(senha)) {
         this.clienteAtual = cliente;
         return cliente;
       }
     }
-
     throw new NameNotFoundException("Usuário não encontrado");
   }
 
