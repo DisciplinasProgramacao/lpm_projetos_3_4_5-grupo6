@@ -1,3 +1,5 @@
 # Instruções de uso
 
-Coloque neste arquivo qualquer instrução que julgar pertinente para a execução correta do sistema: arquivos de configuração, arquivos de dados, possíveis dados de teste etc.
+## Arquivos de dados
+
+Os arquivos de dados para teste e inicialização do sistema estão em `/codigo/PlataformasStreaming/assets`
