@@ -6,13 +6,6 @@
   "configurations": [
     {
       "type": "java",
-      "name": "Launch with Arguments Prompt",
-      "request": "launch",
-      "mainClass": "",
-      "args": "${command:SpecifyProgramArgs}"
-    },
-    {
-      "type": "java",
       "name": "Current File",
       "request": "launch",
       "mainClass": "${file}"
@@ -22,7 +15,7 @@
       "name": "App",
       "request": "launch",
       "mainClass": "App",
-      "projectName": "PlataformasStreaming_fcfd1264"
+      "projectName": "PlataformasStreaming_d3654303"
     }
   ]
 }
