@@ -78,4 +78,12 @@ public class Serie {
   public int getId() {
     return id;
   }
+
+  public String getNome() {
+    return nome;
+  }
+
+  public LocalDate getDataLancamento() {
+    return dataLancamento;
+  }
 }

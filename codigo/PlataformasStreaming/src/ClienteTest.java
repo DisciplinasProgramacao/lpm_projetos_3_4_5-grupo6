@@ -1,19 +1,11 @@
+import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 
 import java.security.InvalidParameterException;
 
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 
 public class ClienteTest {
-  Cliente novoCliente;
-
-  @Test
-  @BeforeEach
-  public void init() {
-    // TODO
-  }
-
   @Test
   public void clienteDeveTerNomeLoginESenha() {
     assertThrowsExactly(InvalidParameterException.class, () -> {
@@ -26,6 +18,16 @@ public class ClienteTest {
     assertThrowsExactly(InvalidParameterException.class, () -> {
       new Cliente("nome;;senha");
     });
+  }
+
+  @Test
+  public void naoDeveSerPossivelAddSerieSeElaJaEstaNaLista() {
+    Cliente cliente = new Cliente("Fulano de Tal;fulano;senha123");
+    Serie serie = new Serie("1;Série;01/01/2023");
+    cliente.adicionarNaLista(serie);
+    cliente.adicionarNaLista(serie);
+    cliente.adicionarNaLista(serie);
+    assertEquals(1, cliente.getListaParaVer().size());
   }
 
   @Test

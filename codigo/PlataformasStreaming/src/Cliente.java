@@ -6,11 +6,10 @@ public class Cliente {
   private String nome;
   private String login;
   private String senha;
-
   private List<Serie> listaParaVer;
   private List<Serie> listaJaVistas;
 
-  public void init(String nome, String login, String senha) {
+  private void init(String nome, String login, String senha) {
     if (nome.length() < 1 || nome == null) {
       throw new InvalidParameterException("Erro ao criar cliente: O nome deve ter pelo menos um caractere!");
     }
@@ -20,7 +19,6 @@ public class Cliente {
     if (senha.length() < 1 || senha == null) {
       throw new InvalidParameterException("Erro ao criar cliente: A senha deve ter pelo menos um caractere!");
     }
-
     this.nome = nome;
     this.login = login;
     this.senha = senha;
@@ -30,23 +28,22 @@ public class Cliente {
 
   public Cliente(String parametros) {
     String[] listaParametros = parametros.split(";");
-
     if (listaParametros.length != 3)
       throw new InvalidParameterException("Erro ao criar cliente: Não foram informados todos os campos!");
-
     String nome = listaParametros[0];
     String login = listaParametros[1];
     String senha = listaParametros[2];
-
     init(nome, login, senha);
   }
 
+  // #region Métodos
   public void adicionarNaLista(Serie serie) {
-    listaParaVer.add(serie);
+    if (!this.listaParaVer.contains(serie)) {
+      listaParaVer.add(serie);
+    }
   }
 
   public void retirarDaLista(String nomeSerie) {
-
     for (Serie serie : listaParaVer) {
       if (serie.getName().equals(nomeSerie)) {
         listaParaVer.remove(serie);
@@ -62,14 +59,11 @@ public class Cliente {
         filtroPorGenero.add(serie);
       }
     }
-
     for (Serie serie : listaJaVistas) {
       if (serie.getGenero().equals(genero)) {
-        // TODO: Fazer assim que tiver o id da serie if (serie.hashCode())
         filtroPorGenero.add(serie);
       }
     }
-
     return filtroPorGenero;
   }
 
@@ -80,14 +74,11 @@ public class Cliente {
         filtroPorIdioma.add(serie);
       }
     }
-
     for (Serie serie : listaJaVistas) {
       if (serie.getIdioma().equals(idioma)) {
-        // TODO: Fazer assim que tiver o id da serie if (serie.hashCode())
         filtroPorIdioma.add(serie);
       }
     }
-
     return filtroPorIdioma;
   }
 
@@ -98,30 +89,39 @@ public class Cliente {
         filtroPorEp.add(serie);
       }
     }
-
     for (Serie serie : listaJaVistas) {
       if (serie.getQuantidadeEpisodios().equals(quantEpisodios)) {
-        // TODO: Fazer assim que tiver o id da serie if (serie.hashCode())
         filtroPorEp.add(serie);
       }
     }
-
     return filtroPorEp;
   }
 
+  public boolean senhaCorreta(String senha) {
+    return this.senha.equals(senha);
+  }
+  // #endregion
+
+  // #region Getters
   public void registrarAudiencia(Serie serie) {
     serie.registrarAudiencia();
+    listaJaVistas.add(serie);
   }
 
   public String getLogin() {
     return login;
   }
 
-  public String getSenha() {
-    return senha;
-  }
-
   public String getNome() {
     return nome;
   }
+
+  public List<Serie> getListaParaVer() {
+    return listaParaVer;
+  }
+
+  public List<Serie> getListaJaVistas() {
+    return listaJaVistas;
+  }
+  // #endregion
 }

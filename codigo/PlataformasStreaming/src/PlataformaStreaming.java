@@ -20,7 +20,7 @@ public class PlataformaStreaming {
   public Cliente login(String nomeUsuario, String senha) throws NameNotFoundException {
     for (HashMap.Entry<String, Cliente> cl : this.clientes.entrySet()) {
       Cliente cliente = cl.getValue();
-      if (cliente.getLogin().equals(nomeUsuario) && cliente.getSenha().equals(senha)) {
+      if (cliente.getLogin().equals(nomeUsuario) && cliente.senhaCorreta(senha)) {
         this.clienteAtual = cliente;
         return cliente;
       }
@@ -81,7 +81,7 @@ public class PlataformaStreaming {
   }
 
   public void registrarAudiencia(Serie serie) {
-    serie.registrarAudiencia();
+    this.clienteAtual.registrarAudiencia(serie);
   }
 
   public void logoff() {
