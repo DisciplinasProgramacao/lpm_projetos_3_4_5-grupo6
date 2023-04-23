@@ -100,14 +100,14 @@ public class Cliente {
   public boolean senhaCorreta(String senha) {
     return this.senha.equals(senha);
   }
+
+  public void registrarAudiencia(Serie serie) {
+    this.listaJaVistas.add(serie);
+    serie.registrarAudiencia();
+  }
   // #endregion
 
   // #region Getters
-  public void registrarAudiencia(Serie serie) {
-    serie.registrarAudiencia();
-    listaJaVistas.add(serie);
-  }
-
   public String getLogin() {
     return login;
   }

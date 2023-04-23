@@ -1,6 +1,7 @@
-import java.util.ArrayList;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Scanner;
 
 import javax.naming.NameNotFoundException;
 
@@ -12,11 +13,11 @@ public class PlataformaStreaming {
 
   public PlataformaStreaming(String nome) {
     this.nome = nome;
-
     series = new HashMap<>();
     clientes = new HashMap<>();
   }
 
+  // #region Métodos
   public Cliente login(String nomeUsuario, String senha) throws NameNotFoundException {
     for (HashMap.Entry<String, Cliente> cl : this.clientes.entrySet()) {
       Cliente cliente = cl.getValue();
@@ -32,18 +33,49 @@ public class PlataformaStreaming {
     this.series.put(serie.getId(), serie);
   }
 
-  public void adicionarSeries(ArrayList<Serie> series) {
-    for (Serie serie : series)
-      adicionarSerie(serie);
+  public void carregarSeries() {
+    try {
+      Scanner scanner = new Scanner(Utilitarios.caminho("Series.csv").toFile());
+      while (scanner.hasNext())
+        adicionarSerie(new Serie(scanner.nextLine()));
+      scanner.close();
+    } catch (FileNotFoundException e) {
+      System.out.println(e);
+    }
   }
 
   public void adicionarCliente(Cliente cliente) {
     this.clientes.put(cliente.getLogin(), cliente);
   }
 
-  public void adicionarClientes(ArrayList<Cliente> clientes) {
-    for (Cliente cliente : clientes) {
-      adicionarCliente(cliente);
+  public void carregarClientes() {
+    try {
+      Scanner scanner = new Scanner(Utilitarios.caminho("Espectadores.csv").toFile());
+      while (scanner.hasNext())
+        adicionarCliente(new Cliente(scanner.nextLine()));
+      scanner.close();
+    } catch (Exception e) {
+      System.out.println(e);
+    }
+  }
+
+  public void carregarAudiencias() {
+    try {
+      Scanner scanner = new Scanner(Utilitarios.caminho("Audiencia.csv").toFile());
+      while (scanner.hasNext()) {
+        String[] parametrosAudiencia = scanner.nextLine().split(";");
+        String nomeUsuario = parametrosAudiencia[0];
+        String listaUsuario = parametrosAudiencia[1];
+        int idSerie = Integer.parseInt(parametrosAudiencia[2]);
+
+        if (listaUsuario.equals("F"))
+          clientes.get(nomeUsuario).adicionarNaLista(series.get(idSerie));
+        else if (listaUsuario.equals("A"))
+          clientes.get(nomeUsuario).registrarAudiencia(series.get(idSerie));
+      }
+      scanner.close();
+    } catch (Exception e) {
+      System.out.println(e);
     }
   }
 
@@ -97,7 +129,9 @@ public class PlataformaStreaming {
     }
     return null;
   }
+  // #endregion
 
+  // #region Getters
   public Cliente getClienteAtual() {
     return clienteAtual;
   }
@@ -105,4 +139,5 @@ public class PlataformaStreaming {
   public String getNome() {
     return nome;
   }
+  // #endregion
 }
