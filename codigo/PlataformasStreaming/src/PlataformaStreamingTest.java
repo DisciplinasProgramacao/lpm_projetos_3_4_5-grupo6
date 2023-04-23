@@ -1,10 +1,10 @@
-import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class PlataformaStreamingTest {
 	@BeforeAll
-	public void initAll() {
+	public static void initAll() {
 		// TODO
 	}
 
@@ -39,7 +39,37 @@ public class PlataformaStreamingTest {
 	}
 
 	@Test
-	public void naoEPermitidoAdicionarClienteComNomeDeUsuarioNulo() {
+	public void cadaUsuarioDeveTerUmLoginUnico() {
+		// TODO
+	}
+
+	@Test
+	public void deveSerPossivelFiltrarPorGenero() {
+		// TODO
+	}
+
+	@Test
+	public void deveSerPossivelFiltrarPorIdioma() {
+		// TODO
+	}
+
+	@Test
+	public void deveSerPossivelFiltrarPorQuantidadeDeEpisodios() {
+		// TODO
+	}
+
+	@Test
+	public void deveSerPossivelRegistrarUmaAudiencia() {
+		// TODO
+	}
+
+	@Test
+	public void deveSerPossivelFazerLogOff() {
+		// TODO
+	}
+
+	@Test
+	public void deveSerPossivelEncontrarUmaSeriePeloNome() {
 		// TODO
 	}
 }
