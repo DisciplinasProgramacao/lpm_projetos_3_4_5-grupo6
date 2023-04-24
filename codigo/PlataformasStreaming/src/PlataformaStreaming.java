@@ -30,7 +30,8 @@ public class PlataformaStreaming {
   }
 
   public void adicionarSerie(Serie serie) {
-    this.series.put(serie.getId(), serie);
+    if (!series.containsValue(serie))
+      this.series.put(serie.getId(), serie);
   }
 
   public void carregarSeries() {
@@ -128,6 +129,10 @@ public class PlataformaStreaming {
       }
     }
     return null;
+  }
+
+  public int quantidadeSeries() {
+    return series.size();
   }
   // #endregion
 

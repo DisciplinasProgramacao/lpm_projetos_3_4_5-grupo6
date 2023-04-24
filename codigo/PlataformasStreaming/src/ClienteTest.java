@@ -1,4 +1,4 @@
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 
 import java.security.InvalidParameterException;
@@ -22,8 +22,8 @@ public class ClienteTest {
 
   @Test
   public void naoDeveSerPossivelAddSerieSeElaJaEstaNaLista() {
-    Cliente cliente = new Cliente("Fulano de Tal;fulano;senha123");
-    Serie serie = new Serie("1;Série;01/01/2023");
+    Cliente cliente = new Cliente("Fulano de Tal", "fulano", "senha123");
+    Serie serie = new Serie("1", "How I Met Your Mother", "01/01/2023");
     cliente.adicionarNaLista(serie);
     cliente.adicionarNaLista(serie);
     cliente.adicionarNaLista(serie);

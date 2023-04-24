@@ -32,23 +32,33 @@ public class Serie {
 
     this.id = Integer.parseInt(id);
     this.nome = nome;
+
     this.dataLancamento = LocalDate.parse(dataLancamento, formatadorDeDatas);
-  }
-
-  public Serie(String parametros) {
-    String[] listaParametros = parametros.split(";");
-
-    String id = listaParametros[0];
-    String nome = listaParametros[1];
-    String dataLancamento = listaParametros[2];
-
-    init(id, nome, dataLancamento);
-
     this.audiencia = 0;
     this.genero = GENEROS[new Random().nextInt(GENEROS.length)];
     this.idioma = "Inglês";
     this.quantidadeEpisodios = 0;
-    this.audiencia = 0;
+  }
+
+  /**
+   * Cria um série com os parâmetros passados. Por padrão, atribui um gênero
+   * aleatório, idioma Inglês e com valores de audiência e quantidade de episódios
+   * zerados.
+   * 
+   * @param parametros String com os seguintes atribuitos separados por ponto e
+   *                   vírgula na ordem:
+   *                   id,nome,dataLancamento
+   */
+  public Serie(String parametros) {
+    String[] listaParametros = parametros.split(";");
+    String id = listaParametros[0];
+    String nome = listaParametros[1];
+    String dataLancamento = listaParametros[2];
+    init(id, nome, dataLancamento);
+  }
+
+  public Serie(String id, String nome, String dataLancamento) {
+    init(id, nome, dataLancamento);
   }
 
   public void registrarAudiencia() {

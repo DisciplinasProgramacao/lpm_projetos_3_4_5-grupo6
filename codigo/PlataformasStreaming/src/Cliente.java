@@ -26,6 +26,12 @@ public class Cliente {
     listaJaVistas = new ArrayList<Serie>();
   }
 
+  /**
+   * Cria um cliente a partir de uma String
+   * 
+   * @param parametros String com os atribuitos separados por ponto e vírgula:
+   *                   nome;login;senha
+   */
   public Cliente(String parametros) {
     String[] listaParametros = parametros.split(";");
     if (listaParametros.length != 3)
@@ -33,6 +39,10 @@ public class Cliente {
     String nome = listaParametros[0];
     String login = listaParametros[1];
     String senha = listaParametros[2];
+    init(nome, login, senha);
+  }
+
+  public Cliente(String nome, String login, String senha) {
     init(nome, login, senha);
   }
 

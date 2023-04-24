@@ -1,75 +1,83 @@
+import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
+
+import javax.naming.NameNotFoundException;
+
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class PlataformaStreamingTest {
+	private static PlataformaStreaming plataforma;
+
 	@BeforeAll
 	public static void initAll() {
-		// TODO
-	}
-
-	@BeforeEach
-	public void initEach() {
-		// TODO
+		plataforma = new PlataformaStreaming("Plataforma de Teste");
+		plataforma.carregarClientes();
+		plataforma.carregarSeries();
+		plataforma.carregarAudiencias();
 	}
 
 	@Test
 	public void clienteDeveConseguirLogarComSucesso() {
-		// TODO
+		try {
+			plataforma.login("Yuk218531", "YTon19241");
+			assertEquals(plataforma.getClienteAtual().getLogin(), "Yuk218531");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Test
 	public void soDeveSerPossivelLogarSeEstiverCadastrado() {
-		// TODO
+		assertThrowsExactly(NameNotFoundException.class, () -> {
+			plataforma.login("usuarionaocadastrado", "senha");
+		});
 	}
 
 	@Test
 	public void deveSerPossivelAdicionarSeriesAPlataforma() {
-		// TODO
+		Serie novaSerie = new Serie("1;Better Call Saul;01/01/2023");
+		plataforma.adicionarSerie(novaSerie);
+		assertEquals(novaSerie, plataforma.buscarSerie("Better Call Saul"));
 	}
 
 	@Test
 	public void naoDeveSerPossivelAdicionarUmaSerieDuplicada() {
-		// TODO
+		PlataformaStreaming novaPlataforma = new PlataformaStreaming("Plataforma");
+		Serie serie = new Serie("123;Suits;02/01/2023");
+		novaPlataforma.adicionarSerie(serie);
+		novaPlataforma.adicionarSerie(serie);
+		assertEquals(1, novaPlataforma.quantidadeSeries());
 	}
 
 	@Test
 	public void deveSerPossivelAdicionarUmNovoCliente() {
-		// TODO
-	}
-
-	@Test
-	public void cadaUsuarioDeveTerUmLoginUnico() {
-		// TODO
-	}
-
-	@Test
-	public void deveSerPossivelFiltrarPorGenero() {
-		// TODO
-	}
-
-	@Test
-	public void deveSerPossivelFiltrarPorIdioma() {
-		// TODO
-	}
-
-	@Test
-	public void deveSerPossivelFiltrarPorQuantidadeDeEpisodios() {
-		// TODO
-	}
-
-	@Test
-	public void deveSerPossivelRegistrarUmaAudiencia() {
-		// TODO
+		Cliente novoCliente = new Cliente("Ciclano", "ciclano", "senha456");
+		plataforma.adicionarCliente(novoCliente);
+		try {
+			plataforma.login("ciclano", "senha456");
+			assertEquals(plataforma.getClienteAtual().getLogin(), novoCliente.getLogin());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Test
 	public void deveSerPossivelFazerLogOff() {
-		// TODO
+		try {
+			plataforma.login("Kle96961", "KPer09061");
+			plataforma.logoff();
+			assertNull(plataforma.getClienteAtual());
+		} catch (NameNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Test
 	public void deveSerPossivelEncontrarUmaSeriePeloNome() {
-		// TODO
+		Serie serieEncontrada = plataforma.buscarSerie("Fixing Trees");
+		assertEquals("Fixing Trees", serieEncontrada.getNome());
+
 	}
 }
