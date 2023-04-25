@@ -38,11 +38,22 @@ public class App {
     limparConsole();
     try {
       plataforma.carregarClientes();
-      plataforma.carregarSeries();
-      plataforma.carregarAudiencias();
-      System.out.println("Dados carregados com sucesso");
+      System.out.println("Dados dos clientes carregados com sucesso");
     } catch (Exception e) {
-      System.out.println("ERRO ao carregar os dados: " + e.getMessage());
+      System.out.println("ERRO ao carregar os dados dos Clientes: " + e.getMessage());
+    }
+    try {
+      plataforma.carregarSeries();
+      System.out.println("Dados das séries carregados com sucesso");
+    } catch (Exception e) {
+      System.out.println("ERRO ao carregar os dados das Series: " + e.getMessage());
+    }
+
+    try {
+      plataforma.carregarAudiencias();
+      System.out.println("Dados de audiência carregados com sucesso");
+    } catch (Exception e) {
+      System.out.println("ERRO ao carregar os dados de  Audiência: " + e.getMessage());
     }
   }
 
