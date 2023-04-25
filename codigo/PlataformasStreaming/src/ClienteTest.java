@@ -32,6 +32,9 @@ public class ClienteTest {
 
   @Test
   public void adicionarSerieNaListaParaVer() {
-    // TODO
+    Cliente cliente = new Cliente("Fulano de Tal", "fulano", "senha123");
+    Serie serie = new Serie("1", "How I Met Your Mother", "01/01/2023");
+    cliente.adicionarNaLista(serie);
+    assertEquals(1, cliente.getListaParaVer().size());
   }
 }
