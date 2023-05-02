@@ -28,6 +28,7 @@ public class App {
 
     System.out.println("MENU PRINCIPAL");
     System.out.println("1 - Carregando dados");
+    System.out.println("2 - Cadastrar Serie");
     System.out.println("0 - Cancelar");
     System.out.print("Digite sua opção: ");
     opcao = Integer.parseInt(sc.nextLine());
@@ -57,6 +58,30 @@ public class App {
     }
   }
 
+  /***
+   *
+   * @param args
+   * @throws Exception
+   * @params nenhum
+   * @return Serie Cadastrada
+   */
+  public static void cadastrarSerie(Serie novaSerie) {
+    // public Serie(String id, String nome, String dataLancamento) {
+    System.out.println("===============================");
+    System.out.println("-Cadastro de serie-");
+    System.out.println("Digite o id: ");
+    String id = sc.nextLine();
+
+    System.out.println("Digite o nome: ");
+    String nome = sc.nextLine();
+
+    System.out.println("Digite a data de lançamento: ");
+    String data = sc.nextLine();
+
+    novaSerie = new Serie(id, nome, data);
+    plataforma.adicionarSerie(novaSerie);
+  }
+
   public static void main(String[] args) throws Exception {
     int opcao = -1;
     do {
@@ -65,7 +90,10 @@ public class App {
         case 1:
           carregarDados();
           break;
-
+        case 2:
+          Serie novaSerie = null;
+          cadastrarSerie(novaSerie);
+          break;
         default:
           break;
       }
