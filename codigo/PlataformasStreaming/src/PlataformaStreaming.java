@@ -60,7 +60,7 @@ public class PlataformaStreaming {
     }
   }
 
-  public void carregarAudiencias() {
+  public void carregarAudiencias()  {
     try {
       Scanner scanner = new Scanner(Utilitarios.caminho("Audiencia.csv").toFile());
       while (scanner.hasNext()) {
