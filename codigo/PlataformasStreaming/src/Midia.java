@@ -1,10 +1,20 @@
+import lombok.Data;
+
 import java.security.InvalidParameterException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
+@Data
 public class Midia {
-	private static final String[] GENEROS = {
+
+	private static int id;
+	private int audiencia;
+	private String nome;
+	private String genero;
+	private String idioma;
+	private LocalDate dataLancamento;
+	static final String[] GENEROS = {
 			"Ação",
 			"Comédia",
 			"Drama",
@@ -14,49 +24,61 @@ public class Midia {
 			"Romance"
 	};
 
-	private int id;
-	private String nome;
-	private LocalDate dataLancamento;
-	private String genero;
-	private String idioma;
-	private int audiencia;
+	static final String[] IDIOMAS = {
+			"Inglês",
+			"Português",
+			"Espanhol",
+			"Italiano",
+			"Francês",
+			"Chinês"
+	};
 
-	public void init(String id, String nome, String dataLancamento) {
-		DateTimeFormatter formatadorDeDatas = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
-		if (id.length() <= 0)
-			throw new InvalidParameterException("Erro ao criar mídia: ID " + id + " inválido!");
-
-		if (nome.length() <= 0)
-			throw new InvalidParameterException("Erro ao criar mídia: Nome " + nome + " inválido!");
-
-		this.id = Integer.parseInt(id);
-		this.nome = nome;
-
-		this.dataLancamento = LocalDate.parse(dataLancamento, formatadorDeDatas);
+	public Midia(int id, String nome, String dataLancamento) {
+		this.dataLancamento = validadados(dataLancamento);
+		this.id = id;
 		this.audiencia = 0;
+		this.nome = nome;
+		Random random = new Random();
+		this.genero = GENEROS[random.nextInt()];
+		this.idioma = IDIOMAS[random.nextInt()];
 	}
 
-	public Midia(String id, String nome, String dataLancamento) {
-		init(id, nome, dataLancamento);
-		this.genero = GENEROS[new Random().nextInt(GENEROS.length)];
-		this.idioma = "Inglês";
+	private LocalDate validadados(String dataLancamento) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDate date = LocalDate.parse(dataLancamento,formatter);
+
+		if (id <= 0)
+			throw new InvalidParameterException("Erro ao criar série: id " + id + " inválido!");
+
+		if (nome.length() <= 0)
+			throw new InvalidParameterException("Erro ao criar série: Nome " + nome + " inválido!");
+
+//    if (contemGenero())
+//      throw new InvalidParameterException("Erro ao criar série: Gênero " + genero + " inválido!");
+
+//    if (idioma.length() <= 0)
+//      throw new InvalidParameterException("Erro ao criar série: Idioma " + idioma + " inválido");
+
+		if (date.compareTo(LocalDate.now()) == 0)
+			throw new InvalidParameterException("Erro ao criar série: Data foi aplicada no futuro");
+
+		return date;
 	}
 
 	public void registrarAudiencia() {
 		this.audiencia++;
 	}
 
-	public int getId() {
+	public static int getId() {
 		return id;
+	}
+
+	public int getAudiencia() {
+		return audiencia;
 	}
 
 	public String getNome() {
 		return nome;
-	}
-
-	public LocalDate getDataLancamento() {
-		return dataLancamento;
 	}
 
 	public String getGenero() {
@@ -67,7 +89,7 @@ public class Midia {
 		return idioma;
 	}
 
-	public int getAudiencia() {
-		return audiencia;
+	public LocalDate getDataLancamento() {
+		return dataLancamento;
 	}
 }

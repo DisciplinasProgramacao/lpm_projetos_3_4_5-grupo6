@@ -67,7 +67,7 @@ public class App {
 
   /***
    *
-   * @param args
+   * @param novaSerie
    * @throws Exception
    * @params nenhum
    * @return Serie Cadastrada
@@ -77,7 +77,7 @@ public class App {
     System.out.println("===============================");
     System.out.println("-Cadastro de serie-");
     System.out.println("Digite o id: ");
-    String id = sc.nextLine();
+    int id = sc.nextInt();
 
     System.out.println("Digite o nome: ");
     String nome = sc.nextLine();

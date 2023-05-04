@@ -55,7 +55,7 @@ public class Cliente {
 
   public void retirarDaLista(String nomeSerie) {
     for (Serie serie : listaParaVer) {
-      if (serie.getName().equals(nomeSerie)) {
+      if (serie.getNome().equals(nomeSerie)) {
         listaParaVer.remove(serie);
         break;
       }
@@ -95,12 +95,12 @@ public class Cliente {
   public List<Serie> FiltrarPorQtdEpisodios(int quantEpisodios) {
     List<Serie> filtroPorEp = new ArrayList<Serie>();
     for (Serie serie : listaParaVer) {
-      if (serie.getQuantidadeEpisodios().equals(quantEpisodios)) {
+      if (serie.getQuantidadeEpisodios() == quantEpisodios) {
         filtroPorEp.add(serie);
       }
     }
     for (Serie serie : listaJaVistas) {
-      if (serie.getQuantidadeEpisodios().equals(quantEpisodios)) {
+      if (serie.getQuantidadeEpisodios() == quantEpisodios) {
         filtroPorEp.add(serie);
       }
     }

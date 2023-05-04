@@ -106,7 +106,7 @@ public class PlataformaStreaming {
     LinkedList<Serie> seriesEncontradas = new LinkedList<>();
     for (HashMap.Entry<Integer, Serie> sr : this.series.entrySet()) {
       Serie serie = sr.getValue();
-      if (serie.getQuantidadeEpisodios().equals(quantEpisodios)) {
+      if (serie.getQuantidadeEpisodios() == quantEpisodios) {
         seriesEncontradas.add(serie);
       }
     }
@@ -124,7 +124,7 @@ public class PlataformaStreaming {
   public Serie buscarSerie(String nomeSerie) {
     for (HashMap.Entry<Integer, Serie> sr : this.series.entrySet()) {
       Serie serie = sr.getValue();
-      if (serie.getName().equals(nomeSerie)) {
+      if (serie.getNome().equals(nomeSerie)) {
         return serie;
       }
     }

@@ -1,7 +1,13 @@
-public class Filme extends Midia {
-	public Filme(String id, String nome, String dataLancamento) {
-		super(id, nome, dataLancamento);
-		// TODO Auto-generated constructor stub
-	}
+import java.security.InvalidParameterException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Random;
 
+public class Filme extends Midia {
+	private double duracao;
+
+	public Filme(int id, String nome, String dataLancamento, double duracao) {
+		super(id, nome, dataLancamento);
+		this.duracao = duracao;
+	}
 }
