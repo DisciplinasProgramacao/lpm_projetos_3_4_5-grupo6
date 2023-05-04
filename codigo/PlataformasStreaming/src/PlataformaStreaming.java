@@ -8,6 +8,7 @@ import javax.naming.NameNotFoundException;
 public class PlataformaStreaming {
   private String nome;
   private HashMap<Integer, Serie> series;
+  private HashMap<Integer, Filme> filmes;
   private HashMap<String, Cliente> clientes;
   private Cliente clienteAtual;
 
@@ -37,12 +38,33 @@ public class PlataformaStreaming {
   public void carregarSeries() {
     try {
       Scanner scanner = new Scanner(Utilitarios.caminho("Series.csv").toFile());
-      while (scanner.hasNext())
-        adicionarSerie(new Serie(scanner.nextLine()));
-      scanner.close();
+      
+      while (scanner.hasNext()) {
+        String[] text = scanner.nextLine().split(";");
+        adicionarSerie(new Serie(Integer.parseInt(text[0]), text[1], text[2]));
+        scanner.close();
+      }
     } catch (FileNotFoundException e) {
       System.out.println(e);
     }
+  }
+
+  public void carregarFilmes() {
+    try {
+      Scanner scanner = new Scanner(Utilitarios.caminho("Filmes.csv").toFile());
+      while (scanner.hasNext()) {
+        String[] text = scanner.nextLine().split(";");
+        adicionarFilme(new Filme(Integer.parseInt(text[0]), text[1], text[2], Integer.parseInt(text[3], 0, 0, 0)));
+        scanner.close();
+      }
+    } catch (FileNotFoundException e) {
+      System.out.println(e);
+    }
+  }
+
+  public void adicionarFilme(Filme filme) {
+    if (!filmes.containsValue(filme))
+      this.filmes.put(Filme.getId(), filme);
   }
 
   public void adicionarCliente(Cliente cliente) {
