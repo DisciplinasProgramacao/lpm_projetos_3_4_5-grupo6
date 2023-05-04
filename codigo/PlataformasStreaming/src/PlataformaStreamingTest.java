@@ -76,8 +76,8 @@ public class PlataformaStreamingTest {
 
 	@Test
 	public void deveSerPossivelEncontrarUmaSeriePeloNome() {
-		Serie serieEncontrada = plataforma.buscarSerie("Fixing Trees");
-		assertEquals("Fixing Trees", serieEncontrada.getNome());
+		Serie serieEncontrada = plataforma.buscarSerie("The Walking Peaks");
+		assertEquals("The Walking Peaks", serieEncontrada.getNome());
 
 	}
 }

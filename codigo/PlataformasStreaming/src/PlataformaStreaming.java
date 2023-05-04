@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -37,8 +38,8 @@ public class PlataformaStreaming {
 
   public void carregarSeries() {
     try {
-      Scanner scanner = new Scanner(Utilitarios.caminho("Series.csv").toFile());
-      
+      File arquivo = new File("../assets/Series.csv");
+      Scanner scanner = new Scanner(arquivo);
       while (scanner.hasNext()) {
         String[] text = scanner.nextLine().split(";");
         adicionarSerie(new Serie(Integer.parseInt(text[0]), text[1], text[2]));
@@ -51,8 +52,8 @@ public class PlataformaStreaming {
 
   public void carregarFilmes() {
     try {
-      Scanner scanner = new Scanner(Utilitarios.caminho("Filmes.csv").toFile());
-      while (scanner.hasNext()) {
+      File arquivo = new File("../assets/Filmes.csv");
+      Scanner scanner = new Scanner(arquivo); {
         String[] text = scanner.nextLine().split(";");
         adicionarFilme(new Filme(Integer.parseInt(text[0]), text[1], text[2], Integer.parseInt(text[3], 0, 0, 0)));
         scanner.close();
@@ -73,7 +74,8 @@ public class PlataformaStreaming {
 
   public void carregarClientes() {
     try {
-      Scanner scanner = new Scanner(Utilitarios.caminho("Espectadores.csv").toFile());
+      File arquivo = new File("../assets/Expectadores.csv");
+      Scanner scanner = new Scanner(arquivo);
       while (scanner.hasNext())
         adicionarCliente(new Cliente(scanner.nextLine()));
       scanner.close();
@@ -84,7 +86,8 @@ public class PlataformaStreaming {
 
   public void carregarAudiencias()  {
     try {
-      Scanner scanner = new Scanner(Utilitarios.caminho("Audiencia.csv").toFile());
+      File arquivo = new File("../assets/Audiencia.csv");
+      Scanner scanner = new Scanner(arquivo);
       while (scanner.hasNext()) {
         String[] parametrosAudiencia = scanner.nextLine().split(";");
         String nomeUsuario = parametrosAudiencia[0];
