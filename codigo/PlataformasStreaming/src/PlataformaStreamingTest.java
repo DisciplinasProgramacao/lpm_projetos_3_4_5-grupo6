@@ -1,5 +1,5 @@
-import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 
 import javax.naming.NameNotFoundException;
@@ -37,7 +37,7 @@ public class PlataformaStreamingTest {
 
 	@Test
 	public void deveSerPossivelAdicionarSeriesAPlataforma() {
-		Serie novaSerie = new Serie("1;Better Call Saul;01/01/2023");
+		Serie novaSerie = new Serie(1, "Better Call Saul", "01/01/2023");
 		plataforma.adicionarSerie(novaSerie);
 		assertEquals(novaSerie, plataforma.buscarSerie("Better Call Saul"));
 	}
@@ -45,7 +45,7 @@ public class PlataformaStreamingTest {
 	@Test
 	public void naoDeveSerPossivelAdicionarUmaSerieDuplicada() {
 		PlataformaStreaming novaPlataforma = new PlataformaStreaming("Plataforma");
-		Serie serie = new Serie("123;Suits;02/01/2023");
+		Serie serie = new Serie(123, "Suits", "02/01/2023");
 		novaPlataforma.adicionarSerie(serie);
 		novaPlataforma.adicionarSerie(serie);
 		assertEquals(1, novaPlataforma.quantidadeSeries());

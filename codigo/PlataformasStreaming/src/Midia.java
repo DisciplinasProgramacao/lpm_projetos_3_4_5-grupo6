@@ -1,11 +1,8 @@
-import lombok.Data;
-
 import java.security.InvalidParameterException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
-@Data
 public class Midia {
 
 	private static int id;
@@ -34,16 +31,16 @@ public class Midia {
 	};
 
 	public Midia(int id, String nome, String dataLancamento) {
-		this.dataLancamento = validadados(dataLancamento);
+		this.dataLancamento = validadados(id, nome, dataLancamento);
 		this.id = id;
 		this.audiencia = 0;
 		this.nome = nome;
 		Random random = new Random();
-		this.genero = GENEROS[random.nextInt()];
-		this.idioma = IDIOMAS[random.nextInt()];
+		this.genero = GENEROS[random.nextInt(0,6)];
+		this.idioma = IDIOMAS[random.nextInt(0,6)];
 	}
 
-	private LocalDate validadados(String dataLancamento) {
+	private LocalDate validadados(int id, String nome, String dataLancamento) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		LocalDate date = LocalDate.parse(dataLancamento,formatter);
 
