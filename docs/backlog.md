@@ -46,7 +46,7 @@
 - [ ] Atualização do diagrama para abrigar o novo tipo de mídia: Filme;
 - [ ] Implementação da lógica de carga de dados do catálogo de filmes;
 - [x] Implementação do cadastro de clientes, filmes e séries;
-- [ ] Salvar dados de clientes, filmes e séries;
+- [x] Salvar dados de clientes, filmes e séries;
 - [ ] Refatoração / reescrita dos filtros de listas de mídias assistidas e futuras.
 - [ ] Implementação do protótipo de sistema cobrindo os requisitos atuais (documento anterior);
 
@@ -58,7 +58,7 @@
 - [x] Método(s) para carregamento dos dados;
 - [x] Criação de um pequeno aplicativo para chamar o carregamento dos dados;
 ##### Até 26/04:
-- [ ] Classe filme e carga do catálogo de filmes;
+- [x] Classe filme e carga do catálogo de filmes;
 - [ ] Primeira versão do protótipo do aplicativo;
 ##### Até 02/05:
 - [ ] Cadastro de novas entidades;
