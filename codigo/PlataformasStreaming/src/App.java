@@ -1,4 +1,3 @@
-import java.io.File;
 import java.io.FileWriter;
 import java.util.Scanner;
 
@@ -37,10 +36,11 @@ public class App {
     return opcao;
   }
 
-  public static void carregarDados() throws Exception{
-    FileWriter arq = new FileWriter("codigo/assets/Audiencia.csv", true);
+  public static void carregarDados() throws Exception {
+    FileWriter arq = new FileWriter("Audiencia.csv", true);
     arq.append("olá");
-    arq.close();;
+    arq.close();
+    ;
     System.out.println("PASSOUUUUU");
     pause();
     limparConsole();
