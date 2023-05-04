@@ -20,14 +20,13 @@ public class PlataformaStreaming {
 
   // #region Métodos
   public Cliente login(String nomeUsuario, String senha) throws NameNotFoundException {
-    for (HashMap.Entry<String, Cliente> cl : this.clientes.entrySet()) {
-      Cliente cliente = cl.getValue();
-      if (cliente.getLogin().equals(nomeUsuario) && cliente.senhaCorreta(senha)) {
-        this.clienteAtual = cliente;
-        return cliente;
-      }
+    clienteAtual = this.clientes.get(nomeUsuario);
+
+    if (!clienteAtual.senhaCorreta(senha)) {
+      clienteAtual = null;
     }
-    throw new NameNotFoundException("Usuário não encontrado");
+
+    return clienteAtual;
   }
 
   public void adicionarSerie(Serie serie) {
