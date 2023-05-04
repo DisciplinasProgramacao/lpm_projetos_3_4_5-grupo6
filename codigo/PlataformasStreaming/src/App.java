@@ -1,4 +1,3 @@
-import java.io.FileWriter;
 import java.util.Scanner;
 
 public class App {
@@ -37,12 +36,6 @@ public class App {
   }
 
   public static void carregarDados() throws Exception {
-    FileWriter arq = new FileWriter("Audiencia.csv", true);
-    arq.append("olá");
-    arq.close();
-    ;
-    System.out.println("PASSOUUUUU");
-    pause();
     limparConsole();
     try {
       plataforma.carregarClientes();
