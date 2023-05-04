@@ -52,6 +52,7 @@ public class App {
     }
     try {
       plataforma.carregarSeries();
+      
       System.out.println("Dados das séries carregados com sucesso");
     } catch (Exception e) {
       System.out.println("ERRO ao carregar os dados das Series: " + e.getMessage());
