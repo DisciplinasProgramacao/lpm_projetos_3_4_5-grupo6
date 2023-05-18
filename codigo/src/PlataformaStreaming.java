@@ -7,6 +7,7 @@ import Exceptions.SenhaIncorretaException;
 public class PlataformaStreaming {
     private String nome;
     private HashMap<Integer, Serie> series;
+    private HashMap<Integer, Filme> filmes;
     private HashMap<String, Cliente> clientes;
     private Cliente clienteAtual;
 
@@ -162,10 +163,30 @@ public class PlataformaStreaming {
         }
     }
 
-    public void carregarFilmes() {
-        //id;nome;data;duracao
+    /**
+     * 
+     * Carrega os filmes a partir de um arquivo CSV.
+     * 
+     * @throws IOException se ocorrer um erro durante a leitura do arquivo
+     */
+    public void carregarFilmes() throws IOException {
+        // id;nome;data;duracao
         String path = "codigo/assets/Filmes.csv";
-        
+        String[] todosFilmes = Util.lerArquivo(path).split(System.lineSeparator());
+
+        for (String FilmeCSV : todosFilmes) {
+            String[] filme = FilmeCSV.split(";");
+            int id = Integer.parseInt(filme[0]);
+            String nome = filme[1];
+            String data = filme[2];
+            int duracao = Integer.parseInt(filme[3]);
+            String idioma = Util.gerarNovoIdioma();
+            String genero = Util.gerarNovoIdioma();
+            Filme novoFilme = new Filme(id, nome, idioma, genero, duracao, data);
+            filmes.put(id, novoFilme);
+
+        }
+
     }
 
     public void carregarEspectadores() {

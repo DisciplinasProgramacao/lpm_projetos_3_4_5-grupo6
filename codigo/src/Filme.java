@@ -20,7 +20,7 @@ public class Filme extends Midia {
      * @throws IllegalArgumentException se algum dos parâmetros obrigatórios for
      *                                  nulo ou vazio
      */
-    public Filme(int id, String nome, String idioma, String genero, Double duracao, String data)
+    public Filme(int id, String nome, String idioma, String genero, int duracao, String data)
             throws IllegalArgumentException {
         super(id, nome, data, idioma, genero);
 
