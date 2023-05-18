@@ -44,11 +44,7 @@ public class Cliente {
 
     // #region Métodos
     /**
-     * Método que adiciona uma série na lista do cliente.
-     * 
-     * Se a série não existe na "lista para ver", ela é adicionada.
-     * Se a série existe na "lista para ver", então ela é removida e adicionada na
-     * "lista de séria já assistidas" e registra a audiencia na série.
+     * Método que adiciona uma série na lista de séries para ver do cliente.
      * 
      * @param serie série para ser adicinada. Deve ser um objeto do tipo Série
      *              (obrigatório)
@@ -57,9 +53,6 @@ public class Cliente {
 
         if (!listaParaVer.contains(serie)) {
             listaParaVer.add(serie);
-        }else{
-            listaParaVer.remove(serie);
-            listaJaVistas.add(serie);
         }
     }
 
