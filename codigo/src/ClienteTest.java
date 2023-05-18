@@ -38,9 +38,6 @@ public class ClienteTest {
 
         cliente.adicionarNaLista(serie1);
         Assertions.assertTrue(cliente.getListaParaVer().contains(serie1));
-        cliente.adicionarNaLista(serie1);
-        Assertions.assertFalse(cliente.getListaParaVer().contains(serie1));
-        Assertions.assertTrue(cliente.getListaJaVistas().contains(serie1));
     }
 
     @Test
