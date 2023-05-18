@@ -2,6 +2,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import javax.naming.NameNotFoundException;
+
+import Exceptions.SenhaFracaException;
 import Exceptions.SenhaIncorretaException;
 
 public class PlataformaStreaming {
@@ -145,7 +147,6 @@ public class PlataformaStreaming {
      * @throws IOException se ocorrer um erro durante a leitura do arquivo
      */
     public void carregarSeries() throws IOException {
-        // id;nome;data
         String path = "codigo/assets/Series.csv";
         String[] todasSeries = Util.lerArquivo(path).split(System.lineSeparator());
 
@@ -170,7 +171,6 @@ public class PlataformaStreaming {
      * @throws IOException se ocorrer um erro durante a leitura do arquivo
      */
     public void carregarFilmes() throws IOException {
-        // id;nome;data;duracao
         String path = "codigo/assets/Filmes.csv";
         String[] todosFilmes = Util.lerArquivo(path).split(System.lineSeparator());
 
@@ -181,16 +181,33 @@ public class PlataformaStreaming {
             String data = filme[2];
             int duracao = Integer.parseInt(filme[3]);
             String idioma = Util.gerarNovoIdioma();
-            String genero = Util.gerarNovoIdioma();
+            String genero = Util.gerarNovoGenero();
             Filme novoFilme = new Filme(id, nome, idioma, genero, duracao, data);
             filmes.put(id, novoFilme);
-
         }
-
     }
 
-    public void carregarEspectadores() {
+    /**
+     * 
+     * Carrega os espectadores a partir de um arquivo CSV.
+     * 
+     * @throws IOException              se ocorrer um erro durante a leitura do
+     *                                  arquivo
+     * @throws IllegalArgumentException se os dados do cliente forem inválidos
+     * @throws SenhaFracaException      se a senha do cliente for considerada fraca
+     */
+    public void carregarEspectadores() throws IOException, IllegalArgumentException, SenhaFracaException {
+        String path = "codigo/assets/Espectadores.csv";
+        String[] todosClientes = Util.lerArquivo(path).split(System.lineSeparator());
 
+        for (String ClienteCSV : todosClientes) {
+            String[] cliente = ClienteCSV.split(";");
+            String nome = cliente[0];
+            String login = cliente[1];
+            String senha = cliente[2];
+            Cliente novoCliente = new Cliente(nome, login, senha);
+            clientes.put(login, novoCliente);
+        }
     }
 
     public void carregarAudiencia() {
