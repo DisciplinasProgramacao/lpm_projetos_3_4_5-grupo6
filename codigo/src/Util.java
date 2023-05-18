@@ -68,13 +68,13 @@ public class Util {
                 "Belga"
         };
 
-        int numeroAleatorio = random.nextInt(7);
+        int numeroAleatorio = random.nextInt(1, 68);
         return idioma[numeroAleatorio];
 
     }
 
     public static int gerarTotalEp() {
-        int numeroAleatorio = random.nextInt(67);
+        int numeroAleatorio = random.nextInt(1, 68);
         return numeroAleatorio;
 
     }
