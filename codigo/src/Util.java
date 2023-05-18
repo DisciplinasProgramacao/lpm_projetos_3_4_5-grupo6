@@ -52,7 +52,7 @@ public class Util {
                 "Romance"
         };
 
-        int numeroAleatorio = random.nextInt(7);
+        int numeroAleatorio = random.nextInt(1,7);
         return genero[numeroAleatorio];
 
     }
@@ -68,7 +68,7 @@ public class Util {
                 "Belga"
         };
 
-        int numeroAleatorio = random.nextInt(1, 68);
+        int numeroAleatorio = random.nextInt(1, 7);
         return idioma[numeroAleatorio];
 
     }

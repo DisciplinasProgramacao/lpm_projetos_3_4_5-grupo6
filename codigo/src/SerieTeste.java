@@ -3,7 +3,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /*TESTE GERADO PELO CHATGPT DEVIDO PRAZO APERTADO E VALIDADO POR LUIZ FELIPE VIEIRA */
-public class SerieTest {
+public class SerieTeste {
 
     private Serie serie;
 

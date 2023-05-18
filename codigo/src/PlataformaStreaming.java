@@ -158,6 +158,7 @@ public class PlataformaStreaming {
             String genero = Util.gerarNovoGenero();
             Serie novaSerie = new Serie(id, nome, idioma, genero, ep, data);
             series.put(id, novaSerie);
+            System.out.println(novaSerie.getNome());
         }
     }
 
