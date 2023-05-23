@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,12 +8,12 @@ public class Cliente {
     private String nome;
     private String login;
     private String senha;
-    private List<Serie> listaParaVer;
-    private List<Serie> listaJaVistas;
+    private List<Midia> listaParaVer;
+    private List<Midia> listaJaVistas;
 
     /**
      * Construtor da classe Cliente.
-     * 
+     *
      * @param nome  O nome do cliente. Deve ser uma string não vazia (obrigatório).
      * @param login O login do cliente. Deve ser uma string não vazia (obrigatório).
      * @param senha A senha do cliente. Deve ser uma string não vazia e ter pelo
@@ -23,13 +24,13 @@ public class Cliente {
      */
     public Cliente(String nome, String login, String senha) throws IllegalArgumentException, SenhaFracaException {
         if (nome == null || nome.isEmpty()) {
-            throw new IllegalArgumentException("Nome do cliente não pode ser vazio.");
+            throw new IllegalArgumentException("O nome do cliente não pode ser vazio.");
         }
         if (login == null || login.isEmpty()) {
-            throw new IllegalArgumentException("Login do cliente não pode ser vazio.");
+            throw new IllegalArgumentException("O login do cliente não pode ser vazio.");
         }
         if (senha == null || senha.isEmpty()) {
-            throw new IllegalArgumentException("Senha do cliente não pode ser vazia.");
+            throw new IllegalArgumentException("A senha do cliente não pode ser vazia.");
         }
         if (senha.length() < 8) {
             throw new SenhaFracaException("A senha deve ter pelo menos 8 caracteres.");
@@ -42,174 +43,165 @@ public class Cliente {
         this.listaJaVistas = new ArrayList<>();
     }
 
-    // #region Métodos
     /**
-     * Método que adiciona uma série na lista de séries para ver do cliente.
-     * 
-     * @param serie série para ser adicinada. Deve ser um objeto do tipo Série
-     *              (obrigatório)
-     */
-    public void adicionarNaLista(Serie serie) {
-
-        if (!listaParaVer.contains(serie)) {
-            listaParaVer.add(serie);
-        }
-    }
-
-    /**
-     * 
-     * Método que remove uma Série da lista de Séries para ver.
-     * 
-     * @param nomeSerie O nome da Série que será removida da lista.
-     */
-    public void retirarDaLista(String nomeSerie) {
-        listaParaVer.removeIf(serie -> serie.getNome().equals(nomeSerie));
-    }
-
-    /**
-     * Filtra as séries por gênero.
+     * Método que adiciona uma mídia na lista de mídias para ver do cliente.
      *
-     * @param genero O gênero das séries a serem filtradas.
-     * @return Uma lista contendo todas as séries que pertencem ao gênero
-     *         especificado. Retorna as séris das listas já assistidas ou para
-     *         assistir.
-     * 
+     * @param m A mídia a ser adicionada (obrigatório).
      */
-    public List<Serie> filtrarPorGenero(String genero) {
-        List<Serie> filtroPorGenero = new ArrayList<>();
+    public void adicionarNaLista(Midia m) {
+        if (!listaParaVer.contains(m)) {
+            listaParaVer.add(m);
+        }
+    }
 
-        for (Serie serie : listaParaVer) {
-            if (serie.getGenero().equals(genero)) {
-                filtroPorGenero.add(serie);
+    /**
+     * Método que remove uma mídia da lista de mídias para ver.
+     *
+     * @param nomeMidia O nome da mídia que será removida da lista.
+     */
+    public void retirarDaLista(String nomeMidia) {
+        listaParaVer.removeIf(midia -> midia.getNome().equals(nomeMidia));
+    }
+
+    /**
+     * Filtra as mídias por gênero.
+     *
+     * @param genero O gênero das mídias a serem filtradas.
+     * @return Uma lista contendo todas as mídias que pertencem ao gênero
+     *         especificado.
+     */
+    public List<Midia> filtrarPorGenero(String genero) {
+        List<Midia> filtroPorGenero = new ArrayList<>();
+
+        for (Midia m : listaParaVer) {
+            if (m.getGenero().equals(genero)) {
+                filtroPorGenero.add(m);
             }
         }
 
-        for (Serie serie : listaJaVistas) {
-            if (serie.getGenero().equals(genero)) {
-                filtroPorGenero.add(serie);
+        for (Midia m : listaJaVistas) {
+            if (m.getGenero().equals(genero)) {
+                filtroPorGenero.add(m);
             }
         }
+
         return filtroPorGenero;
     }
 
-    /*
-     * MÉTODO COM STREAMING
-     * public List<Serie> filtrarPorGenero(String genero) {
-     * List<Serie> filtroPorGenero = new ArrayList<>();
-     * filtroPorGenero.addAll(listaParaVer.stream().filter(serie ->
-     * serie.getGenero().equals(genero)).collect(Collectors.toList()));
-     * filtroPorGenero.addAll(listaJaVistas.stream().filter(serie ->
-     * serie.getGenero().equals(genero)).collect(Collectors.toList()));
-     * return filtroPorGenero;
-     * }
-     */
-
     /**
-     * Filtra as séries por idioma.
+     * Filtra as mídias por idioma.
      *
-     * @param idioma O idioma das séries a serem filtradas.
-     * @return Uma lista contendo todas as séries que pertencem ao idioma
-     *         especificado. Retorna as séris das listas já assistidas ou para
-     *         assistir.
-     * 
+     * @param idioma O idioma das mídias a serem filtradas.
+     * @return Uma lista contendo todas as mídias que pertencem ao idioma
+     *         especificado.
      */
-    public List<Serie> filtrarPorIdioma(String idioma) {
-        List<Serie> filtroPorIdioma = new ArrayList<Serie>();
+    public List<Midia> filtrarPorIdioma(String idioma) {
+        List<Midia> filtroPorIdioma = new ArrayList<>();
 
-        for (Serie serie : listaParaVer) {
-            if (serie.getIdioma().equals(idioma)) {
-                filtroPorIdioma.add(serie);
+        for (Midia m : listaParaVer) {
+            if (m.getIdioma().equals(idioma)) {
+                filtroPorIdioma.add(m);
             }
         }
-        for (Serie serie : listaJaVistas) {
-            if (serie.getIdioma().equals(idioma)) {
-                filtroPorIdioma.add(serie);
+
+        for (Midia m : listaJaVistas) {
+            if (m.getIdioma().equals(idioma)) {
+                filtroPorIdioma.add(m);
             }
         }
+
         return filtroPorIdioma;
     }
 
     /**
-     * Filtra as séries por quantidade de episódios.
+     * Filtra somente as séries por quantidade de episódios.
      *
-     * @param quantidade O valor (inteiro) das séries a serem filtradas.
+     * @param quantEpisodios A quantidade de episódios das séries a serem filtradas.
      * @return Uma lista contendo todas as séries que contém a quantidade de
-     *         episódios especificado. Retorna as séris das listas já assistidas ou
-     *         para assistir.
-     * 
+     *         episódios especificada.
      */
-    public List<Serie> filtrarPorQtdEpisodios(int quantEpisodios) {
-        List<Serie> filtroPorEp = new ArrayList<Serie>();
+    public List<Midia> filtrarPorQtdEpisodios(int quantEpisodios) {
+        List<Midia> filtroPorEp = new ArrayList<>();
+        List<Serie> listaSeries = new ArrayList<>();
 
-        for (Serie serie : listaParaVer) {
+        for (Midia m : listaParaVer) {
+            if (m instanceof Serie) {
+                listaSeries.add((Serie) m);
+            }
+        }
+
+        for (Midia m : listaJaVistas) {
+            if (m instanceof Serie) {
+                listaSeries.add((Serie) m);
+            }
+        }
+
+        for (Serie serie : listaSeries) {
             if (serie.getQuantidadeEpisodios() == quantEpisodios) {
                 filtroPorEp.add(serie);
             }
         }
-        for (Serie serie : listaJaVistas) {
-            if (serie.getQuantidadeEpisodios() == quantEpisodios) {
-                filtroPorEp.add(serie);
-            }
-        }
+
         return filtroPorEp;
     }
 
     /**
-     * 
-     * Registra uma audiência para a série especificada.
-     * 
-     * @param serie a série para a qual será registrada a audiência
+     * Registra uma audiência para a mídia especificada e a registra na lista de
+     * mídias assistidas.
+     * Se a mídia estiver na lista de Mídias para Ver, ela é removida.
+     * Se a Mídia não estiver na lista de assistida, ela é adicionada.
+     *
+     * @param m A mídia para a qual será registrada a audiência.
      */
-    public void registrarAudiencia(Serie serie) {
-        serie.registrarAudiencia();
+    public void registrarAudiencia(Midia m) {
+
+        if (listaParaVer.contains(m)) {
+            listaParaVer.remove(m);
+        }
+        if (!listaJaVistas.contains(m)) {
+            listaJaVistas.add(m);
+        }
+        m.registrarAudiencia();
     }
 
     /**
-     * 
      * Verifica se a senha fornecida é igual à senha armazenada neste objeto de
      * cliente.
-     * 
-     * @param s a senha a ser verificada
+     *
+     * @param s A senha a ser verificada.
      * @return true se a senha fornecida é igual à senha armazenada neste objeto de
-     *         cliente, false caso contrário
+     *         cliente, false caso contrário.
      */
     public boolean senhaCorreta(String s) {
         return this.senha.equals(s);
     }
-    // #endregion
 
-    // #region Getters
     /**
-     * 
-     * Retorna uma cópia da lista de séries para assistir.
-     * 
-     * @return uma nova lista contendo as séries para assistir.
+     * Retorna uma cópia da lista de mídias para assistir.
+     *
+     * @return Uma nova lista contendo as mídias para assistir.
      */
-    public List<Serie> getListaParaVer() {
-        List<Serie> copia = new ArrayList<>(listaParaVer);
+    public List<Midia> getListaParaVer() {
+        List<Midia> copia = new ArrayList<>(listaParaVer);
         return copia;
     }
 
     /**
-     * 
-     * Retorna uma cópia da lista de séries ja assistidas.
-     * 
-     * @return uma nova lista contendo as séries assistidas.
+     * Retorna uma cópia da lista de mídias já assistidas.
+     *
+     * @return Uma nova lista contendo as mídias assistidas.
      */
-    public List<Serie> getListaJaVistas() {
-        List<Serie> copia = new ArrayList<>(listaJaVistas);
+    public List<Midia> getListaJaVistas() {
+        List<Midia> copia = new ArrayList<>(listaJaVistas);
         return copia;
     }
 
     /**
-     * 
      * Retorna o login do cliente.
-     * 
-     * @return string com login do usuário.
+     *
+     * @return String com o login do cliente.
      */
     public String getLogin() {
         return this.login;
     }
-
-    // #endregion
 }

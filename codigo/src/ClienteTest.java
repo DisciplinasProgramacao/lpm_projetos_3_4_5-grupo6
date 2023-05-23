@@ -78,7 +78,7 @@ public class ClienteTest {
         cliente.adicionarNaLista(serie1);
         cliente.adicionarNaLista(serie2);
         cliente.adicionarNaLista(serie3);
-        List<Serie> resultado = cliente.filtrarPorGenero("Drama");
+        List<Midia> resultado = cliente.filtrarPorGenero("Drama");
         assertEquals(1, resultado.size());
         assertEquals(serie1, resultado.get(0));
     }
@@ -88,7 +88,7 @@ public class ClienteTest {
         cliente.adicionarNaLista(serie1);
         cliente.adicionarNaLista(serie2);
         cliente.adicionarNaLista(serie3);
-        List<Serie> resultado = cliente.filtrarPorIdioma("Português");
+        List<Midia> resultado = cliente.filtrarPorIdioma("Português");
         assertEquals(1, resultado.size());
         assertEquals(serie2, resultado.get(0));
     }
@@ -98,7 +98,7 @@ public class ClienteTest {
         cliente.adicionarNaLista(serie1);
         cliente.adicionarNaLista(serie2);
         cliente.adicionarNaLista(serie3);
-        List<Serie> resultado = cliente.filtrarPorQtdEpisodios(10);
+        List<Midia> resultado = cliente.filtrarPorQtdEpisodios(10);
         assertEquals(1, resultado.size());
         assertEquals(serie2, resultado.get(0));
     }
