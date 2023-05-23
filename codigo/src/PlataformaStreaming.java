@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
+
 import javax.naming.NameNotFoundException;
 
 import Exceptions.SenhaFracaException;
@@ -23,7 +24,7 @@ public class PlataformaStreaming {
 
     /**
      * Tenta autenticar um usuário com um nome de usuário e senha fornecidos.
-     * 
+     *
      * @param nomeUsuario o nome de usuário do cliente a ser autenticado
      * @param senha       a senha do cliente a ser autenticado
      * @return o objeto Cliente correspondente ao nome de usuário fornecido se a
@@ -48,7 +49,7 @@ public class PlataformaStreaming {
 
     /**
      * Adiciona uma série ao banco de dados da plataforma.
-     * 
+     *
      * @param serie A série a ser adicionada.
      */
     public void adicionarSerie(Serie serie) {
@@ -58,7 +59,7 @@ public class PlataformaStreaming {
 
     /**
      * Adiciona um cliente ao banco de dados da plataforma.
-     * 
+     *
      * @param cliente O cliente a ser adicionado.
      */
     public void adicionarCliente(Cliente cliente) {
@@ -66,9 +67,9 @@ public class PlataformaStreaming {
     }
 
     /**
-     * 
+     *
      * Filtra as séries por gênero.
-     * 
+     *
      * @param genero O gênero a ser utilizado como critério de filtro.
      * @return Uma lista encadeada contendo as séries que correspondem ao gênero
      *         especificado.
@@ -85,9 +86,9 @@ public class PlataformaStreaming {
     }
 
     /**
-     * 
+     *
      * Filtra as séries por idioma.
-     * 
+     *
      * @param idioma O idioma pelo qual as séries devem ser filtradas.
      * @return Uma lista encadeada contendo as séries encontradas.
      */
@@ -103,9 +104,9 @@ public class PlataformaStreaming {
     }
 
     /**
-     * 
+     *
      * Filtra as séries por quantidade de episódios.
-     * 
+     *
      * @param quantEpisodios A quantidade de episódios desejada para a filtragem.
      * @return Uma lista encadeada contendo as séries encontradas.
      */
@@ -121,9 +122,9 @@ public class PlataformaStreaming {
     }
 
     /**
-     * 
+     *
      * Registra a audiência de uma série para o cliente atual.
-     * 
+     *
      * @param serie A série para a qual a audiência será registrada.
      */
     public void registrarAudiencia(Serie serie) {
@@ -141,9 +142,9 @@ public class PlataformaStreaming {
     }
 
     /**
-     * 
+     *
      * Carrega as séries a partir de um arquivo CSV.
-     * 
+     *
      * @throws IOException se ocorrer um erro durante a leitura do arquivo
      */
     public void carregarSeries() throws IOException {
@@ -161,14 +162,13 @@ public class PlataformaStreaming {
             String genero = Util.gerarNovoGenero();
             Serie novaSerie = new Serie(id, nome, idioma, genero, ep, data);
             series.put(id, novaSerie);
-            System.out.println(novaSerie.getNome());
         }
     }
 
     /**
-     * 
+     *
      * Carrega os filmes a partir de um arquivo CSV.
-     * 
+     *
      * @throws IOException se ocorrer um erro durante a leitura do arquivo
      */
     public void carregarFilmes() throws IOException {
@@ -186,14 +186,13 @@ public class PlataformaStreaming {
             String genero = Util.gerarNovoGenero();
             Filme novoFilme = new Filme(id, nome, idioma, genero, duracao, data);
             filmes.put(id, novoFilme);
-            System.out.println(novoFilme.getNome());
         }
     }
 
     /**
-     * 
+     *
      * Carrega os espectadores a partir de um arquivo CSV.
-     * 
+     *
      * @throws IOException              se ocorrer um erro durante a leitura do
      *                                  arquivo
      * @throws IllegalArgumentException se os dados do cliente forem inválidos
@@ -211,8 +210,7 @@ public class PlataformaStreaming {
             String senha = cliente[2];
             Cliente novoCliente = new Cliente(nome, login, senha);
             clientes.put(login, novoCliente);
-            System.out.println(novoCliente.getLogin());
-            
+
         }
     }
 
@@ -244,8 +242,6 @@ public class PlataformaStreaming {
             if (clientes.containsKey(usuario)) {
                 clienteNoMapa = clientes.get(usuario);
                 clienteNoMapa.registrarAudiencia(midiaNoMapa);
-                System.out.print(midiaNoMapa.getNome() + "Audiencia: ");
-                System.out.println(midiaNoMapa.getAudiencia());
             } else {
                 throw new IOException("Usuário não encontrado");
             }
@@ -253,9 +249,9 @@ public class PlataformaStreaming {
     }
 
     /**
-     * 
+     *
      * Busca uma série pelo nome.
-     * 
+     *
      * @param nomeSerie O nome da série a ser buscada.
      * @return A série encontrada ou null caso não seja encontrada.
      */
