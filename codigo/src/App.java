@@ -51,7 +51,7 @@ public class App {
                     e.getMessage());
         }
         try {
-            plataforma.carregarSeries();
+           plataforma.carregarSeries();
             System.out.println("Dados das séries carregados com sucesso");
         } catch (Exception e) {
             System.out.println("ERRO ao carregar os dados das Series: " +
@@ -59,7 +59,7 @@ public class App {
         }
 
         try {
-            plataforma.carregarAudiencia();
+           plataforma.carregarAudiencia();
             System.out.println("Dados de audiência carregados com sucesso");
         } catch (Exception e) {
             System.out.println("ERRO ao carregar os dados de Audiência: " +

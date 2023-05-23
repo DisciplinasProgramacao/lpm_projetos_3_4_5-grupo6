@@ -186,6 +186,7 @@ public class PlataformaStreaming {
             String genero = Util.gerarNovoGenero();
             Filme novoFilme = new Filme(id, nome, idioma, genero, duracao, data);
             filmes.put(id, novoFilme);
+            System.out.println(novoFilme.getNome());
         }
     }
 
@@ -210,6 +211,8 @@ public class PlataformaStreaming {
             String senha = cliente[2];
             Cliente novoCliente = new Cliente(nome, login, senha);
             clientes.put(login, novoCliente);
+            System.out.println(novoCliente.getLogin());
+            
         }
     }
 
@@ -241,6 +244,8 @@ public class PlataformaStreaming {
             if (clientes.containsKey(usuario)) {
                 clienteNoMapa = clientes.get(usuario);
                 clienteNoMapa.registrarAudiencia(midiaNoMapa);
+                System.out.print(midiaNoMapa.getNome() + "Audiencia: ");
+                System.out.println(midiaNoMapa.getAudiencia());
             } else {
                 throw new IOException("Usuário não encontrado");
             }
