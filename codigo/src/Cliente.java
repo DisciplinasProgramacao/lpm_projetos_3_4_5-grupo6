@@ -1,6 +1,7 @@
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 import Exceptions.SenhaFracaException;
 
@@ -86,6 +87,16 @@ public class Cliente {
         }
 
         return filtroPorGenero;
+        Predicate<Midia> pred = new Predicate<Midia>(String busca) {
+
+
+            @Override
+            public boolean test(Midia t) {
+                // TODO Auto-generated method stub
+                throw new UnsupportedOperationException("Unimplemented method 'test'");
+            }.length()>0
+        };
+        listaParaVer.stream().filter(m->m.getGenero().equals(genero));
     }
 
     /**
