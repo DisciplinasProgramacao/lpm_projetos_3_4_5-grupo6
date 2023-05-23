@@ -147,6 +147,7 @@ public class PlataformaStreaming {
      * @throws IOException se ocorrer um erro durante a leitura do arquivo
      */
     public void carregarSeries() throws IOException {
+        // id;nome;data
         String path = "codigo/assets/Series.csv";
         String[] todasSeries = Util.lerArquivo(path).split(System.lineSeparator());
 
@@ -171,6 +172,7 @@ public class PlataformaStreaming {
      * @throws IOException se ocorrer um erro durante a leitura do arquivo
      */
     public void carregarFilmes() throws IOException {
+        // id;nome;data;duracao
         String path = "codigo/assets/Filmes.csv";
         String[] todosFilmes = Util.lerArquivo(path).split(System.lineSeparator());
 
@@ -197,6 +199,7 @@ public class PlataformaStreaming {
      * @throws SenhaFracaException      se a senha do cliente for considerada fraca
      */
     public void carregarEspectadores() throws IOException, IllegalArgumentException, SenhaFracaException {
+        // nome;login;senha
         String path = "codigo/assets/Espectadores.csv";
         String[] todosClientes = Util.lerArquivo(path).split(System.lineSeparator());
 
@@ -210,8 +213,38 @@ public class PlataformaStreaming {
         }
     }
 
-    public void carregarAudiencia() {
+    /**
+     * Carrega os dados de audiência a partir de um arquivo CSV.
+     *
+     * @throws IOException se ocorrer um erro de entrada/saída ao ler o arquivo.
+     */
+    public void carregarAudiencia() throws IOException {
+        // user;?;idMidia
+        String path = "codigo/assets/Audiencia.csv";
+        String[] todosOsDados = Util.lerArquivo(path).split(System.lineSeparator());
 
+        for (String AudienciaCSV : todosOsDados) {
+            String[] audiencia = AudienciaCSV.split(";");
+            String usuario = audiencia[0];
+            String algumaCoisa = audiencia[1];
+            int id = Integer.parseInt(audiencia[2]);
+            Midia midiaNoMapa;
+            Cliente clienteNoMapa;
+            if (series.containsKey(id)) {
+                midiaNoMapa = series.get(id);
+            } else if (filmes.containsKey(id)) {
+                midiaNoMapa = filmes.get(id);
+            } else {
+                throw new IOException("Mídia não encontrada");
+            }
+
+            if (clientes.containsKey(usuario)) {
+                clienteNoMapa = clientes.get(usuario);
+                clienteNoMapa.registrarAudiencia(midiaNoMapa);
+            } else {
+                throw new IOException("Usuário não encontrado");
+            }
+        }
     }
 
     /**
