@@ -133,6 +133,49 @@ public class App {
         }
     }
 
+    private static void fazerLogoutDoSistema() {
+        System.out.println("");
+        System.out.println("==========================");
+        plataforma.logoff();
+        System.out.println("Logout efetuado com sucesso!");
+    }
+
+    private static void adicionarMidiaNaListaParaVer() {
+        System.out.println("");
+        System.out.println("==========================");
+        int opcao = subMenuMidia();
+        switch (opcao) {
+            case 1:
+                adicionarFilmeNaLista();
+                break;
+            case 2:
+                adicionarSerieNaLista();
+                break;
+            default:
+                break;
+        }
+    }
+
+    /**
+     * Metodo para adicionar uma serie especifica na lista de para ver mais tarde
+     */
+    private static void adicionarSerieNaLista() {
+        System.out.println("");
+        System.out.println("==========================");
+        System.out.println("");
+
+    }
+
+    /**
+     * Metodo para adicionar um filme especifica na lista de para ver mais tarde
+     */
+    private static void adicionarFilmeNaLista() {
+        System.out.println("");
+        System.out.println("==========================");
+        System.out.println("");
+
+    }
+
     public static void main(String[] args) throws Exception {
 
         init();
@@ -148,10 +191,14 @@ public class App {
                     efetuarLoginSistema();
                     break;
                 case 3:
-                    System.out.println("Mídia Adicionada na lista de para ver mais tarde!");
+                    adicionarMidiaNaListaParaVer();
+                    System.out.println("Mídia Adicionada na lista para ver mais tarde!");
                     break;
                 case 4:
                     System.out.println("Serie Assistida! Obrigado por usar nossa plataforma");
+                    break;
+                case 5:
+                    fazerLogoutDoSistema();
                     break;
                 default:
                     System.out.println("Selecione uma opção válida");
