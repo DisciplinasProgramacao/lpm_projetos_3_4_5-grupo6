@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class App {
@@ -27,7 +28,7 @@ public class App {
         int opcao = -1;
 
         System.out.println("MENU PRINCIPAL");
-        System.out.println("1 - Carregar dados");
+        System.out.println("1 - Listar filmes e series para o cliente");
         System.out.println("2 - Cadastrar Serie");
         System.out.println("0 - Cancelar");
         System.out.print("Digite sua opção: ");
@@ -35,51 +36,73 @@ public class App {
         return opcao;
     }
 
+    public static void subMenuParaListarMidia() {
+        System.out.println("");
+        System.out.println("==========================");
+        System.out.println("Menu de escolha para mostrar mídias:");
+        System.out.println("1 - FILMES");
+        System.out.println("2 - SÉRIES");
+        System.out.println("0 - Cancelar");
+        System.out.print("Digite sua opção: ");
+        int opcaoSubMenu = Integer.parseInt(sc.nextLine());
+        switch (opcaoSubMenu) {
+            case 1:
+                System.out.println("filmes sendo mostrados");
+                break;
+            case 2:
+                System.out.println("séries sendo mostrados");
+                break;
+            default:
+                System.out.println("Opção inválida");
+                break;
+        }
+    }
+
     /**
-     * Metodo para carregar arquivos do cliente, serie e audiencias
+     * Metodo de inicio para carregar todos os dados
      *
-     * @param SemParametros
-     * @throws Exception
+     * @param Sem Parametros
+     * @return Sem Return
+     * @throws Sem Throws
      */
-    public static void carregarDados() throws Exception {
-        limparConsole();
+    public static void init() {
+        ArrayList<String> log = new ArrayList<>();
+        // fazer um init pra carregar os dados
         try {
             plataforma.carregarEspectadores();
-            System.out.println("Dados dos clientes carregados com sucesso");
+            plataforma.carregarSeries();
+            plataforma.carregarAudiencia();
         } catch (Exception e) {
-            System.out.println("ERRO ao carregar os dados dos Clientes: " +
-                    e.getMessage());
+            log.add(e.getMessage());
         }
-        try {
-           plataforma.carregarSeries();
-            System.out.println("Dados das séries carregados com sucesso");
-        } catch (Exception e) {
-            System.out.println("ERRO ao carregar os dados das Series: " +
-                    e.getMessage());
-        }
+        if (log.size() > 0) {
+            System.out.println("Dados carregados com: " + log.size() + " erros");
 
-        try {
-           plataforma.carregarAudiencia();
-            System.out.println("Dados de audiência carregados com sucesso");
-        } catch (Exception e) {
-            System.out.println("ERRO ao carregar os dados de Audiência: " +
-                    e.getMessage());
+            for (String string : log) {
+                System.out.println(string);
+            }
+        } else {
+            System.out.println("Dados carregados");
+            pause();
         }
     }
 
     public static void main(String[] args) throws Exception {
+
+        init();
+
         int opcao = -1;
         do {
             opcao = menuPrincipal();
             switch (opcao) {
                 case 1:
-                    System.out.println("Dados sendo carregados...");
-                    carregarDados();
+                    subMenuParaListarMidia();
                     break;
                 case 2:
                     System.out.println("Calma jovem, as funcionalidades já já vão chegar");
                     break;
                 default:
+                    System.out.println("Selecione uma opção válida");
                     break;
             }
             pause();

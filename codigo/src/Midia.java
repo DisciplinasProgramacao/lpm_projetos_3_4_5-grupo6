@@ -1,7 +1,8 @@
 
 import java.util.Arrays;
+import java.util.Comparator;
 
-public abstract class Midia {
+public abstract class Midia implements Comparable<Midia>{
 
     // #region Atributos
     static int proximo_id = 100;
@@ -170,5 +171,7 @@ public abstract class Midia {
     public int getId() {
         return this.id;
     }
+
+ 
 
 }

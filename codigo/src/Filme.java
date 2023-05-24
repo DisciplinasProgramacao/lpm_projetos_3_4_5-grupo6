@@ -66,4 +66,10 @@ public class Filme extends Midia {
         return this.duracao;
     }
 
+    @Override
+    public int compareTo(Midia o) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'compareTo'");
+    }
+
 }
