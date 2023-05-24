@@ -1,5 +1,4 @@
 
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,6 +10,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import java.util.LinkedList;
+import java.util.List;
 
 public class PlataformaStreamingTest {
     private PlataformaStreaming plataforma;
@@ -20,19 +20,14 @@ public class PlataformaStreamingTest {
     private Cliente cliente2;
 
     @BeforeEach
-    public void setup() {
+    public void setup() throws IllegalArgumentException, SenhaFracaException {
         plataforma = new PlataformaStreaming("Minha Plataforma");
 
         serie1 = new Serie("Série 1", "Inglês", "Drama", 5);
         serie2 = new Serie("Série 2", "Português", "Comédia", 10);
 
-        try {
-            cliente1 = new Cliente("John Doe", "johndoe", "password123");
-            cliente2 = new Cliente("Jane Doe", "janedoe", "password123");
-        } catch (IllegalArgumentException | SenhaFracaException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        cliente1 = new Cliente("John Doe", "johndoe", "password123");
+        cliente2 = new Cliente("Jane Doe", "janedoe", "password123");
 
         plataforma.adicionarSerie(serie1);
         plataforma.adicionarSerie(serie2);
@@ -63,9 +58,9 @@ public class PlataformaStreamingTest {
 
     @Test
     public void testAdicionarSerie() {
-        Serie serie3 = new Serie("Breaking Bad", "Inglês", "Drama", 5);
+        Midia serie3 = new Serie("Breaking Bad", "Inglês", "Drama", 5);
         plataforma.adicionarSerie(serie3);
-        Serie serieEncontrada = plataforma.buscarSerie("Breaking Bad");
+        Midia serieEncontrada = plataforma.buscar("Breaking Bad");
         assertEquals(serie3.getNome(), serieEncontrada.getNome());
     }
 
@@ -90,21 +85,21 @@ public class PlataformaStreamingTest {
 
     @Test
     public void testFiltrarPorGenero() {
-        LinkedList<Serie> seriesFiltradas = plataforma.filtrarPorGenero("Drama");
+        List<Midia> seriesFiltradas = plataforma.filtrarPorGenero("Drama");
         assertEquals(1, seriesFiltradas.size());
         assertTrue(seriesFiltradas.contains(serie1));
     }
 
     @Test
     public void testFiltrarPorIdioma() {
-        LinkedList<Serie> seriesFiltradas = plataforma.filtrarPorIdioma("Inglês");
+        List<Midia> seriesFiltradas = plataforma.filtrarPorIdioma("Inglês");
         assertEquals(1, seriesFiltradas.size());
 
     }
 
     @Test
     public void testFiltrarPorQtdEpisodios() {
-        LinkedList<Serie> seriesFiltradas = plataforma.filtrarPorQtdEpisodios(10);
+        List<Midia> seriesFiltradas = plataforma.filtrarPorQtdEpisodios(10);
         assertEquals(1, seriesFiltradas.size());
         assertTrue(seriesFiltradas.contains(serie2));
     }

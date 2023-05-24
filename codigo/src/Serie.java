@@ -64,10 +64,6 @@ public class Serie extends Midia {
         return quantidadeEpisodios;
     }
 
-    @Override
-    public int compareTo(Midia o) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'compareTo'");
-    }
+
 
 }

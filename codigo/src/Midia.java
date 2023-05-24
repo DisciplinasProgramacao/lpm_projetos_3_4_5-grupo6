@@ -1,8 +1,8 @@
 
 import java.util.Arrays;
-import java.util.Comparator;
 
-public abstract class Midia implements Comparable<Midia>{
+
+public abstract class Midia {
 
     // #region Atributos
     static int proximo_id = 100;

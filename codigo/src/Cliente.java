@@ -1,7 +1,6 @@
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 
 import Exceptions.SenhaFracaException;
 
@@ -72,31 +71,9 @@ public class Cliente {
      *         especificado.
      */
     public List<Midia> filtrarPorGenero(String genero) {
-        List<Midia> filtroPorGenero = new ArrayList<>();
+        FiltroGenero filtro = new FiltroGenero();
+        return filtro.comparar(listaParaVer, genero);
 
-        for (Midia m : listaParaVer) {
-            if (m.getGenero().equals(genero)) {
-                filtroPorGenero.add(m);
-            }
-        }
-
-        for (Midia m : listaJaVistas) {
-            if (m.getGenero().equals(genero)) {
-                filtroPorGenero.add(m);
-            }
-        }
-
-        return filtroPorGenero;
-        Predicate<Midia> pred = new Predicate<Midia>(String busca) {
-
-
-            @Override
-            public boolean test(Midia t) {
-                // TODO Auto-generated method stub
-                throw new UnsupportedOperationException("Unimplemented method 'test'");
-            }.length()>0
-        };
-        listaParaVer.stream().filter(m->m.getGenero().equals(genero));
     }
 
     /**
@@ -107,21 +84,8 @@ public class Cliente {
      *         especificado.
      */
     public List<Midia> filtrarPorIdioma(String idioma) {
-        List<Midia> filtroPorIdioma = new ArrayList<>();
-
-        for (Midia m : listaParaVer) {
-            if (m.getIdioma().equals(idioma)) {
-                filtroPorIdioma.add(m);
-            }
-        }
-
-        for (Midia m : listaJaVistas) {
-            if (m.getIdioma().equals(idioma)) {
-                filtroPorIdioma.add(m);
-            }
-        }
-
-        return filtroPorIdioma;
+        FiltroIdioma filtro = new FiltroIdioma();
+        return filtro.comparar(listaParaVer, idioma);
     }
 
     /**
@@ -132,28 +96,8 @@ public class Cliente {
      *         episódios especificada.
      */
     public List<Midia> filtrarPorQtdEpisodios(int quantEpisodios) {
-        List<Midia> filtroPorEp = new ArrayList<>();
-        List<Serie> listaSeries = new ArrayList<>();
-
-        for (Midia m : listaParaVer) {
-            if (m instanceof Serie) {
-                listaSeries.add((Serie) m);
-            }
-        }
-
-        for (Midia m : listaJaVistas) {
-            if (m instanceof Serie) {
-                listaSeries.add((Serie) m);
-            }
-        }
-
-        for (Serie serie : listaSeries) {
-            if (serie.getQuantidadeEpisodios() == quantEpisodios) {
-                filtroPorEp.add(serie);
-            }
-        }
-
-        return filtroPorEp;
+        FiltroTotalEp filtro = new FiltroTotalEp();
+        return filtro.comparar(listaParaVer, Integer.toString(quantEpisodios));
     }
 
     /**

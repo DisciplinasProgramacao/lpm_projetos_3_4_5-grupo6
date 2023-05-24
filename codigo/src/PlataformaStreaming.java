@@ -1,6 +1,7 @@
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.List;
 
 import javax.naming.NameNotFoundException;
 
@@ -9,17 +10,25 @@ import Exceptions.SenhaIncorretaException;
 
 public class PlataformaStreaming {
     private String nome;
-    private HashMap<Integer, Serie> series;
-    private HashMap<Integer, Filme> filmes;
+    private HashMap<Integer, Midia> midias;
     private HashMap<String, Cliente> clientes;
     private Cliente clienteAtual;
 
-    public PlataformaStreaming(String nome) {
+    /**
+     * Cria uma nova instância da plataforma de streaming.
+     *
+     * @param nome O nome da plataforma.
+     * @throws IllegalArgumentException se o nome for nulo ou vazio.
+     */
+    public PlataformaStreaming(String nome) throws IllegalArgumentException {
+        if (nome == null || nome.isEmpty()) {
+            throw new IllegalArgumentException("O nome da plataforma não pode ser nulo ou vazio.");
+        }
+
         this.nome = nome;
-        series = new HashMap<>();
+        midias = new HashMap<>();
         clientes = new HashMap<>();
     }
-
     // #region Métodos
 
     /**
@@ -48,13 +57,13 @@ public class PlataformaStreaming {
     }
 
     /**
-     * Adiciona uma série ao banco de dados da plataforma.
+     * Adiciona uma mídia ao banco de dados da plataforma.
      *
-     * @param serie A série a ser adicionada.
+     * @param novMidia A série a ser adicionada.
      */
-    public void adicionarSerie(Serie serie) {
-        if (!series.containsValue(serie))
-            this.series.put(serie.getId(), serie);
+    public void adicionarSerie(Midia novMidia) {
+        if (!midias.containsValue(novMidia))
+            this.midias.put(novMidia.getId(), novMidia);
     }
 
     /**
@@ -67,58 +76,43 @@ public class PlataformaStreaming {
     }
 
     /**
+     * Filtra as mídias por gênero.
      *
-     * Filtra as séries por gênero.
-     *
-     * @param genero O gênero a ser utilizado como critério de filtro.
-     * @return Uma lista encadeada contendo as séries que correspondem ao gênero
+     * @param genero O gênero das mídias a serem filtradas.
+     * @return Uma lista contendo todas as mídias que pertencem ao gênero
      *         especificado.
      */
-    public LinkedList<Serie> filtrarPorGenero(String genero) {
-        LinkedList<Serie> seriesEncontradas = new LinkedList<>();
-        for (HashMap.Entry<Integer, Serie> sr : this.series.entrySet()) {
-            Serie serie = sr.getValue();
-            if (serie.getGenero().equals(genero)) {
-                seriesEncontradas.add(serie);
-            }
-        }
-        return seriesEncontradas;
+    public List<Midia> filtrarPorGenero(String genero) {
+        FiltroGenero filtro = new FiltroGenero();
+        List<Midia> arrayList = new ArrayList<>(midias.values());
+        return filtro.comparar(arrayList, genero);
+
     }
 
     /**
+     * Filtra as mídias por idioma.
      *
-     * Filtra as séries por idioma.
-     *
-     * @param idioma O idioma pelo qual as séries devem ser filtradas.
-     * @return Uma lista encadeada contendo as séries encontradas.
+     * @param idioma O idioma das mídias a serem filtradas.
+     * @return Uma lista contendo todas as mídias que pertencem ao idioma
+     *         especificado.
      */
-    public LinkedList<Serie> filtrarPorIdioma(String idioma) {
-        LinkedList<Serie> seriesEncontradas = new LinkedList<>();
-        for (HashMap.Entry<Integer, Serie> sr : this.series.entrySet()) {
-            Serie serie = sr.getValue();
-            if (serie.getIdioma().equals(idioma)) {
-                seriesEncontradas.add(serie);
-            }
-        }
-        return seriesEncontradas;
+    public List<Midia> filtrarPorIdioma(String idioma) {
+        FiltroIdioma filtro = new FiltroIdioma();
+        List<Midia> arrayList = new ArrayList<>(midias.values());
+        return filtro.comparar(arrayList, idioma);
     }
 
     /**
+     * Filtra somente as séries por quantidade de episódios.
      *
-     * Filtra as séries por quantidade de episódios.
-     *
-     * @param quantEpisodios A quantidade de episódios desejada para a filtragem.
-     * @return Uma lista encadeada contendo as séries encontradas.
+     * @param quantEpisodios A quantidade de episódios das séries a serem filtradas.
+     * @return Uma lista contendo todas as séries que contém a quantidade de
+     *         episódios especificada.
      */
-    public LinkedList<Serie> filtrarPorQtdEpisodios(int quantEpisodios) {
-        LinkedList<Serie> seriesEncontradas = new LinkedList<>();
-        for (HashMap.Entry<Integer, Serie> sr : this.series.entrySet()) {
-            Serie serie = sr.getValue();
-            if (serie.getQuantidadeEpisodios() == quantEpisodios) {
-                seriesEncontradas.add(serie);
-            }
-        }
-        return seriesEncontradas;
+    public List<Midia> filtrarPorQtdEpisodios(int quantEpisodios) {
+        FiltroTotalEp filtro = new FiltroTotalEp();
+        List<Midia> arrayList = new ArrayList<>(midias.values());
+        return filtro.comparar(arrayList, Integer.toString(quantEpisodios));
     }
 
     /**
@@ -160,8 +154,8 @@ public class PlataformaStreaming {
             String idioma = Util.gerarNovoIdioma();
             int ep = Util.gerarTotalEp();
             String genero = Util.gerarNovoGenero();
-            Serie novaSerie = new Serie(id, nome, idioma, genero, ep, data);
-            series.put(id, novaSerie);
+            Midia novaSerie = new Serie(id, nome, idioma, genero, ep, data);
+            midias.put(id, novaSerie);
         }
     }
 
@@ -184,8 +178,8 @@ public class PlataformaStreaming {
             int duracao = Integer.parseInt(filme[3]);
             String idioma = Util.gerarNovoIdioma();
             String genero = Util.gerarNovoGenero();
-            Filme novoFilme = new Filme(id, nome, idioma, genero, duracao, data);
-            filmes.put(id, novoFilme);
+            Midia novoFilme = new Filme(id, nome, idioma, genero, duracao, data);
+            midias.put(id, novoFilme);
         }
     }
 
@@ -231,10 +225,9 @@ public class PlataformaStreaming {
             int id = Integer.parseInt(audiencia[2]);
             Midia midiaNoMapa;
             Cliente clienteNoMapa;
-            if (series.containsKey(id)) {
-                midiaNoMapa = series.get(id);
-            } else if (filmes.containsKey(id)) {
-                midiaNoMapa = filmes.get(id);
+
+            if (midias.containsKey(id)) {
+                midiaNoMapa = midias.get(id);
             } else {
                 throw new IOException("Mídia não encontrada");
             }
@@ -249,17 +242,16 @@ public class PlataformaStreaming {
     }
 
     /**
+     * Busca uma mídia pelo nome.
      *
-     * Busca uma série pelo nome.
-     *
-     * @param nomeSerie O nome da série a ser buscada.
+     * @param referencia O nome da série a ser buscada.
      * @return A série encontrada ou null caso não seja encontrada.
      */
-    public Serie buscarSerie(String nomeSerie) {
-        for (HashMap.Entry<Integer, Serie> sr : this.series.entrySet()) {
-            Serie serie = sr.getValue();
-            if (serie.getNome().equals(nomeSerie)) {
-                return serie;
+    public Midia buscar(String referencia) {
+        for (HashMap.Entry<Integer, Midia> entry : this.midias.entrySet()) {
+            Midia midia = entry.getValue();
+            if (midia.getNome().equals(referencia)) {
+                return midia;
             }
         }
         return null;
