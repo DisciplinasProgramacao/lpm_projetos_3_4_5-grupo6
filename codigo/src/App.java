@@ -157,7 +157,7 @@ public class App {
     }
 
     /**
-     * Metodo para adicionar uma serie especifica na lista de para ver mais tarde
+     * Metodo para adicionar uma serie especifica na lista para ver mais tarde
      */
     private static void adicionarSerieNaLista() {
         System.out.println("");
@@ -174,6 +174,12 @@ public class App {
         System.out.println("==========================");
         System.out.println("");
 
+    }
+
+    private static void registrarAudienciaDaSerie() {
+        Serie novaSerie = null;
+        plataforma.registrarAudiencia(novaSerie);
+        System.out.println("Serie assistida com sucesso! Obrigado por escolher nossa plataforma!");
     }
 
     public static void main(String[] args) throws Exception {
@@ -195,7 +201,7 @@ public class App {
                     System.out.println("Mídia Adicionada na lista para ver mais tarde!");
                     break;
                 case 4:
-                    System.out.println("Serie Assistida! Obrigado por usar nossa plataforma");
+                    registrarAudienciaDaSerie();
                     break;
                 case 5:
                     fazerLogoutDoSistema();
@@ -208,4 +214,5 @@ public class App {
             limparConsole();
         } while (opcao != 0);
     }
+
 }
