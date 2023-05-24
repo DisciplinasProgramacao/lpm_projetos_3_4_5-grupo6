@@ -2,14 +2,12 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import javax.naming.NameNotFoundException;
 import Exceptions.SenhaFracaException;
 import Exceptions.SenhaIncorretaException;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
-import java.util.LinkedList;
 import java.util.List;
 
 public class PlataformaStreamingTest {

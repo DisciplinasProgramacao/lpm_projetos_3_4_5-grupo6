@@ -10,6 +10,7 @@ public class Cliente {
     private String senha;
     private List<Midia> listaParaVer;
     private List<Midia> listaJaVistas;
+    private ClienteDAO DAO = new ClienteDAO();
 
     /**
      * Construtor da classe Cliente.
