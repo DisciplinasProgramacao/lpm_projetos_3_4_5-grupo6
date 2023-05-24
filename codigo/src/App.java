@@ -1,6 +1,10 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.naming.NameNotFoundException;
+
+import Exceptions.SenhaIncorretaException;
+
 public class App {
 
     static Scanner sc = new Scanner(System.in);
@@ -29,14 +33,23 @@ public class App {
 
         System.out.println("MENU PRINCIPAL");
         System.out.println("1 - Listar filmes e series para o cliente");
-        System.out.println("2 - Cadastrar Serie");
+        System.out.println("2 - Login na plataforma");
+        System.out.println("3 - Adicionar mídia na lista para ver");
+        System.out.println("4 - Assistir uma série");
         System.out.println("0 - Cancelar");
         System.out.print("Digite sua opção: ");
         opcao = Integer.parseInt(sc.nextLine());
         return opcao;
     }
 
-    public static void subMenuParaListarMidia() {
+    /**
+     * Metodo para escolher o tipo de midia
+     *
+     * @param sem parametro
+     * @return Opcao escolhida
+     * @throws sem throws
+     */
+    public static int subMenuMidia() {
         System.out.println("");
         System.out.println("==========================");
         System.out.println("Menu de escolha para mostrar mídias:");
@@ -44,13 +57,25 @@ public class App {
         System.out.println("2 - SÉRIES");
         System.out.println("0 - Cancelar");
         System.out.print("Digite sua opção: ");
-        int opcaoSubMenu = Integer.parseInt(sc.nextLine());
+        int opcao = Integer.parseInt(sc.nextLine());
+        return opcao;
+    }
+
+    /**
+     * Metodo para mostrar a lista de filmes ou series
+     *
+     * @throws sem throws
+     * @param Sem Param
+     * @return Sem return
+     */
+    public static void subMenuParaListarMidia() {
+        int opcaoSubMenu = subMenuMidia();
         switch (opcaoSubMenu) {
             case 1:
-                System.out.println("filmes sendo mostrados");
+                System.out.println("FILMES sendo exibidos");
                 break;
             case 2:
-                System.out.println("séries sendo mostrados");
+                System.out.println("SÉRIES sendo exibidas");
                 break;
             default:
                 System.out.println("Opção inválida");
@@ -87,6 +112,27 @@ public class App {
         }
     }
 
+    private static void efetuarLoginSistema() {
+        String nomeUsuario = "";
+        String senha = "";
+        System.out.println("");
+        System.out.println("==========================");
+        System.out.println("Efetuar Login:");
+        System.out.println("");
+        System.out.println("Digite o nome de Usuario");
+        nomeUsuario = sc.nextLine();
+        System.out.println("");
+        System.out.println("Digite a senha:");
+        senha = sc.nextLine();
+        try {
+            plataforma.login(nomeUsuario, senha);
+        } catch (NameNotFoundException e) {
+            System.out.println("Faça o login com um nome de usuario correto. " + e.getMessage());
+        } catch (SenhaIncorretaException e) {
+            System.out.println("Faça o login com uma senha correta. " + e.getMessage());
+        }
+    }
+
     public static void main(String[] args) throws Exception {
 
         init();
@@ -99,7 +145,13 @@ public class App {
                     subMenuParaListarMidia();
                     break;
                 case 2:
-                    System.out.println("Calma jovem, as funcionalidades já já vão chegar");
+                    efetuarLoginSistema();
+                    break;
+                case 3:
+                    System.out.println("Mídia Adicionada na lista de para ver mais tarde!");
+                    break;
+                case 4:
+                    System.out.println("Serie Assistida! Obrigado por usar nossa plataforma");
                     break;
                 default:
                     System.out.println("Selecione uma opção válida");
