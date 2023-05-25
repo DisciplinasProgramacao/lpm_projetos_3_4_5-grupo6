@@ -160,4 +160,7 @@ public class Cliente {
     public String getLogin() {
         return this.login;
     }
+
+    public void salvar() {
+    }
 }

@@ -75,6 +75,13 @@ public class PlataformaStreaming {
         this.clientes.put(cliente.getLogin(), cliente);
     }
 
+    public void cadastrarCliente(String nome, String login, String senha)
+            throws IllegalArgumentException, SenhaFracaException {
+        Cliente cliente = new Cliente(nome, login, senha);
+        cliente.salvar();
+        clientes.put(login, cliente);
+    }
+
     /**
      * Filtra as mídias por gênero.
      *
@@ -157,6 +164,10 @@ public class PlataformaStreaming {
             Midia novaSerie = new Serie(id, nome, idioma, genero, ep, data);
             midias.put(id, novaSerie);
         }
+    }
+
+    public void cadastrarSerie(String id, String nome, String dataLancamento) {
+        
     }
 
     /**
