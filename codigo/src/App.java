@@ -101,41 +101,33 @@ public class App {
         }
     }
 
-    private static void efetuarLoginSistema() throws NameNotFoundException, SenhaIncorretaException {
-        String nomeUsuario = "";
-        String senha = "";
-        System.out.println("");
-        System.out.println("==========================");
-        System.out.println("Efetuar Login:");
-        System.out.println("");
-        System.out.println("Digite o nome de Usuario");
-        nomeUsuario = sc.nextLine();
-        System.out.println("");
-        System.out.println("Digite a senha:");
-        senha = sc.nextLine();
-        try {
-            plataforma.login(nomeUsuario, senha);
-        } catch (NameNotFoundException e) {
-            System.out.println(e.getMessage());
-            System.out.println("Efetue o login novamente por favor:");
+    private static void efetuarLoginSistema() {
+        boolean login = false;
+        do {
+            String nomeUsuario = "";
+            String senha = "";
             System.out.println("");
-            System.out.println("Digite o nome de Usuario");
+            System.out.println("==========================");
+            System.out.println("Efetuar Login:");
+            System.out.println("");
+            System.out.println("Digite o nome de Usuário");
             nomeUsuario = sc.nextLine();
             System.out.println("");
             System.out.println("Digite a senha:");
             senha = sc.nextLine();
-            plataforma.login(nomeUsuario, senha);
-        } catch (SenhaIncorretaException e) {
-            System.out.println(e.getMessage());
-            System.out.println("Efetue o login novamente por favor:");
-            System.out.println("");
-            System.out.println("Digite o nome de Usuario");
-            nomeUsuario = sc.nextLine();
-            System.out.println("");
-            System.out.println("Digite a senha:");
-            senha = sc.nextLine();
-            plataforma.login(nomeUsuario, senha);
-        }
+            try {
+                plataforma.login(nomeUsuario, senha);
+                login = true;
+            } catch (NameNotFoundException e) {
+                System.out.println(e.getMessage());
+            } catch (SenhaIncorretaException e) {
+                System.out.println(e.getMessage());
+            }
+            if (!login) {
+                pause();
+                limparConsole();
+            }
+        } while (!login);
     }
 
     private static void fazerLogoutDoSistema() {
@@ -167,6 +159,19 @@ public class App {
     public static void main(String[] args) throws Exception {
 
         init();
+
+        // LISTA DO QUE O APP FAZ DA VIDA
+        /*
+         * 1. CARREGAR DADOS OK
+         * 2. FAZER LOGIN (FAZER O WHILE)
+         * 3. EXIBIR MIDIA OK
+         * 4. FILTRAR GENERO, IDIOMA, QTD EPS
+         * 5. REGISTRAR ADUICIENCIA OK
+         * 6. FAZER UMA AVALIACAO
+         * 7. FAZER UM COMENTARIO
+         * 8. SALVAR DADOS
+         * 9. CADASTRAR (FAZER SWITCH PARA clientes, filmes e séries)
+         */
 
         int opcao = -1;
         do {
