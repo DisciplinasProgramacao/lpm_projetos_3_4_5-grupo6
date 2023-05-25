@@ -43,25 +43,6 @@ public class App {
     }
 
     /**
-     * Metodo para escolher o tipo de midia
-     *
-     * @param sem parametro
-     * @return Opcao escolhida
-     * @throws sem throws
-     */
-    public static int subMenuMidia() {
-        System.out.println("");
-        System.out.println("==========================");
-        System.out.println("Menu de escolha para mostrar mídias:");
-        System.out.println("1 - FILMES");
-        System.out.println("2 - SÉRIES");
-        System.out.println("0 - Cancelar");
-        System.out.print("Digite sua opção: ");
-        int opcao = Integer.parseInt(sc.nextLine());
-        return opcao;
-    }
-
-    /**
      * Metodo para mostrar a lista de filmes ou series
      *
      * @throws sem throws
@@ -148,6 +129,7 @@ public class App {
     }
 
     private static void registrarAudienciaDaSerie() {
+        // NAO DEIXAR O CLIENTE ATUAL ASSISTIR 2X
         Midia novaSerie = null;
         System.out.println("Qual nome da midia deseja assistir?");
         String nome = sc.nextLine();
@@ -163,14 +145,14 @@ public class App {
         // LISTA DO QUE O APP FAZ DA VIDA
         /*
          * 1. CARREGAR DADOS OK
-         * 2. FAZER LOGIN (FAZER O WHILE)
-         * 3. EXIBIR MIDIA OK
+         * 2. FAZER LOGIN OK
+         * 3. LISTAR MIDIA OK
          * 4. FILTRAR GENERO, IDIOMA, QTD EPS
          * 5. REGISTRAR ADUICIENCIA OK
          * 6. FAZER UMA AVALIACAO
          * 7. FAZER UM COMENTARIO
          * 8. SALVAR DADOS
-         * 9. CADASTRAR (FAZER SWITCH PARA clientes, filmes e séries)
+         * 9. CADASTRAR (FAZER T)
          */
 
         int opcao = -1;
