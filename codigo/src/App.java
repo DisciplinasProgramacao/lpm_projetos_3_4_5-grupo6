@@ -68,19 +68,8 @@ public class App {
      * @param Sem Param
      * @return Sem return
      */
-    public static void subMenuParaListarMidia() {
-        int opcaoSubMenu = subMenuMidia();
-        switch (opcaoSubMenu) {
-            case 1:
-                System.out.println("FILMES sendo exibidos");
-                break;
-            case 2:
-                System.out.println("SÉRIES sendo exibidas");
-                break;
-            default:
-                System.out.println("Opção inválida");
-                break;
-        }
+    public static void listarMidia() {
+        plataforma.listarMidia();
     }
 
     /**
@@ -112,7 +101,7 @@ public class App {
         }
     }
 
-    private static void efetuarLoginSistema() {
+    private static void efetuarLoginSistema() throws NameNotFoundException, SenhaIncorretaException {
         String nomeUsuario = "";
         String senha = "";
         System.out.println("");
@@ -127,9 +116,25 @@ public class App {
         try {
             plataforma.login(nomeUsuario, senha);
         } catch (NameNotFoundException e) {
-            System.out.println("Faça o login com um nome de usuario correto. " + e.getMessage());
+            System.out.println(e.getMessage());
+            System.out.println("Efetue o login novamente por favor:");
+            System.out.println("");
+            System.out.println("Digite o nome de Usuario");
+            nomeUsuario = sc.nextLine();
+            System.out.println("");
+            System.out.println("Digite a senha:");
+            senha = sc.nextLine();
+            plataforma.login(nomeUsuario, senha);
         } catch (SenhaIncorretaException e) {
-            System.out.println("Faça o login com uma senha correta. " + e.getMessage());
+            System.out.println(e.getMessage());
+            System.out.println("Efetue o login novamente por favor:");
+            System.out.println("");
+            System.out.println("Digite o nome de Usuario");
+            nomeUsuario = sc.nextLine();
+            System.out.println("");
+            System.out.println("Digite a senha:");
+            senha = sc.nextLine();
+            plataforma.login(nomeUsuario, senha);
         }
     }
 
@@ -141,43 +146,20 @@ public class App {
     }
 
     private static void adicionarMidiaNaListaParaVer() {
+        Midia novaMidia = null;
         System.out.println("");
         System.out.println("==========================");
-        int opcao = subMenuMidia();
-        switch (opcao) {
-            case 1:
-                adicionarFilmeNaLista();
-                break;
-            case 2:
-                adicionarSerieNaLista();
-                break;
-            default:
-                break;
-        }
-    }
-
-    /**
-     * Metodo para adicionar uma serie especifica na lista para ver mais tarde
-     */
-    private static void adicionarSerieNaLista() {
-        System.out.println("");
-        System.out.println("==========================");
-        System.out.println("");
-
-    }
-
-    /**
-     * Metodo para adicionar um filme especifica na lista de para ver mais tarde
-     */
-    private static void adicionarFilmeNaLista() {
-        System.out.println("");
-        System.out.println("==========================");
-        System.out.println("");
-
+        System.out.println("Qual nome da midia deseja adicionar na lista: ");
+        String nome = sc.nextLine();
+        novaMidia = plataforma.buscar(nome);
+        plataforma.adicionarNaListaParaVer(novaMidia);
     }
 
     private static void registrarAudienciaDaSerie() {
-        Serie novaSerie = null;
+        Midia novaSerie = null;
+        System.out.println("Qual nome da midia deseja assistir?");
+        String nome = sc.nextLine();
+        novaSerie = plataforma.buscar(nome);
         plataforma.registrarAudiencia(novaSerie);
         System.out.println("Serie assistida com sucesso! Obrigado por escolher nossa plataforma!");
     }
@@ -191,14 +173,13 @@ public class App {
             opcao = menuPrincipal();
             switch (opcao) {
                 case 1:
-                    subMenuParaListarMidia();
+                    listarMidia();
                     break;
                 case 2:
                     efetuarLoginSistema();
                     break;
                 case 3:
                     adicionarMidiaNaListaParaVer();
-                    System.out.println("Mídia Adicionada na lista para ver mais tarde!");
                     break;
                 case 4:
                     registrarAudienciaDaSerie();

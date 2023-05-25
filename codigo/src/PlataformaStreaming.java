@@ -117,13 +117,13 @@ public class PlataformaStreaming {
 
     /**
      *
-     * Registra a audiência de uma série para o cliente atual.
+     * Registra a audiência de uma midia para o cliente atual.
      *
-     * @param serie A série para a qual a audiência será registrada.
+     * @param novaMidia A midia para a qual a audiência será registrada.
      */
-    public void registrarAudiencia(Serie serie) {
+    public void registrarAudiencia(Midia novaMidia) {
         if (this.clienteAtual != null) {
-            this.clienteAtual.registrarAudiencia(serie);
+            this.clienteAtual.registrarAudiencia(novaMidia);
         }
     }
 
@@ -255,5 +255,20 @@ public class PlataformaStreaming {
             }
         }
         return null;
+    }
+
+    /**
+     *
+     * Adiciona uma mídia à lista do cliente para ser vista posteriormente.
+     *
+     * @param novaMidia A nova mídia a ser adicionada.
+     */
+    public void adicionarNaListaParaVer(Midia novaMidia) {
+        clienteAtual.adicionarNaLista(novaMidia);
+    }
+
+    public List<Midia> listarMidia() {
+        List<Midia> copia = new ArrayList<>(midias.values());
+        return copia;
     }
 }
