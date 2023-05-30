@@ -93,7 +93,6 @@ public class PlataformaStreaming {
         FiltroGenero filtro = new FiltroGenero();
         List<Midia> arrayList = new ArrayList<>(midias.values());
         return filtro.comparar(arrayList, genero);
-
     }
 
     /**
@@ -167,7 +166,7 @@ public class PlataformaStreaming {
     }
 
     public void cadastrarSerie(String id, String nome, String dataLancamento) {
-        
+
     }
 
     /**
