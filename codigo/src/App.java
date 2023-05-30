@@ -176,10 +176,9 @@ public class App {
 
     public static void filtrarPorQuantidadeEpisodios() {
         List<Midia> arrayList = new ArrayList<>();
-        System.out.println("Digite o idioma:");
-        int qtd = sc.nextInt();
+        System.out.println("Digite o número de episódios:");
+        int qtd = Integer.parseInt(sc.nextLine());
         arrayList = plataforma.filtrarPorQtdEpisodios(qtd);
-        limparConsole();
         System.out.println(arrayList);
     }
 
@@ -209,6 +208,7 @@ public class App {
         System.out.println("1 - Gênero");
         System.out.println("2 - Idioma");
         System.out.println("3 - Quantidade de episódios");
+        opcao = Integer.parseInt(sc.nextLine());
         return opcao;
     }
 

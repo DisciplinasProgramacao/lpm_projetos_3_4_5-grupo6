@@ -76,7 +76,7 @@ public class Util {
     }
 
     public static int gerarTotalEp() {
-        int numeroAleatorio = random.nextInt(1, 68);
+        int numeroAleatorio = random.nextInt(1, 2);
         return numeroAleatorio;
 
     }
