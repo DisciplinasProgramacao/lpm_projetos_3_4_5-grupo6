@@ -87,6 +87,7 @@ public class App {
         try {
             plataforma.carregarEspectadores();
             plataforma.carregarSeries();
+            plataforma.carregarFilmes();
             plataforma.carregarAudiencia();
         } catch (Exception e) {
             log.add(e.getMessage());
@@ -157,11 +158,51 @@ public class App {
         novaSerie = plataforma.buscar(nome);
         try {
             plataforma.registrarAudiencia(novaSerie);
+
         } catch (InvalidParameterSpecException e) {
             System.out.println(e.getMessage());
         }
         System.out.println("Serie assistida com sucesso! Obrigado por escolher nossa plataforma!");
+        subMenuAvaliacao(novaSerie);
     }
+
+    public static void subMenuAvaliacao(Midia novaSerie) {
+        String userId = plataforma.getCurrentUserId();
+        int midiaId = novaSerie.getId();
+
+        System.out.println("Deseja realizar uma avaliação");
+        System.out.println("1 - Sim");
+        System.out.println("2 - Não");
+        int res = Integer.parseInt(sc.nextLine());
+
+        switch (res) {
+            case 1:
+                int avalacao = -1;
+                do {
+                    System.out.println("Qual a nota entre 1 a 5?");
+                    avalacao = Integer.parseInt(sc.nextLine());
+                } while (avalacao < 1 || avalacao > 5);
+                try {
+                    plataforma.registrarAvaliacao(userId, midiaId, avalacao);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+
+                break;
+            case 2:
+                try {
+                    plataforma.registrarAvaliacao(userId, midiaId, 0);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+
+                break;
+            default:
+                System.out.println("Escolha uma opção valida!");
+                break;
+        }
+
+    };
 
     public static void filtrarPorGenero() {
         List<Midia> arrayList = new ArrayList<>();

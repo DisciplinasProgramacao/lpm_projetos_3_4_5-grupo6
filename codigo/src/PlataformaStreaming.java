@@ -223,7 +223,8 @@ public class PlataformaStreaming {
     /**
      * Carrega os dados de audiência a partir de um arquivo CSV.
      *
-     * @throws IOException se ocorrer um erro de entrada/saída ao ler o arquivo.
+     * @throws IOException                   se ocorrer um erro de entrada/saída ao
+     *                                       ler o arquivo.
      * @throws InvalidParameterSpecException
      */
     public void carregarAudiencia() throws IOException, InvalidParameterSpecException {
@@ -271,6 +272,29 @@ public class PlataformaStreaming {
     }
 
     /**
+     * Registra uma avaliação de um usuário para uma determinada mídia.
+     *
+     * @param userLogin O login do usuário que está fazendo a avaliação.
+     * @param midiaId   O ID da mídia que está sendo avaliada.
+     * @param avaliacao A avaliação atribuída à mídia.
+     * @throws IOException Se ocorrer um erro durante o processo de registro da
+     *                     avaliação.
+     */
+    public void registrarAvaliacao(String userLogin, int midiaId, int avaliacao) throws IOException {
+        String path_avaliacoes = "codigo/assets/Avaliacoes.csv";
+        StringBuilder auxCSV = new StringBuilder();
+       // auxCSV.append(System.lineSeparator());
+        auxCSV.append(userLogin);
+        auxCSV.append(";");
+        auxCSV.append(midiaId);
+        auxCSV.append(";");
+        auxCSV.append(avaliacao);
+
+        DAO dao = new DAO();
+        dao.salvar(path_avaliacoes, auxCSV.toString());
+    }
+
+    /**
      *
      * Adiciona uma mídia à lista do cliente para ser vista posteriormente.
      *
@@ -284,4 +308,15 @@ public class PlataformaStreaming {
         List<Midia> copia = new ArrayList<>(midias.values());
         return copia;
     }
+
+    public String getCurrentUserId() {
+        if(clienteAtual == null){
+            return "Ada2"; //para fins de teste
+        }else{
+            return this.clienteAtual.getLogin();
+        }
+        
+    }
+
+  
 }
