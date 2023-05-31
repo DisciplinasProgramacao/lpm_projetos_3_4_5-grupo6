@@ -1,5 +1,6 @@
 
 import java.security.InvalidAlgorithmParameterException;
+import java.security.spec.InvalidParameterSpecException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -111,7 +112,7 @@ public class Cliente {
      * @param m A mídia para a qual será registrada a audiência.
      * @throws InvalidAlgorithmParameterException
      */
-    public void registrarAudiencia(Midia m) throws InvalidAlgorithmParameterException   {
+    public void registrarAudiencia(Midia m) throws  InvalidParameterSpecException {
 
         if (listaParaVer.contains(m)) {
             listaParaVer.remove(m);
@@ -119,8 +120,10 @@ public class Cliente {
         if (!listaJaVistas.contains(m)) {
             listaJaVistas.add(m);
             m.registrarAudiencia();
+        }else{
+            throw new InvalidParameterSpecException("Não é possível assistir uma mídia mais de uma vez");
         }
-        else throw new InvalidAlgorithmParameterException();
+        
         
     }
 

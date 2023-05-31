@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.security.spec.InvalidParameterSpecException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -126,8 +127,9 @@ public class PlataformaStreaming {
      * Registra a audiência de uma midia para o cliente atual.
      *
      * @param novaMidia A midia para a qual a audiência será registrada.
+     * @throws InvalidParameterSpecException
      */
-    public void registrarAudiencia(Midia novaMidia) {
+    public void registrarAudiencia(Midia novaMidia) throws InvalidParameterSpecException {
         if (this.clienteAtual != null) {
             this.clienteAtual.registrarAudiencia(novaMidia);
         }
@@ -222,8 +224,9 @@ public class PlataformaStreaming {
      * Carrega os dados de audiência a partir de um arquivo CSV.
      *
      * @throws IOException se ocorrer um erro de entrada/saída ao ler o arquivo.
+     * @throws InvalidParameterSpecException
      */
-    public void carregarAudiencia() throws IOException {
+    public void carregarAudiencia() throws IOException, InvalidParameterSpecException {
         // user;?;idMidia
         String path = "codigo/assets/Audiencia.csv";
         String[] todosOsDados = Util.lerArquivo(path).split(System.lineSeparator());

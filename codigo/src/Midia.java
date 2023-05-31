@@ -1,7 +1,6 @@
 
 import java.util.Arrays;
 
-
 public abstract class Midia {
 
     // #region Atributos
@@ -173,6 +172,16 @@ public abstract class Midia {
         return this.id;
     }
 
- 
+    @Override
+    public String toString() {
+        StringBuilder aux = new StringBuilder();
+
+        aux.append(this.id);
+        aux.append("-");
+        aux.append(this.nome);
+        aux.append(System.lineSeparator());
+
+        return aux.toString();
+    }
 
 }

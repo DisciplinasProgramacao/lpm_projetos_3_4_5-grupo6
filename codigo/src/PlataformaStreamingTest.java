@@ -8,6 +8,8 @@ import Exceptions.SenhaIncorretaException;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
+
+import java.security.spec.InvalidParameterSpecException;
 import java.util.List;
 
 public class PlataformaStreamingTest {
@@ -103,7 +105,7 @@ public class PlataformaStreamingTest {
     }
 
     @Test
-    public void testRegistrarAudiencia() {
+    public void testRegistrarAudiencia() throws InvalidParameterSpecException {
         try {
             plataforma.login("kitkat", "password123");
             plataforma.registrarAudiencia(serie1);

@@ -1,3 +1,4 @@
+import java.security.spec.InvalidParameterSpecException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -69,7 +70,8 @@ public class App {
      * @return Sem return
      */
     public static void listarMidia() {
-        plataforma.listarMidia();
+        limparConsole();
+        System.out.println(plataforma.listarMidia());
     }
 
     /**
@@ -153,7 +155,11 @@ public class App {
         System.out.println("Qual nome da midia deseja assistir?");
         String nome = sc.nextLine();
         novaSerie = plataforma.buscar(nome);
-        plataforma.registrarAudiencia(novaSerie);
+        try {
+            plataforma.registrarAudiencia(novaSerie);
+        } catch (InvalidParameterSpecException e) {
+            System.out.println(e.getMessage());
+        }
         System.out.println("Serie assistida com sucesso! Obrigado por escolher nossa plataforma!");
     }
 
