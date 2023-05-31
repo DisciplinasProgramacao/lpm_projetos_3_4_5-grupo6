@@ -1,4 +1,5 @@
 
+import java.security.InvalidAlgorithmParameterException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -108,16 +109,19 @@ public class Cliente {
      * Se a Mídia não estiver na lista de assistida, ela é adicionada.
      *
      * @param m A mídia para a qual será registrada a audiência.
+     * @throws InvalidAlgorithmParameterException
      */
-    public void registrarAudiencia(Midia m) {
+    public void registrarAudiencia(Midia m) throws InvalidAlgorithmParameterException   {
 
         if (listaParaVer.contains(m)) {
             listaParaVer.remove(m);
         }
         if (!listaJaVistas.contains(m)) {
             listaJaVistas.add(m);
+            m.registrarAudiencia();
         }
-        m.registrarAudiencia();
+        else throw new InvalidAlgorithmParameterException();
+        
     }
 
     /**

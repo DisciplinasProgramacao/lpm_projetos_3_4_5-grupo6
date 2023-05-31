@@ -1,7 +1,11 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Random;
 
 public class Util {
@@ -39,6 +43,48 @@ public class Util {
         }
 
         return content.toString();
+    }
+
+    /**
+     * Salva uma string no arquivo CSV especificado.
+     * 
+     * @param filePath O caminho do arquivo CSV.
+     * @param dadoCSV  A string a ser salva no arquivo.
+     * @throws IOException Se ocorrer um erro de E/S durante a operação.
+     */
+    public static void salvarNoArquivo(String filePath, String dadoCSV) throws IOException {
+        // try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath,
+        // true))) {
+        // writer.write(dadoCSV);
+        // writer.newLine();
+        // } catch (IOException e) {
+        // throw new IOException("Ocorreu um erro ao tentar salvar os dados. Erro: " +
+        // e.getMessage());
+        // }
+
+        String dataToAppend = dadoCSV;
+
+        try {
+            // Verifica se o arquivo existe
+            if (Files.notExists(Path.of(filePath))) {
+                // Cria um novo arquivo se ele não existir
+                Files.createFile(Path.of(filePath));
+            }
+
+            // Abre o arquivo em modo de escrita no final ("append")
+            BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true));
+
+            // Escreve os dados no final do arquivo
+            writer.write(dataToAppend);
+            writer.newLine();
+
+            // Fecha o escritor
+            writer.close();
+
+            System.out.println("Dados salvos com sucesso no final do arquivo.");
+        } catch (IOException e) {
+            System.err.println("Erro ao salvar os dados no arquivo: " + e.getMessage());
+        }
     }
 
     public static String gerarNovoGenero() {
