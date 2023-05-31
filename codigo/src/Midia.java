@@ -20,7 +20,7 @@ public abstract class Midia {
     private String genero;
     private String idioma;
     private int audiencia;
-    private MidiaDAO DAO = new MidiaDAO();
+    
     // #endregion
 
     // #region Construtor
