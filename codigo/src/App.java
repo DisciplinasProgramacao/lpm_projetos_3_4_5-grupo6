@@ -44,7 +44,7 @@ public class App {
          * 6. FAZER UMA AVALIACAO OK
          * 7. FAZER UM COMENTARIO (FAKE) OK - ESPERANDO IMPLEMENTAÇÃO
          * 8. SALVAR DADOS - ESPERANDO IMPLEMENTAÇÃO
-         * 9. CADASTRAR (FAZER T) - ESPERANDO IMPLEMENTAÇÃO
+         * 9. CADASTRAR CLIENTE OK
          */
         System.out.println("MENU PRINCIPAL");
         System.out.println("1 - Listar filmes e series para o cliente");
@@ -91,6 +91,7 @@ public class App {
             plataforma.carregarSeries();
             plataforma.carregarFilmes();
             plataforma.carregarAudiencia();
+            efetuarLoginSistema();
         } catch (Exception e) {
             log.add(e.getMessage());
         }
