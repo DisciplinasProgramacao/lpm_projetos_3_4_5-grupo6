@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.security.spec.InvalidParameterSpecException;
 import java.util.ArrayList;
 import java.util.List;
@@ -5,6 +6,7 @@ import java.util.Scanner;
 
 import javax.naming.NameNotFoundException;
 
+import Exceptions.SenhaFracaException;
 import Exceptions.SenhaIncorretaException;
 
 public class App {
@@ -39,7 +41,7 @@ public class App {
          * 3. LISTAR MIDIA OK
          * 4. FILTRAR GENERO, IDIOMA, QTD EPS
          * 5. REGISTRAR ADUICIENCIA OK
-         * 6. FAZER UMA AVALIACAO (FAKE) OK - ESPERANDO IMPLEMENTAÇÃO
+         * 6. FAZER UMA AVALIACAO OK
          * 7. FAZER UM COMENTARIO (FAKE) OK - ESPERANDO IMPLEMENTAÇÃO
          * 8. SALVAR DADOS - ESPERANDO IMPLEMENTAÇÃO
          * 9. CADASTRAR (FAZER T) - ESPERANDO IMPLEMENTAÇÃO
@@ -53,7 +55,7 @@ public class App {
         System.out.println("6 - Avaliar uma mídia");
         System.out.println("7 - Comentar em uma mídia");
         System.out.println("8 - Salvar Dados");
-        System.out.println("9 - Cadastrar <T>");
+        System.out.println("9 - Cadastrar Cliente");
         System.out.println("10 - Fazer Logout do Sistema");
 
         System.out.println("0 - Cancelar");
@@ -266,12 +268,15 @@ public class App {
         System.out.println("Selecione a midia para fazer a avaliação:");
         String nome = sc.nextLine();
         novaMidia = plataforma.buscar(nome);
-
         System.out.println("");
-        System.out.println("Escolha entre 1 e 5:");
-        int av = Integer.parseInt(sc.nextLine());
-        // plataforma.fazerAvaliacao(novaMidia, av);
-        System.out.println("Obrigado por contribuir!");
+        System.out.println("Faça a avaliação:");
+        int avaliacao = Integer.parseInt(sc.nextLine());
+        try {
+            plataforma.registrarAvaliacao(plataforma.getCurrentUserId(), novaMidia.getId(), avaliacao);
+        } catch (IOException e) {
+            realizarUmaAvaliacao();
+            e.printStackTrace();
+        }
     }
 
     private static void realizarUmComentario() {
@@ -293,8 +298,25 @@ public class App {
         System.out.println("Esperando implementação");
     }
 
-    private static void cadastrarComTipoT() {
-        System.out.println("Esperando implementação");
+    private static void cadastrarCliente() {
+        System.out.println("");
+        System.out.println("==========================");
+        System.out.println("Bem vindo novo cliente, como se chama?");
+        String nome = sc.nextLine();
+        System.out.println("Qual será seu login?");
+        String login = sc.nextLine();
+        System.out.println("E sua senha?");
+        String senha = sc.nextLine();
+
+        try {
+            plataforma.cadastrarCliente(nome, login, senha);
+        } catch (IllegalArgumentException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (SenhaFracaException e) {
+            // TODO Auto-generated catch block
+            cadastrarCliente();
+        }
     }
 
     public static void main(String[] args) throws Exception {
@@ -329,7 +351,7 @@ public class App {
                     salvarDados();
                     break;
                 case 9:
-                    cadastrarComTipoT();
+                    cadastrarCliente();
                     break;
                 case 10:
                     fazerLogoutDoSistema();
