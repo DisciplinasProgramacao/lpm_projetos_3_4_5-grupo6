@@ -20,7 +20,9 @@ public abstract class Midia {
     private String genero;
     private String idioma;
     private int audiencia;
-    
+    private int somaAvaliacoes;
+    private int qtdAvaliacoes;
+
     // #endregion
 
     // #region Construtor
@@ -126,6 +128,15 @@ public abstract class Midia {
         this.audiencia++;
     }
 
+    public void registrarPontosDeAvaliacoes(int ponto) {
+        this.somaAvaliacoes += ponto;
+        this.qtdAvaliacoes++;
+    }
+
+    public float obterMediaDasAvaliacoes() {
+        return (float) this.somaAvaliacoes / this.qtdAvaliacoes;
+    }
+
     /**
      * Retorna a audiência atual da série. A audiência representa a quantidade de
      * espectadores que assistiram à série.
@@ -179,6 +190,10 @@ public abstract class Midia {
         aux.append(this.id);
         aux.append("-");
         aux.append(this.nome);
+        aux.append("-");
+        aux.append("pontuação");
+        aux.append(": ");
+        aux.append(obterMediaDasAvaliacoes());
         aux.append(System.lineSeparator());
 
         return aux.toString();
