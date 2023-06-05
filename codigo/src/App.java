@@ -65,14 +65,22 @@ public class App {
         System.out.println("MENU PRINCIPAL");
         System.out.println("1 - Listar filmes e series para o cliente");
         System.out.println("2 - Login na plataforma");
-        System.out.println("3 - Adicionar mídia na lista para ver");
-        System.out.println("4 - Assistir a uma mídia");
-        System.out.println("5 - Filtre a mídia por GÊNERO, IDIOMA OU QUANTIDADE DE EPISÓDIOS");
-        System.out.println("6 - Avaliar uma mídia");
-        System.out.println("7 - Comentar em uma mídia");
-        System.out.println("8 - Salvar Dados");
-        System.out.println("9 - Cadastrar Cliente");
-        System.out.println("10 - Fazer Logout do Sistema");
+        System.out.println("3 - Fazer Logout do Sistema");
+        System.out.println("4 - Adicionar mídia na lista para ver");
+        System.out.println("5 - Assistir a uma mídia");
+        System.out.println("6 - Filtre a mídia por GÊNERO, IDIOMA OU QUANTIDADE DE EPISÓDIOS");
+        System.out.println("7 - Avaliar uma mídia");
+        System.out.println("8 - Comentar em uma mídia");
+        System.out.println("9 - Salvar Dados");
+        System.out.println("10 - Cadastrar Cliente");
+        System.out.println("11 - Ver mídias em lançamento (perfil profissional)");
+        System.out.println("12 - Cliente com mais mídias assistidas");
+        System.out.println("13 - Cliente com mais avaliações");
+        System.out.println("14 - Porcentagem de Clientes com >= 15 avaliações");
+        System.out.println("15 - As 10 mídias mais vistas do Pucflix");
+        System.out.println("16 - As 10 mídias com melhor avaliação do Pucflix");
+        System.out.println("17 - As 10 mídias mais vistas do Pucflix em cada gênero");
+        System.out.println("18 - As 10 mídias com melhor avaliação do Pucflix em cada gênero");
 
         System.out.println("0 - Cancelar");
         System.out.print("Digite sua opção: ");
@@ -350,28 +358,30 @@ public class App {
                     efetuarLoginSistema();
                     break;
                 case 3:
-                    adicionarMidiaNaListaParaVer();
+                    fazerLogoutDoSistema();
                     break;
                 case 4:
-                    registrarAudienciaDaMidia();
+                    adicionarMidiaNaListaParaVer();
                     break;
                 case 5:
-                    filtrarMidia();
+                    registrarAudienciaDaMidia();
                     break;
                 case 6:
-                    realizarUmaAvaliacao();
+                    filtrarMidia();
                     break;
                 case 7:
-                    realizarUmComentario();
+                    realizarUmaAvaliacao();
                     break;
                 case 8:
-                    salvarDados();
+                    realizarUmComentario();
                     break;
                 case 9:
-                    cadastrarCliente();
+                    salvarDados();
                     break;
                 case 10:
-                    fazerLogoutDoSistema();
+                    cadastrarCliente();
+                    break;
+                case 11:
                     break;
                 default:
                     System.out.println("Selecione uma opção válida");
