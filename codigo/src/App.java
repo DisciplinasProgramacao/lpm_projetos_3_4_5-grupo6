@@ -36,15 +36,29 @@ public class App {
         int opcao = -1;
         // LISTA DO QUE O APP FAZ DA VIDA
         /*
+         * PROJETO 3 E 4
          * 1. CARREGAR DADOS OK
          * 2. FAZER LOGIN OK
          * 3. LISTAR MIDIA OK
-         * 4. FILTRAR GENERO, IDIOMA, QTD EPS
+         * 4. FILTRAR GENERO, IDIOMA, QTD EPS - OK
          * 5. REGISTRAR ADUICIENCIA OK
          * 6. FAZER UMA AVALIACAO OK
-         * 7. FAZER UM COMENTARIO (FAKE) OK - ESPERANDO IMPLEMENTAÇÃO
-         * 8. SALVAR DADOS - ESPERANDO IMPLEMENTAÇÃO
+         * 7. FAZER UM COMENTARIO - ESPERANDO IMPLEMENTAÇÃO
+         * 8. SALVAR DADOS - OK
          * 9. CADASTRAR CLIENTE OK
+         * 10. FAZER LOGOUT
+         * PROJETO 5
+         * 11. VER MIDIAS EM LANÇAMENTO COMO PROFISSIONAL
+         * 12. MOSTRAR CLIENTE QUE MAIS ASSISTIU MÍDIAS E O COUNT
+         * 13. MOSTRAR CLIENTE COM MAIS AVALIAÇÕES E O COUNT
+         * 14. PORCENTAGEM CLIENTE COM >= 15 AVALIAÇÕES
+         * 15. MOSTRAR 10 MÍDIAS DE MELHOR AVALIAÇÃO (* contendo 100 avaliações, em
+         * ordem decrescente)
+         * 16. MOSTRAR 10 MÍDIAS COM MAIS VISUALIZAÇÕES (em ordem decrescente)
+         * 17. EM CADA GENERO - MOSTRAR 10 MÍDIAS DE MELHOR AVALIAÇÃO (* contendo 100
+         * avaliações, em ordem decrescente)
+         * 18. EM CADA GENERO - MOSTRAR 10 MÍDIAS COM MAIS VISUALIZAÇÕES (em ordem
+         * decrescente)
          */
         System.out.println("MENU PRINCIPAL");
         System.out.println("1 - Listar filmes e series para o cliente");
