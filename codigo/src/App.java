@@ -46,19 +46,21 @@ public class App {
          * 7. FAZER UM COMENTARIO - ESPERANDO IMPLEMENTAÇÃO
          * 8. SALVAR DADOS - OK
          * 9. CADASTRAR CLIENTE OK
-         * 10. FAZER LOGOUT
+         * 10. FAZER LOGOUT - OK
          * PROJETO 5
-         * 11. VER MIDIAS EM LANÇAMENTO COMO PROFISSIONAL
-         * 12. MOSTRAR CLIENTE QUE MAIS ASSISTIU MÍDIAS E O COUNT
-         * 13. MOSTRAR CLIENTE COM MAIS AVALIAÇÕES E O COUNT
-         * 14. PORCENTAGEM CLIENTE COM >= 15 AVALIAÇÕES
+         * 11. VER MIDIAS EM LANÇAMENTO COMO PROFISSIONAL - ESPERANDO IMPLEMENTAÇÃO
+         * 12. MOSTRAR CLIENTE QUE MAIS ASSISTIU MÍDIAS E O COUNT - ESPERANDO
+         * IMPLEMENTAÇÃO
+         * 13. MOSTRAR CLIENTE COM MAIS AVALIAÇÕES E O COUNT - ESPERANDO IMPLEMENTAÇÃO
+         * 14. PORCENTAGEM CLIENTE COM >= 15 AVALIAÇÕES - ESPERANDO IMPLEMENTAÇÃO
          * 15. MOSTRAR 10 MÍDIAS DE MELHOR AVALIAÇÃO (* contendo 100 avaliações, em
-         * ordem decrescente)
-         * 16. MOSTRAR 10 MÍDIAS COM MAIS VISUALIZAÇÕES (em ordem decrescente)
+         * ordem decrescente) - ESPERANDO IMPLEMENTAÇÃO
+         * 16. MOSTRAR 10 MÍDIAS COM MAIS VISUALIZAÇÕES (em ordem decrescente) -
+         * ESPERANDO IMPLEMENTAÇÃO
          * 17. EM CADA GENERO - MOSTRAR 10 MÍDIAS DE MELHOR AVALIAÇÃO (* contendo 100
-         * avaliações, em ordem decrescente)
+         * avaliações, em ordem decrescente) - ESPERANDO IMPLEMENTAÇÃO
          * 18. EM CADA GENERO - MOSTRAR 10 MÍDIAS COM MAIS VISUALIZAÇÕES (em ordem
-         * decrescente)
+         * decrescente) - ESPERANDO IMPLEMENTAÇÃO
          */
         System.out.println("MENU PRINCIPAL");
         System.out.println("1 - Listar filmes e series para o cliente");
