@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.security.spec.InvalidParameterSpecException;
 import java.util.ArrayList;
 import java.util.List;
@@ -5,6 +6,7 @@ import java.util.Scanner;
 
 import javax.naming.NameNotFoundException;
 
+import Exceptions.SenhaFracaException;
 import Exceptions.SenhaIncorretaException;
 
 public class App {
@@ -34,27 +36,51 @@ public class App {
         int opcao = -1;
         // LISTA DO QUE O APP FAZ DA VIDA
         /*
+         * PROJETO 3 E 4
          * 1. CARREGAR DADOS OK
          * 2. FAZER LOGIN OK
          * 3. LISTAR MIDIA OK
-         * 4. FILTRAR GENERO, IDIOMA, QTD EPS
+         * 4. FILTRAR GENERO, IDIOMA, QTD EPS - OK
          * 5. REGISTRAR ADUICIENCIA OK
-         * 6. FAZER UMA AVALIACAO (FAKE) OK - ESPERANDO IMPLEMENTAÇÃO
-         * 7. FAZER UM COMENTARIO (FAKE) OK - ESPERANDO IMPLEMENTAÇÃO
-         * 8. SALVAR DADOS - ESPERANDO IMPLEMENTAÇÃO
-         * 9. CADASTRAR (FAZER T) - ESPERANDO IMPLEMENTAÇÃO
+         * 6. FAZER UMA AVALIACAO OK
+         * 7. FAZER UM COMENTARIO - ESPERANDO IMPLEMENTAÇÃO
+         * 8. SALVAR DADOS - OK
+         * 9. CADASTRAR CLIENTE OK
+         * 10. FAZER LOGOUT - OK
+         * PROJETO 5
+         * 11. VER MIDIAS EM LANÇAMENTO COMO PROFISSIONAL - ESPERANDO IMPLEMENTAÇÃO
+         * 12. MOSTRAR CLIENTE QUE MAIS ASSISTIU MÍDIAS E O COUNT - ESPERANDO
+         * IMPLEMENTAÇÃO
+         * 13. MOSTRAR CLIENTE COM MAIS AVALIAÇÕES E O COUNT - ESPERANDO IMPLEMENTAÇÃO
+         * 14. PORCENTAGEM CLIENTE COM >= 15 AVALIAÇÕES - ESPERANDO IMPLEMENTAÇÃO
+         * 15. MOSTRAR 10 MÍDIAS DE MELHOR AVALIAÇÃO (* contendo 100 avaliações, em
+         * ordem decrescente) - ESPERANDO IMPLEMENTAÇÃO
+         * 16. MOSTRAR 10 MÍDIAS COM MAIS VISUALIZAÇÕES (em ordem decrescente) -
+         * ESPERANDO IMPLEMENTAÇÃO
+         * 17. EM CADA GENERO - MOSTRAR 10 MÍDIAS DE MELHOR AVALIAÇÃO (* contendo 100
+         * avaliações, em ordem decrescente) - ESPERANDO IMPLEMENTAÇÃO
+         * 18. EM CADA GENERO - MOSTRAR 10 MÍDIAS COM MAIS VISUALIZAÇÕES (em ordem
+         * decrescente) - ESPERANDO IMPLEMENTAÇÃO
          */
         System.out.println("MENU PRINCIPAL");
         System.out.println("1 - Listar filmes e series para o cliente");
         System.out.println("2 - Login na plataforma");
-        System.out.println("3 - Adicionar mídia na lista para ver");
-        System.out.println("4 - Assistir a uma mídia");
-        System.out.println("5 - Filtre a mídia por GÊNERO, IDIOMA OU QUANTIDADE DE EPISÓDIOS");
-        System.out.println("6 - Avaliar uma mídia");
-        System.out.println("7 - Comentar em uma mídia");
-        System.out.println("8 - Salvar Dados");
-        System.out.println("9 - Cadastrar <T>");
-        System.out.println("10 - Fazer Logout do Sistema");
+        System.out.println("3 - Fazer Logout do Sistema");
+        System.out.println("4 - Adicionar mídia na lista para ver");
+        System.out.println("5 - Assistir a uma mídia");
+        System.out.println("6 - Filtre a mídia por GÊNERO, IDIOMA OU QUANTIDADE DE EPISÓDIOS");
+        System.out.println("7 - Avaliar uma mídia");
+        System.out.println("8 - Comentar em uma mídia");
+        System.out.println("9 - Salvar Dados");
+        System.out.println("10 - Cadastrar Cliente");
+        System.out.println("11 - Ver mídias em lançamento (perfil profissional)");
+        System.out.println("12 - Cliente com mais mídias assistidas");
+        System.out.println("13 - Cliente com mais avaliações");
+        System.out.println("14 - Porcentagem de Clientes com >= 15 avaliações");
+        System.out.println("15 - As 10 mídias mais vistas do Pucflix");
+        System.out.println("16 - As 10 mídias com melhor avaliação do Pucflix");
+        System.out.println("17 - As 10 mídias mais vistas do Pucflix em cada gênero");
+        System.out.println("18 - As 10 mídias com melhor avaliação do Pucflix em cada gênero");
 
         System.out.println("0 - Cancelar");
         System.out.print("Digite sua opção: ");
@@ -89,6 +115,7 @@ public class App {
             plataforma.carregarSeries();
             plataforma.carregarFilmes();
             plataforma.carregarAudiencia();
+            efetuarLoginSistema();
         } catch (Exception e) {
             log.add(e.getMessage());
         }
@@ -266,12 +293,15 @@ public class App {
         System.out.println("Selecione a midia para fazer a avaliação:");
         String nome = sc.nextLine();
         novaMidia = plataforma.buscar(nome);
-
         System.out.println("");
-        System.out.println("Escolha entre 1 e 5:");
-        int av = Integer.parseInt(sc.nextLine());
-        // plataforma.fazerAvaliacao(novaMidia, av);
-        System.out.println("Obrigado por contribuir!");
+        System.out.println("Faça a avaliação:");
+        int avaliacao = Integer.parseInt(sc.nextLine());
+        try {
+            plataforma.registrarAvaliacao(plataforma.getCurrentUserId(), novaMidia.getId(), avaliacao);
+        } catch (IOException e) {
+            realizarUmaAvaliacao();
+            e.printStackTrace();
+        }
     }
 
     private static void realizarUmComentario() {
@@ -293,8 +323,25 @@ public class App {
         System.out.println("Esperando implementação");
     }
 
-    private static void cadastrarComTipoT() {
-        System.out.println("Esperando implementação");
+    private static void cadastrarCliente() {
+        System.out.println("");
+        System.out.println("==========================");
+        System.out.println("Bem vindo novo cliente, como se chama?");
+        String nome = sc.nextLine();
+        System.out.println("Qual será seu login?");
+        String login = sc.nextLine();
+        System.out.println("E sua senha?");
+        String senha = sc.nextLine();
+
+        try {
+            plataforma.cadastrarCliente(nome, login, senha);
+        } catch (IllegalArgumentException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (SenhaFracaException e) {
+            // TODO Auto-generated catch block
+            cadastrarCliente();
+        }
     }
 
     public static void main(String[] args) throws Exception {
@@ -311,28 +358,30 @@ public class App {
                     efetuarLoginSistema();
                     break;
                 case 3:
-                    adicionarMidiaNaListaParaVer();
+                    fazerLogoutDoSistema();
                     break;
                 case 4:
-                    registrarAudienciaDaMidia();
+                    adicionarMidiaNaListaParaVer();
                     break;
                 case 5:
-                    filtrarMidia();
+                    registrarAudienciaDaMidia();
                     break;
                 case 6:
-                    realizarUmaAvaliacao();
+                    filtrarMidia();
                     break;
                 case 7:
-                    realizarUmComentario();
+                    realizarUmaAvaliacao();
                     break;
                 case 8:
-                    salvarDados();
+                    realizarUmComentario();
                     break;
                 case 9:
-                    cadastrarComTipoT();
+                    salvarDados();
                     break;
                 case 10:
-                    fazerLogoutDoSistema();
+                    cadastrarCliente();
+                    break;
+                case 11:
                     break;
                 default:
                     System.out.println("Selecione uma opção válida");

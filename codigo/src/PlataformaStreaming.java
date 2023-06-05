@@ -283,7 +283,7 @@ public class PlataformaStreaming {
     public void registrarAvaliacao(String userLogin, int midiaId, int avaliacao) throws IOException {
         String path_avaliacoes = "codigo/assets/Avaliacoes.csv";
         StringBuilder auxCSV = new StringBuilder();
-       // auxCSV.append(System.lineSeparator());
+        // auxCSV.append(System.lineSeparator());
         auxCSV.append(userLogin);
         auxCSV.append(";");
         auxCSV.append(midiaId);
@@ -310,13 +310,12 @@ public class PlataformaStreaming {
     }
 
     public String getCurrentUserId() {
-        if(clienteAtual == null){
-            return "Ada2"; //para fins de teste
-        }else{
+        if (clienteAtual == null) {
+            return "Ada2"; // para fins de teste
+        } else {
             return this.clienteAtual.getLogin();
         }
-        
+
     }
 
-  
 }
