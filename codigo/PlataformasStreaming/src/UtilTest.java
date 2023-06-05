@@ -9,7 +9,7 @@ public class UtilTest {
     @Test
     public void testSalvarNoArquivo() throws IOException {
         // Define o caminho do arquivo de teste
-        String filePath = "codigo/assets/teste.csv";
+        String filePath = "/assets/teste.csv";
         // Define o dado a ser salvo no arquivo
         String dadoCSV = "Exemplo;de;dado;CSV";
         // Chama o método que será testado

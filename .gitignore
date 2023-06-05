@@ -1,6 +1,4 @@
-##############################
 ## Java
-##############################
 .mtj.tmp/
 *.class
 *.jar
@@ -10,9 +8,7 @@
 hs_err_pid*
 replay_pid*
 
-##############################
 ## Maven
-##############################
 target/
 pom.xml.tag
 pom.xml.releaseBackup
@@ -25,9 +21,7 @@ buildNumber.properties
 .mvn/timing.properties
 .mvn/wrapper/maven-wrapper.jar
 
-##############################
 ## Gradle
-##############################
 bin/
 build/
 .gradle
@@ -35,9 +29,7 @@ build/
 gradle-app.setting
 !gradle-wrapper.jar
 
-##############################
 ## IntelliJ
-##############################
 out/
 .idea/
 .idea_modules/
@@ -45,9 +37,7 @@ out/
 *.ipr
 *.iws
 
-##############################
 ## Eclipse
-##############################
 .settings/
 bin/
 tmp/
@@ -62,9 +52,7 @@ local.properties
 .loadpath
 .factorypath
 
-##############################
 ## NetBeans
-##############################
 nbproject/private/
 build/
 nbbuild/
@@ -73,13 +61,9 @@ nbdist/
 nbactions.xml
 nb-configuration.xml
 
-##############################
 ## Visual Studio Code
-##############################
 .vscode/
 .code-workspace
 
-##############################
 ## OS X
-##############################
 .DS_Store
