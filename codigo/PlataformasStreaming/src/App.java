@@ -11,13 +11,13 @@ import Exceptions.SenhaIncorretaException;
 
 public class App {
 
-    static Scanner sc = new Scanner(System.in);
+    static Scanner scanner = new Scanner(System.in);
     static PlataformaStreaming plataforma = new PlataformaStreaming("pucflix");
 
     // #region Utilitários
     static void pausar() {
         System.out.print(System.lineSeparator() + "Digite qualquer tecla para continuar...");
-        sc.nextLine();
+        scanner.nextLine();
     }
 
     public static void limparConsole() {
@@ -59,7 +59,7 @@ public class App {
         System.out.println("0 - Cancelar" + System.lineSeparator());
         System.out.print("Digite sua opção: ");
         try {
-            opcao = Integer.parseInt(sc.nextLine());
+            opcao = Integer.parseInt(scanner.nextLine());
         } catch (Exception e) {
             opcao = -1;
         }
@@ -83,34 +83,28 @@ public class App {
             plataforma.carregarSeries();
             plataforma.carregarFilmes();
             plataforma.carregarAudiencia();
+            System.out.println("Dados carregados com sucesso!");
         } catch (Exception e) {
             log.add(e.getMessage());
-        }
-        boolean carregamentoPossuiErros = log.size() > 0;
-        if (carregamentoPossuiErros) {
             System.out.println("Dados carregados com " + log.size() + " erro(s)");
             for (String string : log)
                 System.out.println(string);
-        } else {
-            System.out.println("Dados carregados com sucesso!");
         }
     }
 
     private static void efetuarLogin() {
         String login;
         String senha;
-        String nomeCliente = null;
 
         System.out.println("==========================");
         System.out.println("Efetuar Login");
         System.out.print("Digite o nome de usuário: ");
-        login = sc.nextLine();
+        login = scanner.nextLine();
         System.out.print("Digite a senha: ");
-        senha = sc.nextLine();
+        senha = scanner.nextLine();
         try {
             Cliente cliente = plataforma.login(login, senha);
-            nomeCliente = cliente.getNome();
-            System.out.println("Bem-vindo(a), " + nomeCliente + "!");
+            System.out.println("Bem-vindo(a), " + cliente.getNome() + "!");
         } catch (NameNotFoundException e) {
             System.out.println("Erro ao fazer login: Usuário não cadastrado!");
         } catch (SenhaIncorretaException e) {
@@ -127,7 +121,7 @@ public class App {
     private static void adicionarMidiaNaListaParaVer() {
         System.out.println("==========================");
         System.out.println("Qual nome da midia deseja adicionar na lista: ");
-        String nomeDaMidia = sc.nextLine();
+        String nomeDaMidia = scanner.nextLine();
         Midia novaMidia = plataforma.buscar(nomeDaMidia);
         try {
             plataforma.adicionarNaListaParaVer(novaMidia);
@@ -140,7 +134,7 @@ public class App {
         // NAO DEIXAR O CLIENTE ATUAL ASSISTIR 2X
         Midia novaSerie = null;
         System.out.println("Qual nome da midia deseja assistir?");
-        String nome = sc.nextLine();
+        String nome = scanner.nextLine();
         novaSerie = plataforma.buscar(nome);
         try {
             plataforma.registrarAudiencia(novaSerie);
@@ -159,14 +153,14 @@ public class App {
         System.out.println("Deseja realizar uma avaliação");
         System.out.println("1 - Sim");
         System.out.println("2 - Não");
-        int res = Integer.parseInt(sc.nextLine());
+        int res = Integer.parseInt(scanner.nextLine());
 
         switch (res) {
             case 1:
                 int avalacao = -1;
                 do {
                     System.out.println("Qual a nota entre 1 a 5?");
-                    avalacao = Integer.parseInt(sc.nextLine());
+                    avalacao = Integer.parseInt(scanner.nextLine());
                 } while (avalacao < 1 || avalacao > 5);
                 try {
                     plataforma.registrarAvaliacao(userId, midiaId, avalacao);
@@ -193,7 +187,7 @@ public class App {
     public static void filtrarPorGenero() {
         List<Midia> arrayList = new ArrayList<>();
         System.out.println("Digite o gênero:");
-        String genero = sc.nextLine();
+        String genero = scanner.nextLine();
         arrayList = plataforma.filtrarPorGenero(genero);
         System.out.println(arrayList);
     }
@@ -201,7 +195,7 @@ public class App {
     public static void filtrarPorIdioma() {
         List<Midia> arrayList = new ArrayList<>();
         System.out.println("Digite o idioma:");
-        String idioma = sc.nextLine();
+        String idioma = scanner.nextLine();
         arrayList = plataforma.filtrarPorIdioma(idioma);
         System.out.println(arrayList);
 
@@ -210,7 +204,7 @@ public class App {
     public static void filtrarPorQuantidadeEpisodios() {
         List<Midia> arrayList = new ArrayList<>();
         System.out.println("Digite o número de episódios:");
-        int qtd = Integer.parseInt(sc.nextLine());
+        int qtd = Integer.parseInt(scanner.nextLine());
         arrayList = plataforma.filtrarPorQtdEpisodios(qtd);
         System.out.println(arrayList);
     }
@@ -240,7 +234,7 @@ public class App {
         System.out.println("1 - Gênero");
         System.out.println("2 - Idioma");
         System.out.println("3 - Quantidade de episódios");
-        opcao = Integer.parseInt(sc.nextLine());
+        opcao = Integer.parseInt(scanner.nextLine());
         return opcao;
     }
 
@@ -248,10 +242,10 @@ public class App {
         Midia novaMidia = null;
         System.out.println("==========================");
         System.out.println("Selecione a midia para fazer a avaliação:");
-        String nome = sc.nextLine();
+        String nome = scanner.nextLine();
         novaMidia = plataforma.buscar(nome);
         System.out.println("Faça a avaliação:");
-        int avaliacao = Integer.parseInt(sc.nextLine());
+        int avaliacao = Integer.parseInt(scanner.nextLine());
         try {
             plataforma.registrarAvaliacao(plataforma.getLoginClienteAtual(), novaMidia.getId(), avaliacao);
         } catch (IOException e) {
@@ -264,10 +258,10 @@ public class App {
         Midia novaMidia = null;
         System.out.println("==========================");
         System.out.println("Selecione a midia para fazer o comentário:");
-        String nome = sc.nextLine();
+        String nome = scanner.nextLine();
         novaMidia = plataforma.buscar(nome);
         System.out.println("Faça o comentário:");
-        String cmt = sc.nextLine();
+        String cmt = scanner.nextLine();
         // plataforma.fazerComentario(novaMidia, cmt);
         System.out.println("Obrigado por contribuir!");
     }
@@ -280,11 +274,11 @@ public class App {
     private static void cadastrarCliente() {
         System.out.println("==========================");
         System.out.println("Bem vindo novo cliente, como se chama?");
-        String nome = sc.nextLine();
+        String nome = scanner.nextLine();
         System.out.println("Qual será seu login?");
-        String login = sc.nextLine();
+        String login = scanner.nextLine();
         System.out.println("E sua senha?");
-        String senha = sc.nextLine();
+        String senha = scanner.nextLine();
 
         try {
             plataforma.cadastrarCliente(nome, login, senha);

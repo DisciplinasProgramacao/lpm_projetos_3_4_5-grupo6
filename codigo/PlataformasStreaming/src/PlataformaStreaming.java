@@ -309,12 +309,6 @@ public class PlataformaStreaming {
     }
 
     public String getLoginClienteAtual() {
-        if (clienteAtual == null) {
-            return "Ada2"; // para fins de teste
-        } else {
-            return this.clienteAtual.getLogin();
-        }
-
+        return this.clienteAtual.getLogin();
     }
-
 }
