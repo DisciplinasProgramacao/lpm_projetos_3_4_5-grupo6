@@ -1,25 +1,36 @@
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
 public class UtilTest {
+    public static String caminhoDoArquivo;
+    public static String dadosCSV;
+    public static File arquivo;
+
+    @BeforeAll
+    public static void initAll() {
+        caminhoDoArquivo = "assets/teste.csv";
+        dadosCSV = "Exemplo;de;dado;CSV";
+    }
 
     @Test
-    public void testSalvarNoArquivo() throws IOException {
-        // Define o caminho do arquivo de teste
-        String filePath = "/assets/teste.csv";
-        // Define o dado a ser salvo no arquivo
-        String dadoCSV = "Exemplo;de;dado;CSV";
-        // Chama o método que será testado
-        Util.salvarNoArquivo(filePath, dadoCSV);
+    public void deveSerPossivelLerUmArquivo() {
+        arquivo = new File(caminhoDoArquivo);
+        assertTrue(arquivo.exists());
+    }
 
-        // Verifica se o arquivo foi criado
-        Assertions.assertTrue(Files.exists(Path.of(filePath)));
-
-        // Lê o conteúdo do arquivo e verifica se corresponde ao dado salvo
-        String fileContent = Files.readString(Path.of(filePath));
-        Assertions.assertEquals(dadoCSV + System.lineSeparator(), fileContent);
+    @Test
+    public void deveSerPossivelAcrescentarDadosAoArquivo() throws IOException {
+        String conteudoDoArquivo = Files.readString(Path.of(caminhoDoArquivo));
+        Util.salvarNoArquivo(caminhoDoArquivo, dadosCSV);
+        String conteudoEsperado = conteudoDoArquivo + dadosCSV + System.lineSeparator();
+        Assertions.assertEquals(Files.readString(Path.of(caminhoDoArquivo)), conteudoEsperado);
     }
 }
