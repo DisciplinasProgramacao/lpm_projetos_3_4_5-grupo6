@@ -308,7 +308,7 @@ public class PlataformaStreaming {
         return copia;
     }
 
-    public String getCurrentUserId() {
+    public String getLoginClienteAtual() {
         if (clienteAtual == null) {
             return "Ada2"; // para fins de teste
         } else {
