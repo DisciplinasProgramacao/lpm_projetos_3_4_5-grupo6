@@ -188,12 +188,11 @@ public abstract class Midia {
         StringBuilder aux = new StringBuilder();
 
         aux.append(this.id);
-        aux.append("-");
+        aux.append(" - ");
         aux.append(this.nome);
-        aux.append("-");
-        aux.append("pontuação");
-        aux.append(": ");
+        aux.append(" (");
         aux.append(obterMediaDasAvaliacoes());
+        aux.append(")");
         aux.append(System.lineSeparator());
 
         return aux.toString();
