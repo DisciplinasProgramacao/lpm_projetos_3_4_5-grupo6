@@ -151,7 +151,7 @@ public class PlataformaStreaming {
      */
     public void carregarSeries() throws IOException {
         // id;nome;data
-        String path = "codigo/assets/Series.csv";
+        String path = "assets/Series.csv";
         String[] todasSeries = Util.lerArquivo(path).split(System.lineSeparator());
 
         for (String SerieCSV : todasSeries) {
@@ -179,7 +179,7 @@ public class PlataformaStreaming {
      */
     public void carregarFilmes() throws IOException {
         // id;nome;data;duracao
-        String path = "codigo/assets/Filmes.csv";
+        String path = "assets/Filmes.csv";
         String[] todosFilmes = Util.lerArquivo(path).split(System.lineSeparator());
 
         for (String FilmeCSV : todosFilmes) {
@@ -206,7 +206,7 @@ public class PlataformaStreaming {
      */
     public void carregarEspectadores() throws IOException, IllegalArgumentException, SenhaFracaException {
         // nome;login;senha
-        String path = "codigo/assets/Espectadores.csv";
+        String path = "assets/Espectadores.csv";
         String[] todosClientes = Util.lerArquivo(path).split(System.lineSeparator());
 
         for (String ClienteCSV : todosClientes) {
@@ -229,7 +229,7 @@ public class PlataformaStreaming {
      */
     public void carregarAudiencia() throws IOException, InvalidParameterSpecException {
         // user;?;idMidia
-        String path = "codigo/assets/Audiencia.csv";
+        String path = "assets/Audiencia.csv";
         String[] todosOsDados = Util.lerArquivo(path).split(System.lineSeparator());
 
         for (String AudienciaCSV : todosOsDados) {
@@ -281,9 +281,8 @@ public class PlataformaStreaming {
      *                     avaliação.
      */
     public void registrarAvaliacao(String userLogin, int midiaId, int avaliacao) throws IOException {
-        String path_avaliacoes = "codigo/assets/Avaliacoes.csv";
+        String path_avaliacoes = "assets/Avaliacoes.csv";
         StringBuilder auxCSV = new StringBuilder();
-        // auxCSV.append(System.lineSeparator());
         auxCSV.append(userLogin);
         auxCSV.append(";");
         auxCSV.append(midiaId);
