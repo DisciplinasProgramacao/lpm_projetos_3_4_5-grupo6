@@ -14,8 +14,9 @@ public class App {
     static Scanner sc = new Scanner(System.in);
     static PlataformaStreaming plataforma = new PlataformaStreaming("pucflix");
 
-    static void pause() {
-        System.out.println("Digite Enter para continuar...");
+    // #region Utilitários
+    static void pausar() {
+        System.out.print(System.lineSeparator() + "Digite qualquer tecla para continuar...");
         sc.nextLine();
     }
 
@@ -31,44 +32,18 @@ public class App {
             System.out.println(e.getMessage());
         }
     }
+    // #endregion
 
     public static int menuPrincipal() {
-        int opcao = -1;
-        // LISTA DO QUE O APP FAZ DA VIDA
-        /*
-         * PROJETO 3 E 4
-         * 1. CARREGAR DADOS OK
-         * 2. FAZER LOGIN OK
-         * 3. LISTAR MIDIA OK
-         * 4. FILTRAR GENERO, IDIOMA, QTD EPS - OK
-         * 5. REGISTRAR ADUICIENCIA OK
-         * 6. FAZER UMA AVALIACAO OK
-         * 7. FAZER UM COMENTARIO - ESPERANDO IMPLEMENTAÇÃO
-         * 8. SALVAR DADOS - OK
-         * 9. CADASTRAR CLIENTE OK
-         * 10. FAZER LOGOUT - OK
-         * PROJETO 5
-         * 11. VER MIDIAS EM LANÇAMENTO COMO PROFISSIONAL - ESPERANDO IMPLEMENTAÇÃO
-         * 12. MOSTRAR CLIENTE QUE MAIS ASSISTIU MÍDIAS E O COUNT - ESPERANDO
-         * IMPLEMENTAÇÃO
-         * 13. MOSTRAR CLIENTE COM MAIS AVALIAÇÕES E O COUNT - ESPERANDO IMPLEMENTAÇÃO
-         * 14. PORCENTAGEM CLIENTE COM >= 15 AVALIAÇÕES - ESPERANDO IMPLEMENTAÇÃO
-         * 15. MOSTRAR 10 MÍDIAS DE MELHOR AVALIAÇÃO (* contendo 100 avaliações, em
-         * ordem decrescente) - ESPERANDO IMPLEMENTAÇÃO
-         * 16. MOSTRAR 10 MÍDIAS COM MAIS VISUALIZAÇÕES (em ordem decrescente) -
-         * ESPERANDO IMPLEMENTAÇÃO
-         * 17. EM CADA GENERO - MOSTRAR 10 MÍDIAS DE MELHOR AVALIAÇÃO (* contendo 100
-         * avaliações, em ordem decrescente) - ESPERANDO IMPLEMENTAÇÃO
-         * 18. EM CADA GENERO - MOSTRAR 10 MÍDIAS COM MAIS VISUALIZAÇÕES (em ordem
-         * decrescente) - ESPERANDO IMPLEMENTAÇÃO
-         */
+        int opcao;
+        System.out.println("==========================");
         System.out.println("MENU PRINCIPAL");
-        System.out.println("1 - Listar filmes e series para o cliente");
-        System.out.println("2 - Login na plataforma");
-        System.out.println("3 - Fazer Logout do Sistema");
+        System.out.println("1 - Listar mídias");
+        System.out.println("2 - Fazer Login");
+        System.out.println("3 - Fazer Logout");
         System.out.println("4 - Adicionar mídia na lista para ver");
         System.out.println("5 - Assistir a uma mídia");
-        System.out.println("6 - Filtre a mídia por GÊNERO, IDIOMA OU QUANTIDADE DE EPISÓDIOS");
+        System.out.println("6 - Filtrar a mídia por gênero, idioma ou quantidade de episódios");
         System.out.println("7 - Avaliar uma mídia");
         System.out.println("8 - Comentar em uma mídia");
         System.out.println("9 - Salvar Dados");
@@ -81,100 +56,84 @@ public class App {
         System.out.println("16 - As 10 mídias com melhor avaliação do Pucflix");
         System.out.println("17 - As 10 mídias mais vistas do Pucflix em cada gênero");
         System.out.println("18 - As 10 mídias com melhor avaliação do Pucflix em cada gênero");
-
-        System.out.println("0 - Cancelar");
+        System.out.println("0 - Cancelar" + System.lineSeparator());
         System.out.print("Digite sua opção: ");
-        opcao = Integer.parseInt(sc.nextLine());
+        try {
+            opcao = Integer.parseInt(sc.nextLine());
+        } catch (Exception e) {
+            opcao = -1;
+        }
         return opcao;
     }
 
     /**
-     * Metodo para mostrar a lista de filmes ou series
-     *
-     * @throws sem throws
-     * @param Sem Param
-     * @return Sem return
+     * Metodo para mostrar a lista de mídias
      */
-    public static void listarMidia() {
-        limparConsole();
+    public static void listarMidias() {
         System.out.println(plataforma.listarMidia());
     }
 
     /**
      * Metodo de inicio para carregar todos os dados
-     *
-     * @param Sem Parametros
-     * @return Sem Return
-     * @throws Sem Throws
      */
-    public static void init() {
+    public static void carregarDados() {
         ArrayList<String> log = new ArrayList<>();
-        // fazer um init pra carregar os dados
         try {
             plataforma.carregarEspectadores();
             plataforma.carregarSeries();
             plataforma.carregarFilmes();
             plataforma.carregarAudiencia();
-            efetuarLoginSistema();
         } catch (Exception e) {
             log.add(e.getMessage());
         }
-        if (log.size() > 0) {
-            System.out.println("Dados carregados com: " + log.size() + " erros");
-
-            for (String string : log) {
+        boolean carregamentoPossuiErros = log.size() > 0;
+        if (carregamentoPossuiErros) {
+            System.out.println("Dados carregados com " + log.size() + " erro(s)");
+            for (String string : log)
                 System.out.println(string);
-            }
         } else {
-            System.out.println("Dados carregados");
-            pause();
+            System.out.println("Dados carregados com sucesso!");
         }
     }
 
-    private static void efetuarLoginSistema() {
-        boolean login = false;
-        do {
-            String nomeUsuario = "";
-            String senha = "";
-            System.out.println("");
-            System.out.println("==========================");
-            System.out.println("Efetuar Login:");
-            System.out.println("");
-            System.out.println("Digite o nome de Usuário");
-            nomeUsuario = sc.nextLine();
-            System.out.println("");
-            System.out.println("Digite a senha:");
-            senha = sc.nextLine();
-            try {
-                plataforma.login(nomeUsuario, senha);
-                login = true;
-            } catch (NameNotFoundException e) {
-                System.out.println(e.getMessage());
-            } catch (SenhaIncorretaException e) {
-                System.out.println(e.getMessage());
-            }
-            if (!login) {
-                pause();
-                limparConsole();
-            }
-        } while (!login);
+    private static void efetuarLogin() {
+        String login;
+        String senha;
+        String nomeCliente = null;
+
+        System.out.println("==========================");
+        System.out.println("Efetuar Login");
+        System.out.print("Digite o nome de usuário: ");
+        login = sc.nextLine();
+        System.out.print("Digite a senha: ");
+        senha = sc.nextLine();
+        try {
+            Cliente cliente = plataforma.login(login, senha);
+            nomeCliente = cliente.getNome();
+            System.out.println("Bem-vindo(a), " + nomeCliente + "!");
+        } catch (NameNotFoundException e) {
+            System.out.println("Erro ao fazer login: Usuário não cadastrado!");
+        } catch (SenhaIncorretaException e) {
+            System.out.println("Erro ao fazer login: Senha incorreta!");
+        }
     }
 
-    private static void fazerLogoutDoSistema() {
-        System.out.println("");
+    private static void efetuarLogout() {
         System.out.println("==========================");
         plataforma.logoff();
         System.out.println("Logout efetuado com sucesso!");
     }
 
     private static void adicionarMidiaNaListaParaVer() {
-        Midia novaMidia = null;
-        System.out.println("");
         System.out.println("==========================");
         System.out.println("Qual nome da midia deseja adicionar na lista: ");
-        String nome = sc.nextLine();
-        novaMidia = plataforma.buscar(nome);
-        plataforma.adicionarNaListaParaVer(novaMidia);
+        String nomeDaMidia = sc.nextLine();
+        Midia novaMidia = plataforma.buscar(nomeDaMidia);
+        try {
+            plataforma.adicionarNaListaParaVer(novaMidia);
+        } catch (NullPointerException e) {
+            System.out.println("Você deve estar logado para adicionar uma mídia na lista para ver!");
+        }
     }
 
     private static void registrarAudienciaDaMidia() {
@@ -194,7 +153,7 @@ public class App {
     }
 
     public static void subMenuAvaliacao(Midia novaSerie) {
-        String userId = plataforma.getCurrentUserId();
+        String userId = plataforma.getLoginClienteAtual();
         int midiaId = novaSerie.getId();
 
         System.out.println("Deseja realizar uma avaliação");
@@ -276,7 +235,6 @@ public class App {
 
     private static int subMenuParaFiltrar() {
         int opcao = -1;
-        System.out.println("");
         System.out.println("==========================");
         System.out.println("Escolha o método para filtrar");
         System.out.println("1 - Gênero");
@@ -288,16 +246,14 @@ public class App {
 
     private static void realizarUmaAvaliacao() {
         Midia novaMidia = null;
-        System.out.println("");
         System.out.println("==========================");
         System.out.println("Selecione a midia para fazer a avaliação:");
         String nome = sc.nextLine();
         novaMidia = plataforma.buscar(nome);
-        System.out.println("");
         System.out.println("Faça a avaliação:");
         int avaliacao = Integer.parseInt(sc.nextLine());
         try {
-            plataforma.registrarAvaliacao(plataforma.getCurrentUserId(), novaMidia.getId(), avaliacao);
+            plataforma.registrarAvaliacao(plataforma.getLoginClienteAtual(), novaMidia.getId(), avaliacao);
         } catch (IOException e) {
             realizarUmaAvaliacao();
             e.printStackTrace();
@@ -306,13 +262,10 @@ public class App {
 
     private static void realizarUmComentario() {
         Midia novaMidia = null;
-        System.out.println("");
         System.out.println("==========================");
         System.out.println("Selecione a midia para fazer o comentário:");
         String nome = sc.nextLine();
         novaMidia = plataforma.buscar(nome);
-
-        System.out.println("");
         System.out.println("Faça o comentário:");
         String cmt = sc.nextLine();
         // plataforma.fazerComentario(novaMidia, cmt);
@@ -320,11 +273,11 @@ public class App {
     }
 
     private static void salvarDados() {
-        System.out.println("Esperando implementação");
+        // TODO: Salvar Dados
+        System.out.println("Em breve...");
     }
 
     private static void cadastrarCliente() {
-        System.out.println("");
         System.out.println("==========================");
         System.out.println("Bem vindo novo cliente, como se chama?");
         String nome = sc.nextLine();
@@ -336,29 +289,32 @@ public class App {
         try {
             plataforma.cadastrarCliente(nome, login, senha);
         } catch (IllegalArgumentException e) {
-            // TODO Auto-generated catch block
+            System.out.println("Erro ao cadastrar cliente: Dados inválidos!");
             e.printStackTrace();
         } catch (SenhaFracaException e) {
-            // TODO Auto-generated catch block
+            System.out.println("Erro ao cadastrar cliente: Senha fraca!");
             cadastrarCliente();
         }
     }
 
-    public static void main(String[] args) throws Exception {
-
-        init();
-        int opcao = -1;
+    public static void main(String[] args) {
+        carregarDados();
+        int opcao;
         do {
             opcao = menuPrincipal();
+            limparConsole();
             switch (opcao) {
+                case 0:
+                    System.out.println("Desligando...");
+                    break;
                 case 1:
-                    listarMidia();
+                    listarMidias();
                     break;
                 case 2:
-                    efetuarLoginSistema();
+                    efetuarLogin();
                     break;
                 case 3:
-                    fazerLogoutDoSistema();
+                    efetuarLogout();
                     break;
                 case 4:
                     adicionarMidiaNaListaParaVer();
@@ -382,12 +338,42 @@ public class App {
                     cadastrarCliente();
                     break;
                 case 11:
+                    // TODO: 11 - Ver mídias em lançamento (perfil profissional)
+                    System.out.println("Em breve...");
+                    break;
+                case 12:
+                    // TODO: 12 - Cliente com mais mídias assistidas
+                    System.out.println("Em breve...");
+                    break;
+                case 13:
+                    // TODO: 13 - Cliente com mais avaliações
+                    System.out.println("Em breve...");
+                    break;
+                case 14:
+                    // TODO: 14 - Porcentagem de Clientes com >= 15 avaliações
+                    System.out.println("Em breve...");
+                    break;
+                case 15:
+                    // TODO: 15 - As 10 mídias mais vistas do Pucflix
+                    System.out.println("Em breve...");
+                    break;
+                case 16:
+                    // TODO: 16 - As 10 mídias com melhor avaliação do Pucflix
+                    System.out.println("Em breve...");
+                    break;
+                case 17:
+                    // TODO: 17 - As 10 mídias mais vistas do Pucflix em cada gênero
+                    System.out.println("Em breve...");
+                    break;
+                case 18:
+                    // TODO: 18 - As 10 mídias com melhor avaliação do Pucflix em cada gênero
+                    System.out.println("Em breve...");
                     break;
                 default:
-                    System.out.println("Selecione uma opção válida");
+                    System.out.println("Opção inválida!");
                     break;
             }
-            pause();
+            pausar();
             limparConsole();
         } while (opcao != 0);
     }
