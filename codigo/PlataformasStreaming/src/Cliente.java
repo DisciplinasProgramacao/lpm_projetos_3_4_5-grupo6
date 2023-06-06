@@ -12,7 +12,6 @@ public class Cliente {
     private String senha;
     private List<Midia> listaParaVer;
     private List<Midia> listaJaVistas;
-    
 
     /**
      * Construtor da classe Cliente.
@@ -112,7 +111,7 @@ public class Cliente {
      * @param m A mídia para a qual será registrada a audiência.
      * @throws InvalidAlgorithmParameterException
      */
-    public void registrarAudiencia(Midia m) throws  InvalidParameterSpecException {
+    public void registrarAudiencia(Midia m) throws InvalidParameterSpecException {
 
         if (listaParaVer.contains(m)) {
             listaParaVer.remove(m);
@@ -120,11 +119,10 @@ public class Cliente {
         if (!listaJaVistas.contains(m)) {
             listaJaVistas.add(m);
             m.registrarAudiencia();
-        }else{
+        } else {
             throw new InvalidParameterSpecException("Não é possível assistir uma mídia mais de uma vez");
         }
-        
-        
+
     }
 
     /**
@@ -171,4 +169,7 @@ public class Cliente {
     public void salvar() {
     }
 
+    public String getNome() {
+        return nome;
+    }
 }
