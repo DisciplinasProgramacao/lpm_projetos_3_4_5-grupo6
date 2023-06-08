@@ -1,3 +1,5 @@
+import java.io.IOException;
+
 public class Serie extends Midia {
 
     // #region Atributos
@@ -32,7 +34,8 @@ public class Serie extends Midia {
 
     /**
      * 
-     * Cria uma nova instância da classe Serie com os parâmetros especificados e gera um id automático.
+     * Cria uma nova instância da classe Serie com os parâmetros especificados e
+     * gera um id automático.
      * 
      * @param nome                o nome da série
      * @param idioma              o idioma da série
@@ -64,6 +67,14 @@ public class Serie extends Midia {
         return quantidadeEpisodios;
     }
 
+    @Override
+    public void salvar() throws IOException {
+        DAO dao = new DAO();
+        dao.salvar(Util.CAMINHO_ARQUIVO_SERIES, this.toString());
+    }
 
-
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }
