@@ -28,7 +28,7 @@ public class FilmeTest {
 
         // Teste com gênero não cadastrado
         assertThrows(IllegalArgumentException.class, () -> {
-            new Filme("Filme 1", "Inglês", "Aventura", 120.0);
+            new Filme("Filme 1", "Inglês", "OutroGenero", 120.0);
         });
 
         // Teste válido

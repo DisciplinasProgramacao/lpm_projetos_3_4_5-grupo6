@@ -5,15 +5,7 @@ public abstract class Midia {
 
     // #region Atributos
     static int proximo_id = 100;
-    static final String[] GENEROS = {
-            "Ação",
-            "Comédia",
-            "Drama",
-            "Fantasia",
-            "Horror",
-            "Mistério",
-            "Romance"
-    };
+    static final EnumGeneros[] GENEROS = EnumGeneros.values();
     private int id;
     private String nome;
     private String data;
@@ -49,13 +41,14 @@ public abstract class Midia {
         if (genero == null || genero.trim().isEmpty()) {
             throw new IllegalArgumentException("O gênero da não pode ser vazio ou nulo.");
         }
-
-        boolean existeGenero = Arrays.asList(GENEROS).contains(genero);
+        boolean existeGenero = Arrays.stream(GENEROS)
+                .map(EnumGeneros::getDescricao) // Obtém as descrições dos valores do enum
+                .anyMatch(descricao -> descricao.equals(genero)); // Verifica se alguma descrição é igual ao gênero
+                                                                  // fornecido
 
         if (!existeGenero) {
-            throw new IllegalArgumentException("O Genero não está cadastrado na plataforma");
+            throw new IllegalArgumentException("O Gênero não está cadastrado na plataforma");
         }
-
         this.nome = nome;
         this.idioma = idioma;
         this.genero = genero;
