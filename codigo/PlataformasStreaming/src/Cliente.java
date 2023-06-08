@@ -1,4 +1,5 @@
 
+import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.spec.InvalidParameterSpecException;
 import java.util.ArrayList;
@@ -166,7 +167,7 @@ public class Cliente {
         return this.login;
     }
 
-    public void salvar() {
+    public void salvar() throws IOException {
         DAO dao = new DAO();
         StringBuilder clienteParaCSV = new StringBuilder();
         clienteParaCSV.append(this.nome).append(";").append(this.login).append(this.senha);
