@@ -2,21 +2,30 @@
 
 ## Arquivos
 
-Os arquivos utilizados para leitura/escrita estão no diretório `assets` na raiz do projeto
+Os arquivos utilizados para leitura/escrita estão no diretório `assets` na raiz do projeto `PlataformasStreaming`
 
-## Configuração de Testes no VS Code
+## VS Code
 
-Se utilizar o VS Code, crie um arquivo `settings.json` no mesmo diretório do Projeto Java dessa forma
+### Workspace
+
+Para a abrir o projeto corretamente, clicar em `Arquivos` > `Abrir pasta` e selecionar a pasta `PlataformasStreaming`
+
+> Isso simplifica as configurações do projeto no VS Code, e impede por exemplo instalar a biblioteca de testes "fora" do projeto ou configurar o projeto a nível "global" e não de Workspace
+
+### Configuração de testes
+
+Crie um arquivo `settings.json` na raiz do projeto java `PlataformasStreaming`
 
 ```txt
 PlataformasStreaming
-|__src
 |__assets
+|__bin
+|__src
 |__.vscode
    |__settings.json
 ```
 
-Depois, cole a seguinte configuração no arquivo `settings.json`
+Depois, cole essa configuração no arquivo `settings.json`
 
 ```json
 {
@@ -26,4 +35,4 @@ Depois, cole a seguinte configuração no arquivo `settings.json`
 }
 ```
 
-Isso deve ser feito para não ocorrerem erros de caminhos quando forem executados testes.
+> Isso deve ser feito para não ocorrerem erros de caminhos quando forem executados testes e/ou leitura/escrita de arquivos
