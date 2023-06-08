@@ -77,7 +77,7 @@ public class PlataformaStreaming {
     }
 
     public void cadastrarCliente(String nome, String login, String senha)
-            throws IllegalArgumentException, SenhaFracaException {
+            throws IllegalArgumentException, SenhaFracaException, IOException {
         Cliente cliente = new Cliente(nome, login, senha);
         cliente.salvar();
         clientes.put(login, cliente);
@@ -310,5 +310,9 @@ public class PlataformaStreaming {
 
     public String getLoginClienteAtual() {
         return this.clienteAtual.getLogin();
+    }
+
+    public String getNome() {
+        return nome;
     }
 }

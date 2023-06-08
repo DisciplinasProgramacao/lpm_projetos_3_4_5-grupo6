@@ -288,6 +288,9 @@ public class App {
         } catch (SenhaFracaException e) {
             System.out.println("Erro ao cadastrar cliente: Senha fraca!");
             cadastrarCliente();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
     }
 

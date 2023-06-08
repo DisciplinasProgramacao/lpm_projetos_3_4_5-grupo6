@@ -167,6 +167,10 @@ public class Cliente {
     }
 
     public void salvar() {
+        DAO dao = new DAO();
+        StringBuilder clienteParaCSV = new StringBuilder();
+        clienteParaCSV.append(this.nome).append(";").append(this.login).append(this.senha);
+        dao.salvar("assets/Espectadores.csv", clienteParaCSV.toString());
     }
 
     public String getNome() {
