@@ -61,6 +61,8 @@ public abstract class Midia {
         this.genero = genero;
         this.id = proximo_id;
         proximo_id++;
+        this.qtdAvaliacoes = 0;
+        this.qtdAvaliacoes = 0;
 
         // OBSERVAÇÕES DE ESTUDO:
         // O método trim() é um método da classe String em Java que remove os espaços em
@@ -113,6 +115,8 @@ public abstract class Midia {
         this.genero = genero;
         this.data = data;
         this.id = id;
+        this.qtdAvaliacoes = 0;
+        this.qtdAvaliacoes = 0;
     }
     // #endregion Construtor
 
@@ -134,7 +138,11 @@ public abstract class Midia {
     }
 
     public float obterMediaDasAvaliacoes() {
-        return (float) this.somaAvaliacoes / this.qtdAvaliacoes;
+        if (qtdAvaliacoes == 0) {
+            return 0;
+        } else {
+            return (float) this.somaAvaliacoes / this.qtdAvaliacoes;
+        }
     }
 
     /**
