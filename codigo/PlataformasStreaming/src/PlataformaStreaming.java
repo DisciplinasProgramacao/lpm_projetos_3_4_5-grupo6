@@ -199,8 +199,22 @@ public class PlataformaStreaming {
         midias.put(id, midia);
     }
 
-    public void cadastrarFilme() {
-
+    /**
+     * * Cadastra um novo Filme no armazenamento de dados da aplicação.
+     * 
+     * @param id      ID do novo filme
+     * @param nome    Nome do novo filme
+     * @param idioma  Idioma do novo filme
+     * @param genero  Gênero do novo filme
+     * @param duracao Duração em minutos do novo filme
+     * @param data    Data de lançamento do novo filme
+     * @throws IOException
+     */
+    public void cadastrarFilme(int id, String nome, String idioma, String genero, int duracao, String data)
+            throws IOException {
+        Midia midia = new Filme(id, nome, idioma, genero, duracao, data);
+        midia.salvar();
+        midias.put(id, midia);
     }
 
     /**

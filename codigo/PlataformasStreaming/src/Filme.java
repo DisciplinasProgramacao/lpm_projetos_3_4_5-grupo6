@@ -1,3 +1,5 @@
+import java.io.IOException;
+
 public class Filme extends Midia {
 
     // #region Atributos
@@ -66,6 +68,23 @@ public class Filme extends Midia {
         return this.duracao;
     }
 
+    /**
+     * Salva o Filme no armazenamento de dados do projeto
+     * 
+     * @throws IOException
+     */
+    public void salvar() throws IOException {
+        DAO dao = new DAO();
+        dao.salvar(Util.CAMINHO_ARQUIVO_FILMES, this.toString());
+    }
 
+    @Override
+    public String toString() {
+        StringBuilder filmeParaCSV = new StringBuilder();
+        filmeParaCSV.append(super.toString());
+        filmeParaCSV.append(Util.SEPARADOR_CSV);
+        filmeParaCSV.append((int) this.duracao / 60);
+        return filmeParaCSV.toString();
+    }
 
 }
