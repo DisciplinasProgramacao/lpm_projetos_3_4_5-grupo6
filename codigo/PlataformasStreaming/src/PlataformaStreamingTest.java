@@ -1,16 +1,20 @@
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import javax.naming.NameNotFoundException;
-import Exceptions.SenhaFracaException;
-import Exceptions.SenhaIncorretaException;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
 import java.security.spec.InvalidParameterSpecException;
 import java.util.List;
+
+import javax.naming.NameNotFoundException;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import Exceptions.SenhaFracaException;
+import Exceptions.SenhaIncorretaException;
 
 public class PlataformaStreamingTest {
     private PlataformaStreaming plataforma;
@@ -120,4 +124,19 @@ public class PlataformaStreamingTest {
 
     }
 
+    @Test
+    public void deveSerPossivelCadastrarUmaNovaSerie() throws IOException {
+        plataforma.cadastrarSerie(12345678, "As Tranças do Rei Careca", "Português", "Comédia", 100, "01/01/2023");
+        String[] vetorDeSeriesCSV = Util.lerArquivo(Util.CAMINHO_ARQUIVO_SERIES).split(Util.SEPARADOR_LINHA);
+        String CSVultimaSerie = vetorDeSeriesCSV[vetorDeSeriesCSV.length - 1];
+        assertEquals("12345678;As Tranças do Rei Careca;01/01/2023", CSVultimaSerie);
+    }
+
+    @Test
+    public void deveSerPossivelCadastrarUmaNovoFilme() throws IOException {
+        plataforma.cadastrarFilme(12092000, "Jason Bourne", "Inglês", "Ação", 180, "10/11/2005");
+        String[] vetorDeFilmesCSV = Util.lerArquivo(Util.CAMINHO_ARQUIVO_FILMES).split(Util.SEPARADOR_LINHA);
+        String CSVultimoFilme = vetorDeFilmesCSV[vetorDeFilmesCSV.length - 1];
+        assertEquals("12092000;Jason Bourne;10/11/2005;180", CSVultimoFilme);
+    }
 }

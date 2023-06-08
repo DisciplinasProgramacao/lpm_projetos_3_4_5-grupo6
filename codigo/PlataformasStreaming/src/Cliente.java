@@ -26,19 +26,9 @@ public class Cliente {
      * @throws SenhaFracaException      Se a senha tiver menos de 8 caracteres.
      */
     public Cliente(String nome, String login, String senha) throws IllegalArgumentException, SenhaFracaException {
-        if (nome == null || nome.isEmpty()) {
-            throw new IllegalArgumentException("O nome do cliente não pode ser vazio.");
-        }
-        if (login == null || login.isEmpty()) {
-            throw new IllegalArgumentException("O login do cliente não pode ser vazio.");
-        }
-        if (senha == null || senha.isEmpty()) {
-            throw new IllegalArgumentException("A senha do cliente não pode ser vazia.");
-        }
-        if (senha.length() < 8) {
-            throw new SenhaFracaException("A senha deve ter pelo menos 8 caracteres.");
-        }
-
+        validarNome(nome);
+        validarLogin(login);
+        validarSenha(senha);
         this.nome = nome;
         this.login = login;
         this.senha = senha;
@@ -46,19 +36,62 @@ public class Cliente {
         this.listaJaVistas = new ArrayList<>();
     }
 
+    // #region Validação de dados
     /**
-     * Método que adiciona uma mídia na lista de mídias para ver do cliente.
-     *
-     * @param m A mídia a ser adicionada (obrigatório).
+     * Valida o nome passado como parâmetro.
+     * 
+     * @param nome
+     * @throws IllegalArgumentException
      */
-    public void adicionarNaLista(Midia m) {
-        if (!listaParaVer.contains(m)) {
-            listaParaVer.add(m);
+    private void validarNome(String nome) throws IllegalArgumentException {
+        if (nome == null || nome.isEmpty()) {
+            throw new IllegalArgumentException("O nome do cliente não pode ser vazio.");
         }
     }
 
     /**
-     * Método que remove uma mídia da lista de mídias para ver.
+     * Valida o login passado como parâmetro.
+     * 
+     * @param login
+     * @throws IllegalArgumentException
+     */
+    private void validarLogin(String login) throws IllegalArgumentException {
+        if (login == null || login.isEmpty()) {
+            throw new IllegalArgumentException("O login do cliente não pode ser vazio.");
+        }
+    }
+
+    /**
+     * Valida a senha passada como parâmetro.
+     * 
+     * @param senha
+     * @throws IllegalArgumentException
+     * @throws SenhaFracaException
+     */
+    private void validarSenha(String senha) throws IllegalArgumentException, SenhaFracaException {
+        if (senha == null || senha.isEmpty()) {
+            throw new IllegalArgumentException("A senha do cliente não pode ser vazia.");
+        }
+        if (senha.length() < 8) {
+            throw new SenhaFracaException("A senha deve ter pelo menos 8 caracteres.");
+        }
+    }
+
+    // #endregion
+
+    /**
+     * Adiciona uma mídia na lista de mídias para ver do cliente.
+     *
+     * @param midia A mídia a ser adicionada (obrigatório).
+     */
+    public void adicionarNaLista(Midia midia) {
+        if (!listaParaVer.contains(midia)) {
+            listaParaVer.add(midia);
+        }
+    }
+
+    /**
+     * Remove uma mídia da lista de mídias para ver.
      *
      * @param nomeMidia O nome da mídia que será removida da lista.
      */
@@ -66,6 +99,7 @@ public class Cliente {
         listaParaVer.removeIf(midia -> midia.getNome().equals(nomeMidia));
     }
 
+    // #region Filtros
     /**
      * Filtra as mídias por gênero.
      *
@@ -76,7 +110,6 @@ public class Cliente {
     public List<Midia> filtrarPorGenero(String genero) {
         FiltroGenero filtro = new FiltroGenero();
         return filtro.comparar(listaParaVer, genero);
-
     }
 
     /**
@@ -102,6 +135,7 @@ public class Cliente {
         FiltroTotalEp filtro = new FiltroTotalEp();
         return filtro.comparar(listaParaVer, Integer.toString(quantEpisodios));
     }
+    // #endregion
 
     /**
      * Registra uma audiência para a mídia especificada e a registra na lista de
@@ -109,33 +143,30 @@ public class Cliente {
      * Se a mídia estiver na lista de Mídias para Ver, ela é removida.
      * Se a Mídia não estiver na lista de assistida, ela é adicionada.
      *
-     * @param m A mídia para a qual será registrada a audiência.
+     * @param midia A mídia para a qual será registrada a audiência.
      * @throws InvalidAlgorithmParameterException
      */
-    public void registrarAudiencia(Midia m) throws InvalidParameterSpecException {
-
-        if (listaParaVer.contains(m)) {
-            listaParaVer.remove(m);
-        }
-        if (!listaJaVistas.contains(m)) {
-            listaJaVistas.add(m);
-            m.registrarAudiencia();
-        } else {
+    public void registrarAudiencia(Midia midia) throws InvalidParameterSpecException {
+        if (listaJaVistas.contains(midia))
             throw new InvalidParameterSpecException("Não é possível assistir uma mídia mais de uma vez");
-        }
 
+        if (listaParaVer.contains(midia))
+            listaParaVer.remove(midia);
+
+        listaJaVistas.add(midia);
+        midia.registrarAudiencia();
     }
 
     /**
      * Verifica se a senha fornecida é igual à senha armazenada neste objeto de
      * cliente.
      *
-     * @param s A senha a ser verificada.
+     * @param senha A senha a ser verificada.
      * @return true se a senha fornecida é igual à senha armazenada neste objeto de
      *         cliente, false caso contrário.
      */
-    public boolean senhaCorreta(String s) {
-        return this.senha.equals(s);
+    public boolean senhaCorreta(String senha) {
+        return this.senha.equals(senha);
     }
 
     /**
@@ -159,6 +190,29 @@ public class Cliente {
     }
 
     /**
+     * Salva o cliente no armazenamento de dados do projeto
+     * 
+     * @throws IOException
+     */
+    public void salvar() throws IOException {
+        DAO dao = new DAO();
+        dao.salvar(Util.CAMINHO_ARQUIVO_ESPECTADORES, this.toString());
+    }
+
+    /**
+     * Transforma os dados do cliente para o formato de texto.
+     * 
+     * @return os dados do cliente no formato: nome;login;senha
+     */
+    @Override
+    public String toString() {
+        StringBuilder clienteParaCSV = new StringBuilder();
+        clienteParaCSV.append(this.nome).append(";").append(this.login).append(";").append(this.senha);
+        return clienteParaCSV.toString();
+    }
+
+    // #region Getters
+    /**
      * Retorna o login do cliente.
      *
      * @return String com o login do cliente.
@@ -167,14 +221,12 @@ public class Cliente {
         return this.login;
     }
 
-    public void salvar() throws IOException {
-        DAO dao = new DAO();
-        StringBuilder clienteParaCSV = new StringBuilder();
-        clienteParaCSV.append(this.nome).append(";").append(this.login).append(this.senha);
-        dao.salvar("assets/Espectadores.csv", clienteParaCSV.toString());
-    }
-
+    /**
+     * 
+     * @return o nome do cliente
+     */
     public String getNome() {
         return nome;
     }
+    // #endregion
 }

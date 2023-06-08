@@ -1,4 +1,5 @@
 
+import java.io.IOException;
 import java.util.Arrays;
 
 public abstract class Midia {
@@ -186,17 +187,17 @@ public abstract class Midia {
 
     @Override
     public String toString() {
+        // id;nome;dataLancamento
         StringBuilder aux = new StringBuilder();
-
         aux.append(this.id);
-        aux.append(" - ");
+        aux.append(Util.SEPARADOR_CSV);
         aux.append(this.nome);
-        aux.append(" (");
-        aux.append(obterMediaDasAvaliacoes());
-        aux.append(")");
-        aux.append(System.lineSeparator());
-
+        aux.append(Util.SEPARADOR_CSV);
+        aux.append(this.data);
         return aux.toString();
     }
 
+    public void salvar() throws IOException {
+        // TODO: Verificar se precisa implementar esse método na classe mãe
+    }
 }
