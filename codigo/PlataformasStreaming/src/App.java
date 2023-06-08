@@ -38,24 +38,7 @@ public class App {
         int opcao;
         System.out.println("==========================");
         System.out.println("MENU PRINCIPAL");
-        System.out.println("1 - Listar mídias");
-        System.out.println("2 - Fazer Login");
-        System.out.println("3 - Fazer Logout");
-        System.out.println("4 - Adicionar mídia na lista para ver");
-        System.out.println("5 - Assistir a uma mídia");
-        System.out.println("6 - Filtrar a mídia por gênero, idioma ou quantidade de episódios");
-        System.out.println("7 - Avaliar uma mídia");
-        System.out.println("8 - Comentar em uma mídia");
-        System.out.println("9 - Salvar Dados");
-        System.out.println("10 - Cadastrar Cliente");
-        System.out.println("11 - Ver mídias em lançamento (perfil profissional)");
-        System.out.println("12 - Cliente com mais mídias assistidas");
-        System.out.println("13 - Cliente com mais avaliações");
-        System.out.println("14 - Porcentagem de Clientes com >= 15 avaliações");
-        System.out.println("15 - As 10 mídias mais vistas do Pucflix");
-        System.out.println("16 - As 10 mídias com melhor avaliação do Pucflix");
-        System.out.println("17 - As 10 mídias mais vistas do Pucflix em cada gênero");
-        System.out.println("18 - As 10 mídias com melhor avaliação do Pucflix em cada gênero");
+        // relatorios
         System.out.println("0 - Cancelar" + System.lineSeparator());
         System.out.print("Digite sua opção: ");
         try {
@@ -92,6 +75,9 @@ public class App {
         }
     }
 
+    /**
+     * Metodo para efetuar login no sistema
+     */
     private static void efetuarLogin() {
         String login;
         String senha;
@@ -112,12 +98,18 @@ public class App {
         }
     }
 
+    /**
+     * Metodo para efetuar logout no sistema
+     */
     private static void efetuarLogout() {
         System.out.println("==========================");
         plataforma.logoff();
         System.out.println("Logout efetuado com sucesso!");
     }
 
+    /**
+     * Metodo para adicionar uma midia na lista para ver
+     */
     private static void adicionarMidiaNaListaParaVer() {
         System.out.println("==========================");
         System.out.println("Qual nome da midia deseja adicionar na lista: ");
@@ -130,6 +122,9 @@ public class App {
         }
     }
 
+    /**
+     * Metodo para assistir uma midia
+     */
     private static void registrarAudienciaDaMidia() {
         // NAO DEIXAR O CLIENTE ATUAL ASSISTIR 2X
         Midia novaSerie = null;
@@ -146,6 +141,9 @@ public class App {
         subMenuAvaliacao(novaSerie);
     }
 
+    /**
+     * Metodo de subMenu de Avaliação
+     */
     public static void subMenuAvaliacao(Midia novaSerie) {
         String userId = plataforma.getLoginClienteAtual();
         int midiaId = novaSerie.getId();
@@ -294,82 +292,247 @@ public class App {
         }
     }
 
+    public static int subMenuPrincipal() {
+        int opcao = -1;
+        System.out.println("==========================");
+        System.out.println("MENU PRINCIPAL");
+        System.out.println("1 - Login, Logout e Registrar");
+        System.out.println("2 - Processos com as Mídias");
+        System.out.println("3 - Relatórios");
+
+        System.out.println("Sua opção:");
+        opcao = Integer.parseInt(scanner.nextLine());
+        return opcao;
+    }
+
+    public static int subMenuParaLoginLogoutRegistrar() {
+        int opcao = -1;
+        System.out.println("==========================");
+        System.out.println("Escolha uma opção: ");
+        System.out.println("1 - Fazer Login");
+        System.out.println("2 - Fazer Logout");
+        System.out.println("3 - Cadastrar Cliente");
+        System.out.println("4 - Salvar Dados");
+
+        System.out.println("Sua opção:");
+        opcao = Integer.parseInt(scanner.nextLine());
+        return opcao;
+    }
+
+    public static int subMenuParaMidias() {
+        int opcao = -1;
+        System.out.println("==========================");
+        System.out.println("Veja as opções: ");
+        System.out.println("1 - Listar mídias");
+        System.out.println("2 - Adicionar mídia na lista para ver");
+        System.out.println("3 - Assistir a uma mídia");
+        System.out.println("4 - Filtrar a mídia por gênero, idioma ou quantidade de episódios");
+        System.out.println("5 - Avaliar uma mídia");
+        System.out.println("6 - Comentar em uma mídia");
+        System.out.println("7 - Ver mídias em lançamento (perfil profissional)");
+
+        System.out.println("Sua opção:");
+        opcao = Integer.parseInt(scanner.nextLine());
+        return opcao;
+    }
+
+    public static int subMenuRelatorios() {
+        int opcao = -1;
+        System.out.println("==========================");
+        System.out.println("Veja as opções: ");
+        System.out.println("1 - Cliente com mais mídias assistidas");
+        System.out.println("2 - Cliente com mais avaliações");
+        System.out.println("3 - Porcentagem de Clientes com >= 15 avaliações");
+        System.out.println("4 - As 10 mídias mais vistas do Pucflix");
+        System.out.println("5 - As 10 mídias com melhor avaliação do Pucflix");
+        System.out.println("6 - As 10 mídias mais vistas do Pucflix em cada gênero");
+        System.out.println("7 - As 10 mídias com melhor avaliação do Pucflix em cada gênero");
+
+        System.out.println("Sua opção:");
+        opcao = Integer.parseInt(scanner.nextLine());
+        return opcao;
+    }
+
+    public static void subSwitchLoginLogoutRegistrar() {
+        int opcao = subMenuParaLoginLogoutRegistrar();
+        switch (opcao) {
+            case 1:
+                efetuarLogin();
+                break;
+            case 2:
+                efetuarLogout();
+                break;
+            case 3:
+                cadastrarCliente();
+                break;
+            case 4:
+                salvarDados();
+                break;
+            default:
+                break;
+        }
+    }
+
+    public static void subSwitchMidias() {
+        int opcao = subMenuParaMidias();
+        switch (opcao) {
+            case 1:
+                listarMidias();
+                break;
+            case 2:
+                adicionarMidiaNaListaParaVer();
+                break;
+            case 3:
+                registrarAudienciaDaMidia();
+                break;
+            case 4:
+                filtrarMidia();
+                break;
+            case 5:
+                realizarUmaAvaliacao();
+                break;
+            case 6:
+                realizarUmComentario();
+                break;
+            case 7:
+                // TODO: 7 - Ver mídias em lançamento (perfil profissional)
+                System.out.println("Em breve...");
+                break;
+            default:
+                break;
+        }
+    }
+
+    public static void subSwitchRelatorios() {
+        int opcao = subMenuParaLoginLogoutRegistrar();
+        switch (opcao) {
+            case 1:
+                // TODO: 12 - Cliente com mais mídias assistidas
+                System.out.println("Em breve...");
+                break;
+            case 2:
+                // TODO: 13 - Cliente com mais avaliações
+                System.out.println("Em breve...");
+                break;
+            case 3:
+                // TODO: 14 - Porcentagem de Clientes com >= 15 avaliações
+                System.out.println("Em breve...");
+                break;
+            case 4:
+                // TODO: 15 - As 10 mídias mais vistas do Pucflix
+                System.out.println("Em breve...");
+                break;
+            case 5:
+                // TODO: 16 - As 10 mídias com melhor avaliação do Pucflix
+                System.out.println("Em breve...");
+                break;
+            case 6:
+                // TODO: 17 - As 10 mídias mais vistas do Pucflix em cada gênero
+                System.out.println("Em breve...");
+                break;
+            case 7:
+                // TODO: 18 - As 10 mídias com melhor avaliação do Pucflix em cada gênero
+                System.out.println("Em breve...");
+                break;
+            default:
+                break;
+        }
+    }
+
     public static void main(String[] args) {
         carregarDados();
         int opcao;
         do {
-            opcao = menuPrincipal();
+            opcao = subMenuPrincipal();
             limparConsole();
             switch (opcao) {
-                case 0:
-                    System.out.println("Desligando...");
-                    break;
                 case 1:
-                    listarMidias();
+                    subSwitchLoginLogoutRegistrar();
                     break;
                 case 2:
-                    efetuarLogin();
+                    subSwitchMidias();
                     break;
                 case 3:
-                    efetuarLogout();
-                    break;
-                case 4:
-                    adicionarMidiaNaListaParaVer();
-                    break;
-                case 5:
-                    registrarAudienciaDaMidia();
-                    break;
-                case 6:
-                    filtrarMidia();
-                    break;
-                case 7:
-                    realizarUmaAvaliacao();
-                    break;
-                case 8:
-                    realizarUmComentario();
-                    break;
-                case 9:
-                    salvarDados();
-                    break;
-                case 10:
-                    cadastrarCliente();
-                    break;
-                case 11:
-                    // TODO: 11 - Ver mídias em lançamento (perfil profissional)
-                    System.out.println("Em breve...");
-                    break;
-                case 12:
-                    // TODO: 12 - Cliente com mais mídias assistidas
-                    System.out.println("Em breve...");
-                    break;
-                case 13:
-                    // TODO: 13 - Cliente com mais avaliações
-                    System.out.println("Em breve...");
-                    break;
-                case 14:
-                    // TODO: 14 - Porcentagem de Clientes com >= 15 avaliações
-                    System.out.println("Em breve...");
-                    break;
-                case 15:
-                    // TODO: 15 - As 10 mídias mais vistas do Pucflix
-                    System.out.println("Em breve...");
-                    break;
-                case 16:
-                    // TODO: 16 - As 10 mídias com melhor avaliação do Pucflix
-                    System.out.println("Em breve...");
-                    break;
-                case 17:
-                    // TODO: 17 - As 10 mídias mais vistas do Pucflix em cada gênero
-                    System.out.println("Em breve...");
-                    break;
-                case 18:
-                    // TODO: 18 - As 10 mídias com melhor avaliação do Pucflix em cada gênero
-                    System.out.println("Em breve...");
+                    subSwitchRelatorios();
                     break;
                 default:
                     System.out.println("Opção inválida!");
                     break;
+
             }
+            /*
+             * switch (opcao) {
+             * case 0:
+             * System.out.println("Desligando...");
+             * break;
+             * case 1:
+             * listarMidias();
+             * break;
+             * case 2:
+             * efetuarLogin();
+             * break;
+             * case 3:
+             * efetuarLogout();
+             * break;
+             * case 4:
+             * adicionarMidiaNaListaParaVer();
+             * break;
+             * case 5:
+             * registrarAudienciaDaMidia();
+             * break;
+             * case 6:
+             * filtrarMidia();
+             * break;
+             * case 7:
+             * realizarUmaAvaliacao();
+             * break;
+             * case 8:
+             * realizarUmComentario();
+             * break;
+             * case 9:
+             * salvarDados();
+             * break;
+             * case 10:
+             * cadastrarCliente();
+             * break;
+             * /
+             * case 11:
+             * // TODO: 11 - Ver mídias em lançamento (perfil profissional)
+             * System.out.println("Em breve...");
+             * break;
+             * case 12:
+             * // TODO: 12 - Cliente com mais mídias assistidas
+             * System.out.println("Em breve...");
+             * break;
+             * case 13:
+             * // TODO: 13 - Cliente com mais avaliações
+             * System.out.println("Em breve...");
+             * break;
+             * case 14:
+             * // TODO: 14 - Porcentagem de Clientes com >= 15 avaliações
+             * System.out.println("Em breve...");
+             * break;
+             * case 15:
+             * // TODO: 15 - As 10 mídias mais vistas do Pucflix
+             * System.out.println("Em breve...");
+             * break;
+             * case 16:
+             * // TODO: 16 - As 10 mídias com melhor avaliação do Pucflix
+             * System.out.println("Em breve...");
+             * break;
+             * case 17:
+             * // TODO: 17 - As 10 mídias mais vistas do Pucflix em cada gênero
+             * System.out.println("Em breve...");
+             * break;
+             * case 18:
+             * // TODO: 18 - As 10 mídias com melhor avaliação do Pucflix em cada gênero
+             * System.out.println("Em breve...");
+             * break;
+             * default:
+             * System.out.println("Opção inválida!");
+             * break;
+             * }
+             */
             pausar();
             limparConsole();
         } while (opcao != 0);
