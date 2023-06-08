@@ -10,6 +10,9 @@ import java.util.Random;
 
 public class Util {
     static Random random = new Random();
+    public static final String CAMINHO_ARQUIVO_SERIES = "assets/Series.csv";
+    public static final String SEPARADOR_CSV = ";";
+    public static final String SEPARADOR_LINHA = System.lineSeparator();
 
     /**
      * Lê o conteúdo de um arquivo.
