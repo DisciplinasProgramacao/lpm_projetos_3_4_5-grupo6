@@ -8,7 +8,6 @@ import java.util.List;
 import Exceptions.SenhaFracaException;
 
 public class Cliente {
-    private static final String CAMINHO_ARQUIVO_ESPECTADORES = "assets/Espectadores.csv";
     private String nome;
     private String login;
     private String senha;
@@ -197,7 +196,7 @@ public class Cliente {
      */
     public void salvar() throws IOException {
         DAO dao = new DAO();
-        dao.salvar(CAMINHO_ARQUIVO_ESPECTADORES, this.toString());
+        dao.salvar(Util.CAMINHO_ARQUIVO_ESPECTADORES, this.toString());
     }
 
     /**
