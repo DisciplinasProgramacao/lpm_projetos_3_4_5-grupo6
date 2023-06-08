@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.security.InvalidParameterException;
 import java.security.spec.InvalidParameterSpecException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -76,6 +77,19 @@ public class PlataformaStreaming {
         this.clientes.put(cliente.getLogin(), cliente);
     }
 
+    /**
+     * Salvar um novo cliente na plataforma
+     * 
+     * @param nome  nome do cliente
+     * @param login login do cliente (nome de usuário)
+     * @param senha senha do cliente
+     * @throws IllegalArgumentException se os valores informados não são válidos
+     *                                  para registrar um cliente (exemplo: login em
+     *                                  branco)
+     * @throws SenhaFracaException      se a senha não atende aos requisitos de uma
+     *                                  senha forte
+     * @throws IOException              se
+     */
     public void cadastrarCliente(String nome, String login, String senha)
             throws IllegalArgumentException, SenhaFracaException, IOException {
         Cliente cliente = new Cliente(nome, login, senha);
@@ -167,7 +181,25 @@ public class PlataformaStreaming {
         }
     }
 
-    public void cadastrarSerie(String id, String nome, String dataLancamento) {
+    /**
+     * Cadastra uma nova Serie no armazenamento de dados da aplicação.
+     * 
+     * @param id                  ID da nova série
+     * @param nome                nome da nova série
+     * @param idioma              idioma da nova série
+     * @param genero              gênero da nova série
+     * @param quantidadeEpisodios episódios da nova série
+     * @param data                data de lançamento da nova série
+     * @throws IOException
+     */
+    public void cadastrarSerie(int id, String nome, String idioma, String genero, int quantidadeEpisodios,
+            String data) throws IOException {
+        Midia midia = new Serie(id, nome, idioma, genero, quantidadeEpisodios, data);
+        midia.salvar();
+        midias.put(id, midia);
+    }
+
+    public void cadastrarFilme() {
 
     }
 
@@ -303,9 +335,18 @@ public class PlataformaStreaming {
         clienteAtual.adicionarNaLista(novaMidia);
     }
 
-    public List<Midia> listarMidia() {
-        List<Midia> copia = new ArrayList<>(midias.values());
-        return copia;
+    /**
+     * Dados de texto no formato CSV que representa as Mídias cadastradas
+     * 
+     * @return
+     */
+    public String listarMidia() {
+        StringBuilder listaDeMidias = new StringBuilder();
+        for (Midia midia : midias.values()) {
+            listaDeMidias.append(midia.toString());
+            listaDeMidias.append(Util.SEPARADOR_LINHA);
+        }
+        return listaDeMidias.toString();
     }
 
     public String getLoginClienteAtual() {
