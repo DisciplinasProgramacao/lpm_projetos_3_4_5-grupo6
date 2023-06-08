@@ -64,17 +64,10 @@ public class Util {
     }
 
     public static String gerarNovoGenero() {
-        String[] genero = {
-                "Ação",
-                "Comédia",
-                "Drama",
-                "Fantasia",
-                "Horror",
-                "Mistério",
-                "Romance"
-        };
-        int numeroAleatorio = random.nextInt(1, 7);
-        return genero[numeroAleatorio];
+        EnumGeneros[] generos = EnumGeneros.values();
+
+        int numeroAleatorio = random.nextInt(0, generos.length);
+        return generos[numeroAleatorio].getDescricao();
     }
 
     public static String gerarNovoIdioma() {
