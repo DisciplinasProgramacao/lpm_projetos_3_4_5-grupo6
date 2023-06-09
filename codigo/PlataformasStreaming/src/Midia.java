@@ -98,7 +98,11 @@ public abstract class Midia {
             throw new IllegalArgumentException("O id não pode ser negativo");
         }
 
-        boolean existeGenero = Arrays.asList(GENEROS).contains(genero);
+       boolean existeGenero = Arrays.stream(GENEROS)
+                .map(EnumGeneros::getDescricao) // Obtém as descrições dos valores do enum
+                .anyMatch(descricao -> descricao.equals(genero)); // Verifica se alguma descrição é igual ao gênero
+                                                                  // fornecido
+
 
         if (!existeGenero) {
             throw new IllegalArgumentException("O Genero não está cadastrado na plataforma");
