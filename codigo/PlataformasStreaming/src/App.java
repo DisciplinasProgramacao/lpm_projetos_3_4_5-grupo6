@@ -182,6 +182,9 @@ public class App {
 
     };
 
+    /*
+     * Metodo para filtrar midia por genero
+     */
     public static void filtrarPorGenero() {
         List<Midia> arrayList = new ArrayList<>();
         System.out.println("Digite o gênero:");
@@ -190,6 +193,9 @@ public class App {
         System.out.println(arrayList);
     }
 
+    /*
+     * Metodo para filtrar midia por idioma
+     */
     public static void filtrarPorIdioma() {
         List<Midia> arrayList = new ArrayList<>();
         System.out.println("Digite o idioma:");
@@ -199,6 +205,9 @@ public class App {
 
     }
 
+    /*
+     * Metodo para filtrar midia por quantidade de episodios
+     */
     public static void filtrarPorQuantidadeEpisodios() {
         List<Midia> arrayList = new ArrayList<>();
         System.out.println("Digite o número de episódios:");
@@ -207,6 +216,9 @@ public class App {
         System.out.println(arrayList);
     }
 
+    /*
+     * Metodo com switch para chama dos metodos de filtros
+     */
     private static void filtrarMidia() {
         int opcao = subMenuParaFiltrar();
         switch (opcao) {
@@ -225,6 +237,9 @@ public class App {
         }
     }
 
+    /*
+     * Metodo com submenu para escolha do filtro
+     */
     private static int subMenuParaFiltrar() {
         int opcao = -1;
         System.out.println("==========================");
@@ -236,6 +251,9 @@ public class App {
         return opcao;
     }
 
+    /*
+     * Metodo para realizar uma avaliação de uma midia
+     */
     private static void realizarUmaAvaliacao() {
         Midia novaMidia = null;
         System.out.println("==========================");
@@ -252,6 +270,9 @@ public class App {
         }
     }
 
+    /*
+     * Metodo para realizar um comentario em uma midia
+     */
     private static void realizarUmComentario() {
         Midia novaMidia = null;
         System.out.println("==========================");
@@ -264,11 +285,17 @@ public class App {
         System.out.println("Obrigado por contribuir!");
     }
 
+    /*
+     * Metodo para salvar dados
+     */
     private static void salvarDados() {
         // TODO: Salvar Dados
         System.out.println("Em breve...");
     }
 
+    /*
+     * Metodo para cadastrar um Cliente na plataforma
+     */
     private static void cadastrarCliente() {
         System.out.println("==========================");
         System.out.println("Bem vindo novo cliente, como se chama?");
@@ -292,6 +319,9 @@ public class App {
         }
     }
 
+    /*
+     * Metodo com sub menu principal
+     */
     public static int subMenuPrincipal() {
         int opcao = -1;
         System.out.println("==========================");
@@ -305,6 +335,10 @@ public class App {
         return opcao;
     }
 
+    /*
+     * Metodo com sub menu do sub menu, o cliente pode realizar tarefas que estão
+     * relacionados a ele
+     */
     public static int subMenuParaLoginLogoutRegistrar() {
         int opcao = -1;
         System.out.println("==========================");
@@ -319,6 +353,10 @@ public class App {
         return opcao;
     }
 
+    /*
+     * Metodo com sub menu do sub menu, o cliente pode realizar tarefas com as
+     * midias
+     */
     public static int subMenuParaMidias() {
         int opcao = -1;
         System.out.println("==========================");
@@ -336,6 +374,9 @@ public class App {
         return opcao;
     }
 
+    /*
+     * Metodo com sub menu do sub menu, o cliente pode verificar os relatórios
+     */
     public static int subMenuRelatorios() {
         int opcao = -1;
         System.out.println("==========================");
@@ -353,6 +394,9 @@ public class App {
         return opcao;
     }
 
+    /*
+     * Switch com os metodos de tarefas relacionadas ao cliente
+     */
     public static void subSwitchLoginLogoutRegistrar() {
         int opcao = subMenuParaLoginLogoutRegistrar();
         switch (opcao) {
@@ -373,6 +417,9 @@ public class App {
         }
     }
 
+    /*
+     * Switch com os metodos de tarefas relacionadas as midias
+     */
     public static void subSwitchMidias() {
         int opcao = subMenuParaMidias();
         switch (opcao) {
@@ -403,6 +450,9 @@ public class App {
         }
     }
 
+    /*
+     * Switch com os metodos de tarefas relacionadas aos relatórios
+     */
     public static void subSwitchRelatorios() {
         int opcao = subMenuParaLoginLogoutRegistrar();
         switch (opcao) {
@@ -460,79 +510,6 @@ public class App {
                     break;
 
             }
-            /*
-             * switch (opcao) {
-             * case 0:
-             * System.out.println("Desligando...");
-             * break;
-             * case 1:
-             * listarMidias();
-             * break;
-             * case 2:
-             * efetuarLogin();
-             * break;
-             * case 3:
-             * efetuarLogout();
-             * break;
-             * case 4:
-             * adicionarMidiaNaListaParaVer();
-             * break;
-             * case 5:
-             * registrarAudienciaDaMidia();
-             * break;
-             * case 6:
-             * filtrarMidia();
-             * break;
-             * case 7:
-             * realizarUmaAvaliacao();
-             * break;
-             * case 8:
-             * realizarUmComentario();
-             * break;
-             * case 9:
-             * salvarDados();
-             * break;
-             * case 10:
-             * cadastrarCliente();
-             * break;
-             * /
-             * case 11:
-             * // TODO: 11 - Ver mídias em lançamento (perfil profissional)
-             * System.out.println("Em breve...");
-             * break;
-             * case 12:
-             * // TODO: 12 - Cliente com mais mídias assistidas
-             * System.out.println("Em breve...");
-             * break;
-             * case 13:
-             * // TODO: 13 - Cliente com mais avaliações
-             * System.out.println("Em breve...");
-             * break;
-             * case 14:
-             * // TODO: 14 - Porcentagem de Clientes com >= 15 avaliações
-             * System.out.println("Em breve...");
-             * break;
-             * case 15:
-             * // TODO: 15 - As 10 mídias mais vistas do Pucflix
-             * System.out.println("Em breve...");
-             * break;
-             * case 16:
-             * // TODO: 16 - As 10 mídias com melhor avaliação do Pucflix
-             * System.out.println("Em breve...");
-             * break;
-             * case 17:
-             * // TODO: 17 - As 10 mídias mais vistas do Pucflix em cada gênero
-             * System.out.println("Em breve...");
-             * break;
-             * case 18:
-             * // TODO: 18 - As 10 mídias com melhor avaliação do Pucflix em cada gênero
-             * System.out.println("Em breve...");
-             * break;
-             * default:
-             * System.out.println("Opção inválida!");
-             * break;
-             * }
-             */
             pausar();
             limparConsole();
         } while (opcao != 0);
