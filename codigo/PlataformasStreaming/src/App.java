@@ -367,9 +367,8 @@ public class App {
         System.out.println("4 - Filtrar a mídia por gênero, idioma ou quantidade de episódios");
         System.out.println("5 - Avaliar uma mídia");
         System.out.println("6 - Comentar em uma mídia");
-        System.out.println("7 - Ver mídias em lançamento (perfil profissional)");
-        System.out.println("8 - Cadastrar Serie");
-        System.out.println("9 - Cadastrar filme");
+        System.out.println("7 - Cadastrar Serie");
+        System.out.println("8 - Cadastrar filme");
         System.out.println("Sua opção:");
         opcao = Integer.parseInt(scanner.nextLine());
         return opcao;
@@ -458,6 +457,46 @@ public class App {
         System.out.println("Série cadastrada com sucesso!");
     }
 
+    private static void cadastrarFilme() throws IOException {
+        System.out.println();
+        System.out.println("==========================");
+        System.out.println("Cadastro de filme:");
+
+        System.out.println("Qual o id do filme:");
+        int id = Integer.parseInt(scanner.nextLine());
+
+        System.out.println("Qual o nome do filme:");
+        String nome = scanner.nextLine();
+
+        System.out.println("Qual o gênero do filme:");
+        EnumGeneros[] generos = EnumGeneros.values();
+        System.out.println();
+        for (EnumGeneros enumGeneros : generos) {
+            System.out.println(enumGeneros.getDescricao());
+        }
+        System.out.println();
+        String genero = scanner.nextLine();
+
+        System.out.println("Qual o idioma do filme:");
+        String idioma = scanner.nextLine();
+
+        System.out.println("Qual a duração:");
+        int duracao = Integer.parseInt(scanner.nextLine());
+
+        System.out.println("Qual a data de lançamento do filme:");
+        String data = scanner.nextLine();
+
+        try {
+            plataforma.cadastrarFilme(id, nome, idioma, genero, duracao, data);
+        } catch (IOException e) {
+            System.out.println("Tente novamente, erro ao cadastrar o filme.");
+            System.out.println("Problema encontrado: " + e.getMessage());
+
+            cadastrarFilme();
+        }
+        System.out.println("Filme cadastrado com sucesso!");
+    }
+
     /*
      * Switch com os metodos de tarefas relacionadas as midias
      */
@@ -488,7 +527,7 @@ public class App {
                 break;
             case 8:
                 // TODO: 9 - cadastrar filmes
-                System.out.println("Em breve...");
+                cadastrarFilme();
                 break;
             default:
                 break;
