@@ -368,7 +368,8 @@ public class App {
         System.out.println("5 - Avaliar uma mídia");
         System.out.println("6 - Comentar em uma mídia");
         System.out.println("7 - Ver mídias em lançamento (perfil profissional)");
-
+        System.out.println("8 - Cadastrar Serie");
+        System.out.println("9 - Cadastrar filme");
         System.out.println("Sua opção:");
         opcao = Integer.parseInt(scanner.nextLine());
         return opcao;
@@ -417,10 +418,50 @@ public class App {
         }
     }
 
+    private static void cadastrarSerie() throws IOException {
+        System.out.println();
+        System.out.println("==========================");
+        System.out.println("Cadastro de série:");
+
+        System.out.println("Qual o id da série:");
+        int id = Integer.parseInt(scanner.nextLine());
+
+        System.out.println("Qual o nome da série:");
+        String nome = scanner.nextLine();
+
+        System.out.println("Qual o gênero da série:");
+        EnumGeneros[] generos = EnumGeneros.values();
+        System.out.println();
+        for (EnumGeneros enumGeneros : generos) {
+            System.out.println(enumGeneros.getDescricao());
+        }
+        System.out.println();
+        String genero = scanner.nextLine();
+
+        System.out.println("Qual o idioma da série:");
+        String idioma = scanner.nextLine();
+
+        System.out.println("Qual a quantidade de episódios:");
+        int qtdEp = Integer.parseInt(scanner.nextLine());
+
+        System.out.println("Qual a data de lançamento da série:");
+        String data = scanner.nextLine();
+
+        try {
+            plataforma.cadastrarSerie(id, nome, idioma, genero, qtdEp, data);
+        } catch (IOException e) {
+            System.out.println("Tente novamente, erro ao cadastrar a serie.");
+            System.out.println("Problema encontrado: " + e.getMessage());
+
+            cadastrarSerie();
+        }
+        System.out.println("Série cadastrada com sucesso!");
+    }
+
     /*
      * Switch com os metodos de tarefas relacionadas as midias
      */
-    public static void subSwitchMidias() {
+    public static void subSwitchMidias() throws IOException {
         int opcao = subMenuParaMidias();
         switch (opcao) {
             case 1:
@@ -442,7 +483,11 @@ public class App {
                 realizarUmComentario();
                 break;
             case 7:
-                // TODO: 7 - Ver mídias em lançamento (perfil profissional)
+                // TODO: 8 - Cadastrar series
+                cadastrarSerie();
+                break;
+            case 8:
+                // TODO: 9 - cadastrar filmes
                 System.out.println("Em breve...");
                 break;
             default:
@@ -489,7 +534,7 @@ public class App {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         carregarDados();
         int opcao;
         do {
