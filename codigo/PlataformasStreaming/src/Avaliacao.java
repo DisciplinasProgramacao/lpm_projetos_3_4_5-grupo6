@@ -1,16 +1,16 @@
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
 import java.security.InvalidParameterException;
 import java.security.spec.InvalidParameterSpecException;
 import java.util.Date;
 
+@Data
 public class Avaliacao {
 
     private String login;
     private Date dataDaAvaliacao;
     private int pontuacao;
-
-    public String getLogin() {
-        return login;
-    }
 
     public Avaliacao(String login, int pontuacao) {
         if (login == null) {
