@@ -522,11 +522,9 @@ public class App {
                 realizarUmComentario();
                 break;
             case 7:
-                // TODO: 8 - Cadastrar series
                 cadastrarSerie();
                 break;
             case 8:
-                // TODO: 9 - cadastrar filmes
                 cadastrarFilme();
                 break;
             default:
@@ -541,31 +539,31 @@ public class App {
         int opcao = subMenuParaLoginLogoutRegistrar();
         switch (opcao) {
             case 1:
-                // TODO: 12 - Cliente com mais mídias assistidas
+                // TODO: Cliente com mais mídias assistidas
                 System.out.println("Em breve...");
                 break;
             case 2:
-                // TODO: 13 - Cliente com mais avaliações
+                // TODO: Cliente com mais avaliações
                 System.out.println("Em breve...");
                 break;
             case 3:
-                // TODO: 14 - Porcentagem de Clientes com >= 15 avaliações
+                // TODO: Porcentagem de Clientes com >= 15 avaliações
                 System.out.println("Em breve...");
                 break;
             case 4:
-                // TODO: 15 - As 10 mídias mais vistas do Pucflix
+                // TODO: As 10 mídias mais vistas do Pucflix
                 System.out.println("Em breve...");
                 break;
             case 5:
-                // TODO: 16 - As 10 mídias com melhor avaliação do Pucflix
+                // TODO: As 10 mídias com melhor avaliação do Pucflix
                 System.out.println("Em breve...");
                 break;
             case 6:
-                // TODO: 17 - As 10 mídias mais vistas do Pucflix em cada gênero
+                // TODO: As 10 mídias mais vistas do Pucflix em cada gênero
                 System.out.println("Em breve...");
                 break;
             case 7:
-                // TODO: 18 - As 10 mídias com melhor avaliação do Pucflix em cada gênero
+                // TODO: As 10 mídias com melhor avaliação do Pucflix em cada gênero
                 System.out.println("Em breve...");
                 break;
             default:
