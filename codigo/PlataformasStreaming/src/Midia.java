@@ -1,6 +1,9 @@
 
 import java.io.IOException;
+import java.security.InvalidParameterException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public abstract class Midia {
 
@@ -15,6 +18,7 @@ public abstract class Midia {
     private int audiencia;
     private int somaAvaliacoes;
     private int qtdAvaliacoes;
+    private List<Avaliacao> avaliacao;
 
     // #endregion
 
@@ -50,6 +54,7 @@ public abstract class Midia {
         if (!existeGenero) {
             throw new IllegalArgumentException("O Gênero não está cadastrado na plataforma");
         }
+        this.avaliacao = new ArrayList<>();
         this.nome = nome;
         this.idioma = idioma;
         this.genero = genero;
@@ -108,6 +113,7 @@ public abstract class Midia {
             throw new IllegalArgumentException("O Genero não está cadastrado na plataforma");
         }
 
+        this.avaliacao = new ArrayList<>();
         this.nome = nome;
         this.idioma = idioma;
         this.genero = genero;
@@ -203,5 +209,15 @@ public abstract class Midia {
 
     public void salvar() throws IOException {
         // TODO: Verificar se precisa implementar esse método na classe mãe
+    }
+
+    public void addAvaliacao(Avaliacao avaliacao){
+        boolean existe = this.avaliacao.stream().anyMatch(a -> avaliacao.getLogin().equals(a.getLogin()));
+
+        if (existe){
+        this.avaliacao.add(avaliacao);
+        } else {
+            throw new IllegalArgumentException("Este cliente já avaliou esta mídia");
+        }
     }
 }
