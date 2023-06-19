@@ -190,7 +190,14 @@ public class App {
         System.out.println("Digite o gênero:");
         String genero = scanner.nextLine();
         arrayList = plataforma.filtrarPorGenero(genero);
-        System.out.println(arrayList);
+        if (arrayList.size() < 1) {
+            System.out.println("Não há mídias com esse gênero.");
+        } else {
+            for (Midia midia : arrayList) {
+                System.out.println(midia);
+            }
+        }
+
     }
 
     /*
@@ -201,8 +208,13 @@ public class App {
         System.out.println("Digite o idioma:");
         String idioma = scanner.nextLine();
         arrayList = plataforma.filtrarPorIdioma(idioma);
-        System.out.println(arrayList);
-
+        if (arrayList.size() < 1) {
+            System.out.println("Não há mídias com esse gênero.");
+        } else {
+            for (Midia midia : arrayList) {
+                System.out.println(midia);
+            }
+        }
     }
 
     /*
@@ -213,7 +225,13 @@ public class App {
         System.out.println("Digite o número de episódios:");
         int qtd = Integer.parseInt(scanner.nextLine());
         arrayList = plataforma.filtrarPorQtdEpisodios(qtd);
-        System.out.println(arrayList);
+        if (arrayList.size() < 1) {
+            System.out.println("Não há mídias com esse gênero.");
+        } else {
+            for (Midia midia : arrayList) {
+                System.out.println(midia);
+            }
+        }
     }
 
     /*
@@ -536,7 +554,7 @@ public class App {
      * Switch com os metodos de tarefas relacionadas aos relatórios
      */
     public static void subSwitchRelatorios() {
-        int opcao = subMenuParaLoginLogoutRegistrar();
+        int opcao = subMenuRelatorios();
         switch (opcao) {
             case 1:
                 // TODO: Cliente com mais mídias assistidas
