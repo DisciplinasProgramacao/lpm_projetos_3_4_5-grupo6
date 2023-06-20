@@ -17,8 +17,9 @@ public class Avaliacao {
      * 
      * Constrói um novo objeto Avaliacao com o login e pontuação especificados.
      * 
-     * @param login     o login do usuário que fez a avaliação
-     * @param avaliacao a pontuação da avaliação (entre 1 e 5)
+     * @param login           o login do usuário que fez a avaliação
+     * @param avaliacao       a pontuação da avaliação (entre 1 e 5)
+     * @param midiaIdAvaliada o identificador da mídia avaliada
      * @throws InvalidParameterException se o login for nulo ou a pontuação estiver
      *                                   fora do intervalo válido
      */
@@ -29,6 +30,27 @@ public class Avaliacao {
         this.login = login;
         this.pontuacao = avaliacao;
         this.dataDaAvaliacao = new Date();
+        this.midiaIdAvaliada = midiaIdAvaliada;
+    }
+
+    /**
+     * 
+     * Constrói um novo objeto Avaliacao com o login e pontuação especificados.
+     * 
+     * @param login           o login do usuário que fez a avaliação
+     * @param avaliacao       a pontuação da avaliação (entre 1 e 5)
+     * @param midiaIdAvaliada o identificador da mídia avaliada
+     * @param data            data da avaliação
+     * @throws InvalidParameterException se o login for nulo ou a pontuação estiver
+     *                                   fora do intervalo válido
+     */
+    public Avaliacao(String login, int avaliacao, int midiaIdAvaliada, Date data) throws InvalidParameterException {
+        validarLogin(login);
+        validarPontuacao(avaliacao);
+        validarIdMidia(midiaIdAvaliada);
+        this.login = login;
+        this.pontuacao = avaliacao;
+        this.dataDaAvaliacao = data;
         this.midiaIdAvaliada = midiaIdAvaliada;
     }
 
@@ -44,10 +66,10 @@ public class Avaliacao {
         auxCSV.append(dataDaAvaliacao);
         DAO dao = new DAO();
         dao.salvar(path_avaliacoes, auxCSV.toString());
-    } 
-        
-    public void validarIdMidia(int midia){
-         if (midia == 0) {
+    }
+
+    public void validarIdMidia(int midia) {
+        if (midia == 0) {
             throw new InvalidParameterException("Valor da mídia inválido");
         }
     }

@@ -1,6 +1,10 @@
 import java.io.IOException;
 import java.security.spec.InvalidParameterSpecException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -302,6 +306,38 @@ public class PlataformaStreaming {
     }
 
     /**
+     * Carrega as avaliações a partir de um arquivo CSV.
+     * O arquivo deve seguir o formato "userId;MidiaId;Avaliacao;data".
+     * Cada linha do arquivo representa uma avaliação.
+     *
+     * @throws IOException                   se ocorrer um erro de leitura do
+     *                                       arquivo
+     * @throws InvalidParameterSpecException se houver um parâmetro inválido no
+     *                                       arquivo de avaliações
+     */
+    public void carregarAvaliacoes() throws IOException, InvalidParameterSpecException {
+        String path = "assets/Avaliacoes.csv";
+        DateFormat formatoData = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
+        String[] todosOsDados = Util.lerArquivo(path).split(System.lineSeparator());
+
+        for (String avaliacaoCSV : todosOsDados) {
+            String[] avaliacao = avaliacaoCSV.split(";");
+
+            String userID = avaliacao[0];
+            int midiaId = Integer.parseInt(avaliacao[1]);
+            int pontuacao = Integer.parseInt(avaliacao[2]);
+            String dataString = avaliacao[3];
+            Date data;
+            try {
+                data = formatoData.parse(dataString);
+            } catch (ParseException e) {
+                throw new IOException("Erro ao carregar a data");
+            }
+            registrarAvaliacao(userID, midiaId, pontuacao, data);
+        }
+    }
+
+    /**
      * Busca uma mídia pelo nome.
      *
      * @param referencia O nome da série a ser buscada.
@@ -363,6 +399,46 @@ public class PlataformaStreaming {
         }
 
         Avaliacao novaAvaliacao = new Avaliacao(userLogin, avaliacao, midiaId);
+        newMidia.addAvaliacao(novaAvaliacao);
+        novaAvaliacao.salvar();
+    }
+
+    /**
+     * Registra uma avaliação de um usuário para uma determinada mídia.
+     *
+     * @param userLogin O login do usuário que está fazendo a avaliação.
+     * @param midiaId   O ID da mídia que está sendo avaliada.
+     * @param avaliacao A avaliação atribuída à mídia.
+     * @param data      A data da avaliação.
+     * @throws IOException              Se ocorrer um erro durante o processo de
+     *                                  registro da avaliação.
+     * @throws IllegalArgumentException Se algum dos parâmetros fornecidos for
+     *                                  inválido.
+     */
+    public void registrarAvaliacao(String userLogin, int midiaId, int avaliacao, Date data)
+            throws IOException, IllegalArgumentException {
+        Midia newMidia = this.buscar(midiaId);
+
+        // Validação do userLogin
+        if (userLogin == null || userLogin.isEmpty()) {
+            throw new IllegalArgumentException("O login do usuário não pode ser nulo ou vazio.");
+        }
+
+        if (newMidia == null) {
+            throw new IllegalArgumentException("O identificador da mídia está incorreto ou não existe.");
+        }
+
+        // Validação da avaliacao
+        if (avaliacao < 1 || avaliacao > 5) {
+            throw new IllegalArgumentException("A avaliação deve ser um valor entre 1 e 5.");
+        }
+
+        // Validação da data
+        if (data == null) {
+            throw new IllegalArgumentException("A data da avaliação não pode ser nula.");
+        }
+
+        Avaliacao novaAvaliacao = new Avaliacao(userLogin, avaliacao, midiaId, data);
         newMidia.addAvaliacao(novaAvaliacao);
         novaAvaliacao.salvar();
     }
