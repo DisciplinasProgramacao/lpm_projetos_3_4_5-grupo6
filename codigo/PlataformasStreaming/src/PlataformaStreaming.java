@@ -339,8 +339,10 @@ public class PlataformaStreaming {
      * @param userLogin O login do usuário que está fazendo a avaliação.
      * @param midiaId   O ID da mídia que está sendo avaliada.
      * @param avaliacao A avaliação atribuída à mídia.
-     * @throws IOException Se ocorrer um erro durante o processo de registro da
-     *                     avaliação.
+     * @throws IOException              Se ocorrer um erro durante o processo de
+     *                                  registro da avaliação.
+     * @throws IllegalArgumentException Se algum dos parâmetros fornecidos for
+     *                                  inválido.
      */
     public void registrarAvaliacao(String userLogin, int midiaId, int avaliacao)
             throws IOException, IllegalArgumentException {
