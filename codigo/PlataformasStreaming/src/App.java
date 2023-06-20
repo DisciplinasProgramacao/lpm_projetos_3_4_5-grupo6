@@ -86,6 +86,7 @@ public class App {
             plataforma.carregarSeries();
             plataforma.carregarFilmes();
             plataforma.carregarAudiencia();
+            plataforma.carregarAvaliacoes();
             System.out.println("Dados carregados com sucesso!");
         } catch (Exception e) {
             log.add(e.getMessage());
@@ -594,7 +595,7 @@ public class App {
         switch (opcao) {
             case 1:
                 // TODO: Cliente com mais mídias assistidas
-                System.out.println("Em breve...");
+                // relatorio.relatoriosPorParametro();
                 break;
             case 2:
                 // TODO: Cliente com mais avaliações
