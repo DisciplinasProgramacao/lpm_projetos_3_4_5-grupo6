@@ -174,13 +174,13 @@ public class App {
 
         switch (res) {
             case 1:
-                int avalacao = -1;
+                int avaliacao = -1;
                 do {
                     System.out.println("Qual a nota entre 1 a 5?");
-                    avalacao = Integer.parseInt(scanner.nextLine());
-                } while (avalacao < 1 || avalacao > 5);
+                    avaliacao = Integer.parseInt(scanner.nextLine());
+                } while (avaliacao < 1 || avaliacao > 5);
                 try {
-                    plataforma.registrarAvaliacao(userId, midiaId, avalacao);
+                    plataforma.registrarAvaliacao(userId, midiaId, avaliacao);
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
@@ -289,48 +289,6 @@ public class App {
     }
 
     /*
-     * Metodo para realizar uma avaliação de uma midia
-     */
-    private static void realizarUmaAvaliacao() {
-        Midia novaMidia = null;
-        System.out.println("==========================");
-        System.out.println("Selecione a midia para fazer a avaliação:");
-        String nome = scanner.nextLine();
-        novaMidia = plataforma.buscar(nome);
-        System.out.println("Faça a avaliação:");
-        int avaliacao = Integer.parseInt(scanner.nextLine());
-        try {
-            plataforma.registrarAvaliacao(plataforma.getLoginClienteAtual(), novaMidia.getId(), avaliacao);
-        } catch (IOException e) {
-            realizarUmaAvaliacao();
-            e.printStackTrace();
-        }
-    }
-
-    /*
-     * Metodo para realizar um comentario em uma midia
-     */
-    private static void realizarUmComentario() {
-        Midia novaMidia = null;
-        System.out.println("==========================");
-        System.out.println("Selecione a midia para fazer o comentário:");
-        String nome = scanner.nextLine();
-        novaMidia = plataforma.buscar(nome);
-        System.out.println("Faça o comentário:");
-        String cmt = scanner.nextLine();
-        // plataforma.fazerComentario(novaMidia, cmt);
-        System.out.println("Obrigado por contribuir!");
-    }
-
-    /*
-     * Metodo para salvar dados
-     */
-    private static void salvarDados() {
-        // TODO: Salvar Dados
-        System.out.println("Em breve...");
-    }
-
-    /*
      * Metodo para cadastrar um Cliente na plataforma
      */
     private static void cadastrarCliente() {
@@ -387,7 +345,6 @@ public class App {
         System.out.println("1 - Fazer Login");
         System.out.println("2 - Fazer Logout");
         System.out.println("3 - Cadastrar Cliente");
-        System.out.println("4 - Salvar Dados");
 
         System.out.println("Sua opção:");
         opcao = Integer.parseInt(scanner.nextLine());
@@ -406,10 +363,8 @@ public class App {
         System.out.println("2 - Adicionar mídia na lista para ver");
         System.out.println("3 - Assistir a uma mídia");
         System.out.println("4 - Filtrar a mídia por gênero, idioma ou quantidade de episódios");
-        System.out.println("5 - Avaliar uma mídia");
-        System.out.println("6 - Comentar em uma mídia");
-        System.out.println("7 - Cadastrar Serie");
-        System.out.println("8 - Cadastrar filme");
+        System.out.println("5 - Cadastrar Serie");
+        System.out.println("6 - Cadastrar filme");
         System.out.println("Sua opção:");
         opcao = Integer.parseInt(scanner.nextLine());
         return opcao;
@@ -450,14 +405,22 @@ public class App {
             case 3:
                 cadastrarCliente();
                 break;
-            case 4:
-                salvarDados();
-                break;
             default:
                 break;
         }
     }
 
+    /**
+     * Realiza o cadastro de uma série.
+     *
+     * Este método solicita ao usuário as informações necessárias para cadastrar uma
+     * série, como o id, nome, gênero, idioma,
+     * quantidade de episódios e data de lançamento. Em seguida, chama o método
+     * "cadastrarSerie" da instância da classe
+     * "plataforma" para efetuar o cadastro da série no sistema.
+     *
+     * @throws IOException se ocorrer um erro durante o cadastro da série.
+     */
     private static void cadastrarSerie() throws IOException {
         System.out.println();
         System.out.println("==========================");
@@ -498,6 +461,17 @@ public class App {
         System.out.println("Série cadastrada com sucesso!");
     }
 
+    /**
+     * Realiza o cadastro de um filme.
+     *
+     * Este método solicita ao usuário as informações necessárias para cadastrar um
+     * filme, como o id, nome, gênero, idioma,
+     * duração e data de lançamento. Em seguida, chama o método "cadastrarFilme" da
+     * instância da classe "plataforma" para
+     * efetuar o cadastro do filme no sistema.
+     *
+     * @throws IOException se ocorrer um erro durante o cadastro do filme.
+     */
     private static void cadastrarFilme() throws IOException {
         System.out.println();
         System.out.println("==========================");
@@ -556,15 +530,9 @@ public class App {
                 filtrarMidia();
                 break;
             case 5:
-                realizarUmaAvaliacao();
-                break;
-            case 6:
-                realizarUmComentario();
-                break;
-            case 7:
                 cadastrarSerie();
                 break;
-            case 8:
+            case 6:
                 cadastrarFilme();
                 break;
             default:
@@ -611,6 +579,15 @@ public class App {
         }
     }
 
+    /**
+     * Exibe o submenu de login e cadastro.
+     *
+     * Este método exibe as opções disponíveis para o usuário no submenu de login e
+     * cadastro, como fazer login ou se cadastrar
+     * como cliente. Solicita a opção escolhida pelo usuário e a retorna.
+     *
+     * @return A opção escolhida pelo usuário.
+     */
     public static int subMenuLoginCadastrar() {
         int opcao = -1;
         System.out.println("==========================");
@@ -623,6 +600,20 @@ public class App {
         return opcao;
     }
 
+    /**
+     * Inicializa o sistema.
+     *
+     * Este método é responsável por carregar os dados iniciais, exibir o submenu de
+     * login e cadastro e realizar a ação
+     * correspondente à opção escolhida pelo usuário. Primeiro, carrega os dados
+     * iniciais chamando o método "carregarDados()".
+     * Em seguida, exibe o submenu de login e cadastro chamando o método
+     * "subMenuLoginCadastrar()" e obtém a opção escolhida
+     * pelo usuário. Com base na opção escolhida, executa a ação correspondente:
+     * efetuar login ou cadastrar um cliente.
+     * Caso nenhuma opção válida seja escolhida, o método encerra sem executar
+     * nenhuma ação adicional.
+     */
     public static void init() {
         carregarDados();
         int opcao = subMenuLoginCadastrar();
@@ -637,6 +628,26 @@ public class App {
         }
     }
 
+    /**
+     * Ponto de entrada do programa.
+     *
+     * Este método é responsável por iniciar a execução do programa. Primeiro, chama
+     * o método "init()" para inicializar o
+     * sistema, carregar os dados iniciais e exibir o submenu de login e cadastro.
+     * Em seguida, entra em um loop "do-while"
+     * que permite ao usuário selecionar diferentes opções do menu principal. A cada
+     * iteração do loop, exibe o submenu
+     * correspondente à opção escolhida e executa a ação correspondente. O loop
+     * continua até que o usuário selecione a opção
+     * de sair (opção 0). Durante a execução do programa, utiliza os métodos
+     * "limparConsole()" para limpar a tela, "pausar()"
+     * para aguardar a interação do usuário e "subMenuPrincipal()" para exibir e
+     * obter a opção do menu principal.
+     *
+     * @param args os argumentos de linha de comando (não utilizados neste
+     *             programa).
+     * @throws IOException se ocorrer um erro durante a execução do programa.
+     */
     public static void main(String[] args) throws IOException {
         init();
         int opcao;
