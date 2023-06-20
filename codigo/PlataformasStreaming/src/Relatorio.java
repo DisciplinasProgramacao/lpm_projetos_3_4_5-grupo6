@@ -1,14 +1,19 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.*;
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Relatorio {
 
-    public void relatoriosPorParametro (int relatorio) {
+    public void relatoriosPorParametro(int relatorio) {
 
         String caminho;
-        if (relatorio == 1){
+        if (relatorio == 1) {
             caminho = "assets/Audiencia.csv";
         } else {
             caminho = "assets/Avaliacoes.csv";
@@ -71,11 +76,13 @@ public class Relatorio {
                     .filter(entry -> entry.getValue() > 15)
                     .count() / (coluna1.size() - 1) * 100; // Subtrai 1 para excluir a primeira linha
 
-            if (relatorio == 1){
-                System.out.println("O cliente que mais assistiu foi: " + nomeMaisAssistiu + " (" + maxAssistido + " Mídias assistidas).");
-            } else if (relatorio == 2){
-                System.out.println("O cliente que mais avaliou foi: " + nomeMaisAvaliou + " (" + maxAssistido + " avaliações).");
-            } else if(relatorio == 3){
+            if (relatorio == 1) {
+                System.out.println("O cliente que mais assistiu foi: " + nomeMaisAssistiu + " (" + maxAssistido
+                        + " Mídias assistidas).");
+            } else if (relatorio == 2) {
+                System.out.println(
+                        "O cliente que mais avaliou foi: " + nomeMaisAvaliou + " (" + maxAssistido + " avaliações).");
+            } else if (relatorio == 3) {
                 System.out.println("Porcentagem de clientes que avaliaram mais de 15x " + porcentagem + "%");
             }
 
@@ -85,7 +92,7 @@ public class Relatorio {
     }
 
     public void relatorioMediaAvaliacao() {
-        String caminho = "C:\\Users\\gustavo.riegert_evol\\IdeaProjects\\plf-es-2023-1-ti3-6654100-concreta\\Codigo\\teste\\src\\audincia.txt"; // Nome do arquivo a ser lido
+        String caminho = "assets/Avaliacao.csv";
 
         Map<String, List<Integer>> avaliacoesPorMidia = new HashMap<>();
 
@@ -138,6 +145,7 @@ public class Relatorio {
             System.out.println("Erro ao ler o arquivo: " + e.getMessage());
         }
     }
+
     private static double calcularMediaAvaliacoes(List<Integer> avaliacoes) {
         if (avaliacoes.isEmpty()) {
             return 0.0;
@@ -151,4 +159,3 @@ public class Relatorio {
         return (double) soma / avaliacoes.size();
     }
 }
-
