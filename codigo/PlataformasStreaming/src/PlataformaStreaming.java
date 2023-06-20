@@ -273,29 +273,30 @@ public class PlataformaStreaming {
      * @throws InvalidParameterSpecException
      */
     public void carregarAudiencia() throws IOException, InvalidParameterSpecException {
-        // user;?;idMidia
         String path = "assets/Audiencia.csv";
         String[] todosOsDados = Util.lerArquivo(path).split(System.lineSeparator());
 
-        for (String AudienciaCSV : todosOsDados) {
-            String[] audiencia = AudienciaCSV.split(";");
+        for (String audienciaCSV : todosOsDados) {
+            String[] audiencia = audienciaCSV.split(";");
             String usuario = audiencia[0];
-            // String algumaCoisa = audiencia[1];
+            String listaDestino = audiencia[1];
             int id = Integer.parseInt(audiencia[2]);
-            Midia midiaNoMapa;
-            Cliente clienteNoMapa;
 
-            if (midias.containsKey(id)) {
-                midiaNoMapa = midias.get(id);
-            } else {
+            if (!midias.containsKey(id)) {
                 throw new IOException("Mídia não encontrada");
             }
 
-            if (clientes.containsKey(usuario)) {
-                clienteNoMapa = clientes.get(usuario);
-                clienteNoMapa.registrarAudiencia(midiaNoMapa);
-            } else {
+            if (!clientes.containsKey(usuario)) {
                 throw new IOException("Usuário não encontrado");
+            }
+
+            Midia midiaNoMapa = midias.get(id);
+            Cliente clienteNoMapa = clientes.get(usuario);
+
+            if (listaDestino.equals("F")) {
+                clienteNoMapa.adicionarNaLista(midiaNoMapa);
+            } else {
+                clienteNoMapa.registrarAudiencia(midiaNoMapa);
             }
         }
     }
