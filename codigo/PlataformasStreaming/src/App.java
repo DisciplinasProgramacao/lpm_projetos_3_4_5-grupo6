@@ -156,9 +156,12 @@ public class App {
         System.out.println("Qual nome da midia deseja assistir?");
         String nome = scanner.nextLine();
         novaSerie = plataforma.buscar(nome);
+        if (novaSerie == null) {
+            System.out.println("Mídia não existe.");
+            registrarAudienciaDaMidia();
+        }
         try {
             plataforma.registrarAudiencia(novaSerie);
-
         } catch (InvalidParameterSpecException e) {
             System.out.println(e.getMessage());
         }
