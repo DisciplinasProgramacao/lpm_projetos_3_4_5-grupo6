@@ -99,26 +99,37 @@ public class App {
 
     /**
      * Metodo para efetuar login no sistema
+     *
+     * @return true se o login for efetuado, false se o usuário escolher sair do
+     *         login
      */
-    private static void efetuarLogin() {
-        String login;
-        String senha;
+    private static boolean efetuarLogin() {
+        while (true) {
+            String login;
+            String senha;
 
-        System.out.println("==========================");
-        System.out.println("Efetuar Login");
-        System.out.print("Digite o nome de usuário: ");
-        login = scanner.nextLine();
-        System.out.print("Digite a senha: ");
-        senha = scanner.nextLine();
-        try {
-            Cliente cliente = plataforma.login(login, senha);
-            System.out.println("Bem-vindo(a), " + cliente.getNome() + "!");
-        } catch (NameNotFoundException e) {
-            System.out.println("Erro ao fazer login: Usuário não cadastrado!");
-            return;
-        } catch (SenhaIncorretaException e) {
-            System.out.println("Erro ao fazer login: Senha incorreta!");
-            return;
+            System.out.println("==========================");
+            System.out.println("Efetuar Login");
+            System.out.print("Digite o nome de usuário (ou 'sair' para sair): ");
+            login = scanner.nextLine();
+
+            if (login.equalsIgnoreCase("sair")) {
+                System.out.println("Saindo do login...");
+                return false; // Retorna false para indicar que o usuário escolheu sair do login
+            }
+
+            System.out.print("Digite a senha: ");
+            senha = scanner.nextLine();
+
+            try {
+                Cliente cliente = plataforma.login(login, senha);
+                System.out.println("Bem-vindo(a), " + cliente.getNome() + "!");
+                return true; // Retorna true para indicar que o login foi efetuado com sucesso
+            } catch (NameNotFoundException e) {
+                System.out.println("Erro ao fazer login: Usuário não cadastrado!");
+            } catch (SenhaIncorretaException e) {
+                System.out.println("Erro ao fazer login: Senha incorreta!");
+            }
         }
     }
 
@@ -399,6 +410,8 @@ public class App {
             System.out.println("5 - Cadastrar Serie");
             System.out.println("6 - Cadastrar filme");
             System.out.println("7 - Ver média de avaliações de uma mídia");
+            System.out.println("8 - Ver minhas mídias da lista para ver");
+
             System.out.println("Sua opção:");
             opcao = Integer.parseInt(scanner.nextLine());
         } while (opcao < 0 || opcao > 7);
@@ -580,11 +593,20 @@ public class App {
             case 7:
                 verMediaAvaliacoesMidia();
                 break;
+            case 8:
+                verMinhaListaParaVer();
+                break;
             case 0:
                 break;
             default:
                 break;
         }
+    }
+
+    public static void verMinhaListaParaVer() {
+        System.out.println();
+        System.out.println("==========================");
+        System.out.println("Minha lista: ");
     }
 
     private static void verMediaAvaliacoesMidia() {
@@ -627,7 +649,13 @@ public class App {
                 break;
             case 4:
                 // TODO: As 10 mídias mais vistas do Pucflix
-                // relatorio.relatoriosPorParametro(4);
+                List<Integer> listaRelatorio = new ArrayList();
+                Midia encontrada;
+                listaRelatorio = relatorio.midiasMaisVistas();
+                for (Integer cadaMidia : listaRelatorio) {
+                    encontrada = plataforma.buscar(cadaMidia);
+                    System.out.println(encontrada.toString());
+                }
                 break;
             case 5:
                 // TODO: As 10 mídias com melhor avaliação do Pucflix
