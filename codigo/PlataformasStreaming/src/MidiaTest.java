@@ -1,18 +1,20 @@
 
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.Assert;
 import org.junit.Test;
 
+import Exceptions.SenhaFracaException;
 
 public class MidiaTest {
 
-
-
     @Test
     public void testCriarMidia() {
-        String   nome = "Filme A";
-        String  idioma = "Português";
-        String  genero = "Ação";
-        Double  duracao = 60d;
+        String nome = "Filme A";
+        String idioma = "Português";
+        String genero = "Ação";
+        Double duracao = 60d;
         Midia midia = new Filme(nome, idioma, genero, duracao);
         Assert.assertEquals("Filme A", midia.getNome());
         Assert.assertEquals(idioma, midia.getIdioma());
@@ -21,29 +23,35 @@ public class MidiaTest {
 
     @Test
     public void testCriarMidiaNomeNulo() {
-        String   nome = null;
-        String  idioma = "Português";
-        String  genero = "Ação";
-        Double  duracao = 60d;
-       
+        String nome = null;
+        String idioma = "Português";
+        String genero = "Ação";
+        Double duracao = 60d;
 
         Assert.assertThrows(IllegalArgumentException.class, () -> {
-            Midia midia = new Filme(nome, idioma, genero, duracao);;
+            Midia midia = new Filme(nome, idioma, genero, duracao);
+            ;
         });
 
     }
+
     @Test
-    public void testContabilizarMediaDaMidia() {
-        String   nome = "Filme A";
-        String  idioma = "Português";
-        String  genero = "Ação";
-        Double  duracao = 60d;
+    public void deveAdicionarUmaAvaliacao() throws IllegalArgumentException, SenhaFracaException {
+        String nome = "Filme A";
+        String idioma = "Português";
+        String genero = "Ação";
+        Double duracao = 60d;
         Midia midia = new Filme(nome, idioma, genero, duracao);
-        midia.registrarPontosDeAvaliacoes(2);
-        midia.registrarPontosDeAvaliacoes(5);
-        float avaliacaoEsperada = 3.5f;
-        double margemDeErro = 0.001; 
-        Assert.assertEquals(avaliacaoEsperada, midia.obterMediaDasAvaliacoes(), margemDeErro);
+
+        Assert.assertEquals(0, midia.getTodasAvaliacoes().size());
+
+        Cliente cliente1 = new Cliente("John Doe", "johndoe", "password123");
+        Avaliacao avaliacao = new Avaliacao(cliente1.getLogin(), 4);
+
+        midia.addAvaliacao(avaliacao);
+
+        Assert.assertEquals(1, midia.getTodasAvaliacoes().size());
+
     }
 
 }

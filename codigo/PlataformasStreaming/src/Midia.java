@@ -1,153 +1,121 @@
-
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public abstract class Midia {
 
-    // #region Atributos
     static int proximo_id = 100;
     static final EnumGeneros[] GENEROS = EnumGeneros.values();
+
     private int id;
     private String nome;
     private String data;
     private String genero;
     private String idioma;
     private int audiencia;
-    private int somaAvaliacoes;
-    private int qtdAvaliacoes;
+    private List<Avaliacao> avaliacoes;
 
-    // #endregion
-
-    // #region Construtor
     /**
      * Cria uma nova instância da classe Midia com o nome, idioma e gênero
-     * especificados e cria um id aleatório.
-     * 
+     * especificados.
+     *
      * @param nome   o nome da mídia (obrigatório)
      * @param idioma o idioma da mídia (obrigatório)
-     * @param genero o gênero, previamente cadastrado,da mídia (obrigatório)
-     * 
+     * @param genero o gênero, previamente cadastrado, da mídia (obrigatório)
+     *
      * @throws IllegalArgumentException se o nome, idioma ou gênero forem nulos ou
      *                                  vazios
      */
-    public Midia(String nome, String idioma, String genero) throws IllegalArgumentException {
-        if (nome == null || nome.trim().isEmpty()) {
-            throw new IllegalArgumentException("O nome da não pode ser vazio ou nulo.");
-        }
-
-        if (idioma == null || idioma.trim().isEmpty()) {
-            throw new IllegalArgumentException("O idioma da não pode ser vazio ou nulo.");
-        }
-
-        if (genero == null || genero.trim().isEmpty()) {
-            throw new IllegalArgumentException("O gênero da não pode ser vazio ou nulo.");
-        }
-        boolean existeGenero = Arrays.stream(GENEROS)
-                .map(EnumGeneros::getDescricao) // Obtém as descrições dos valores do enum
-                .anyMatch(descricao -> descricao.equals(genero)); // Verifica se alguma descrição é igual ao gênero
-                                                                  // fornecido
-
-        if (!existeGenero) {
-            throw new IllegalArgumentException("O Gênero não está cadastrado na plataforma");
-        }
+    public Midia(String nome, String idioma, String genero) {
+        validarParametros(nome, idioma, genero);
+        this.avaliacoes = new ArrayList<>();
         this.nome = nome;
         this.idioma = idioma;
         this.genero = genero;
         this.id = proximo_id;
         proximo_id++;
-        this.qtdAvaliacoes = 0;
-        this.qtdAvaliacoes = 0;
-
-        // OBSERVAÇÕES DE ESTUDO:
-        // O método trim() é um método da classe String em Java que remove os espaços em
-        // branco no início e no final de uma string. Ele retorna uma cópia da string
-        // original, sem os espaços em branco no início e no final.
     }
 
     /**
      * Cria uma nova instância da classe Midia com id, nome, data, idioma e gênero
      * especificados.
-     * 
+     *
      * @param id     o id da mídia (obrigatório)
      * @param nome   o nome da mídia (obrigatório)
-     * @param data   a data em Sting da mídia (obrigatório)
-     * @param idioma o idioma da midia (obrigatório)
-     * @param genero o gênero, previamente cadastrado,da midia (obrigatório)
-     * 
+     * @param data   a data em String da mídia (obrigatório)
+     * @param idioma o idioma da mídia (obrigatório)
+     * @param genero o gênero, previamente cadastrado, da mídia (obrigatório)
+     *
      * @throws IllegalArgumentException se o nome, idioma ou gênero forem nulos ou
      *                                  vazios
      */
-    public Midia(int id, String nome, String data, String idioma, String genero) throws IllegalArgumentException {
-        if (nome == null || nome.trim().isEmpty()) {
-            throw new IllegalArgumentException("O nome não pode ser vazio ou nulo.");
+    public Midia(int id, String nome, String data, String idioma, String genero) {
+        validarParametros(nome, idioma, genero);
+        if (data == null || data.trim().isEmpty()) {
+            throw new IllegalArgumentException("A data não pode ser vazia ou nula.");
         }
-
-        if (idioma == null || idioma.trim().isEmpty()) {
-            throw new IllegalArgumentException("O idioma não pode ser vazio ou nulo.");
-        }
-
-        if (genero == null || genero.trim().isEmpty()) {
-            throw new IllegalArgumentException("O gênero não pode ser vazio ou nulo.");
-        }
-
-        if (data == null || genero.trim().isEmpty()) {
-            throw new IllegalArgumentException("O gênero não pode ser vazio ou nulo.");
-        }
-
         if (id <= 0) {
             throw new IllegalArgumentException("O id não pode ser negativo");
         }
-
-       boolean existeGenero = Arrays.stream(GENEROS)
-                .map(EnumGeneros::getDescricao) // Obtém as descrições dos valores do enum
-                .anyMatch(descricao -> descricao.equals(genero)); // Verifica se alguma descrição é igual ao gênero
-                                                                  // fornecido
-
-
-        if (!existeGenero) {
-            throw new IllegalArgumentException("O Genero não está cadastrado na plataforma");
-        }
-
+        this.avaliacoes = new ArrayList<>();
         this.nome = nome;
         this.idioma = idioma;
         this.genero = genero;
         this.data = data;
         this.id = id;
-        this.qtdAvaliacoes = 0;
-        this.qtdAvaliacoes = 0;
     }
-    // #endregion Construtor
 
     /**
-     * Registra um ponto de audiência para a série. A cada vez que este método for
+     * Valida os parâmetros de nome, idioma e gênero. Lança uma exceção se algum
+     * parâmetro for nulo ou vazio, ou se o gênero não estiver cadastrado na
+     * plataforma.
+     *
+     * @param nome   o nome da mídia a ser validado
+     * @param idioma o idioma da mídia a ser validado
+     * @param genero o gênero da mídia a ser validado
+     *
+     * @throws IllegalArgumentException se o nome, idioma ou gênero forem nulos ou
+     *                                  vazios
+     * @throws IllegalArgumentException se o gênero não estiver cadastrado na
+     *                                  plataforma
+     */
+    private void validarParametros(String nome, String idioma, String genero) {
+        if (nome == null || nome.trim().isEmpty()) {
+            throw new IllegalArgumentException("O nome não pode ser vazio ou nulo.");
+        }
+        if (idioma == null || idioma.trim().isEmpty()) {
+            throw new IllegalArgumentException("O idioma não pode ser vazio ou nulo.");
+        }
+        if (genero == null || genero.trim().isEmpty()) {
+            throw new IllegalArgumentException("O gênero não pode ser vazio ou nulo.");
+        }
+        boolean existeGenero = Arrays.stream(GENEROS)
+                .map(EnumGeneros::getDescricao)
+                .anyMatch(descricao -> descricao.equals(genero));
+
+        if (!existeGenero) {
+            throw new IllegalArgumentException("O gênero não está cadastrado na plataforma.");
+        }
+    }
+
+    /**
+     * Registra um ponto de audiência para a mídia. A cada vez que este método for
      * chamado, a contagem de audiência será incrementada em 1.
-     * 
+     *
      * Nota: Este método não recebe parâmetros e não retorna nenhum valor.
-     * 
-     * @see #getAudiencia() Método que retorna a audiência atual da série
+     *
+     * @see #getAudiencia() Método que retorna a audiência atual da mídia
      */
     public void registrarAudiencia() {
         this.audiencia++;
     }
 
-    public void registrarPontosDeAvaliacoes(int ponto) {
-        this.somaAvaliacoes += ponto;
-        this.qtdAvaliacoes++;
-    }
-
-    public float obterMediaDasAvaliacoes() {
-        if (qtdAvaliacoes == 0) {
-            return 0;
-        } else {
-            return (float) this.somaAvaliacoes / this.qtdAvaliacoes;
-        }
-    }
-
     /**
-     * Retorna a audiência atual da série. A audiência representa a quantidade de
-     * espectadores que assistiram à série.
-     * 
-     * @return a audiência atual da série
+     * Retorna a audiência atual da mídia. A audiência representa a quantidade de
+     * espectadores que assistiram à mídia.
+     *
+     * @return a audiência atual da mídia
      */
     public int getAudiencia() {
         return this.audiencia;
@@ -155,7 +123,7 @@ public abstract class Midia {
 
     /**
      * Retorna o gênero associado a essa instância.
-     * 
+     *
      * @return uma String representando o gênero dessa instância.
      */
     public String getGenero() {
@@ -164,7 +132,7 @@ public abstract class Midia {
 
     /**
      * Retorna o nome associado a essa instância.
-     * 
+     *
      * @return um String representando o nome dessa instância.
      */
     public String getNome() {
@@ -173,7 +141,7 @@ public abstract class Midia {
 
     /**
      * Retorna o idioma associado a essa instância.
-     * 
+     *
      * @return um String representando o idioma dessa instância.
      */
     public String getIdioma() {
@@ -182,7 +150,7 @@ public abstract class Midia {
 
     /**
      * Retorna o id associado a essa instância.
-     * 
+     *
      * @return um inteiro representando o idioma dessa instância.
      */
     public int getId() {
@@ -191,7 +159,6 @@ public abstract class Midia {
 
     @Override
     public String toString() {
-        // id;nome;dataLancamento
         StringBuilder aux = new StringBuilder();
         aux.append(this.id);
         aux.append(Util.SEPARADOR_CSV);
@@ -201,7 +168,32 @@ public abstract class Midia {
         return aux.toString();
     }
 
-    public void salvar() throws IOException {
-        // TODO: Verificar se precisa implementar esse método na classe mãe
+    /**
+     * Adiciona uma avaliação à mídia.
+     *
+     * @param avaliacao a avaliação a ser adicionada
+     *
+     * @throws IllegalArgumentException se o cliente já tiver avaliado esta mídia
+     */
+    public void addAvaliacao(Avaliacao avaliacao) {
+        boolean existe = this.avaliacoes.stream()
+                .anyMatch(a -> avaliacao.getLogin().equals(a.getLogin()));
+
+        if (!existe) {
+            this.avaliacoes.add(avaliacao);
+        } else {
+            throw new IllegalArgumentException("Este cliente já avaliou esta mídia.");
+        }
     }
+
+    /**
+     * Retorna uma lista contendo todas as avaliações da mídia.
+     *
+     * @return uma lista com as avaliações da mídia
+     */
+    public List<Avaliacao> getTodasAvaliacoes() {
+        return new ArrayList<>(avaliacoes);
+    }
+
+    protected abstract void salvar() throws IOException;
 }
