@@ -40,13 +40,14 @@ public class MidiaTest {
         String nome = "Filme A";
         String idioma = "Português";
         String genero = "Ação";
-        Double duracao = 60d;
-        Midia midia = new Filme(nome, idioma, genero, duracao);
+        String data="21/04/2022";
+        int duracao = 60;
+        Midia midia = new Filme(001,nome,idioma,genero,duracao,data);
 
         Assert.assertEquals(0, midia.getTodasAvaliacoes().size());
 
         Cliente cliente1 = new Cliente("John Doe", "johndoe", "password123");
-        Avaliacao avaliacao = new Avaliacao(cliente1.getLogin(), 4);
+        Avaliacao avaliacao = new Avaliacao(cliente1.getLogin(), 4, 001);
 
         midia.addAvaliacao(avaliacao);
 

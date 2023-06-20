@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.security.InvalidParameterException;
 import java.util.Date;
 
@@ -10,22 +11,45 @@ public class Avaliacao {
     private String login;
     private Date dataDaAvaliacao;
     private int pontuacao;
+    private int midiaIdAvaliada;
 
     /**
      * 
      * Constrói um novo objeto Avaliacao com o login e pontuação especificados.
      * 
      * @param login     o login do usuário que fez a avaliação
-     * @param pontuacao a pontuação da avaliação (entre 1 e 5)
+     * @param avaliacao a pontuação da avaliação (entre 1 e 5)
      * @throws InvalidParameterException se o login for nulo ou a pontuação estiver
      *                                   fora do intervalo válido
      */
-    public Avaliacao(String login, int pontuacao) throws InvalidParameterException {
+    public Avaliacao(String login, int avaliacao, int midiaIdAvaliada) throws InvalidParameterException {
         validarLogin(login);
-        validarPontuacao(pontuacao);
+        validarPontuacao(avaliacao);
+        validarIdMidia(midiaIdAvaliada);
         this.login = login;
-        this.pontuacao = pontuacao;
+        this.pontuacao = avaliacao;
         this.dataDaAvaliacao = new Date();
+        this.midiaIdAvaliada = midiaIdAvaliada;
+    }
+
+    public void salvar() throws IOException {
+        String path_avaliacoes = "assets/Avaliacoes.csv";
+        StringBuilder auxCSV = new StringBuilder();
+        auxCSV.append(login);
+        auxCSV.append(";");
+        auxCSV.append(midiaIdAvaliada);
+        auxCSV.append(";");
+        auxCSV.append(pontuacao);
+        auxCSV.append(";");
+        auxCSV.append(dataDaAvaliacao);
+        DAO dao = new DAO();
+        dao.salvar(path_avaliacoes, auxCSV.toString());
+    } 
+        
+    public void validarIdMidia(int midia){
+         if (midia == 0) {
+            throw new InvalidParameterException("Valor da mídia inválido");
+        }
     }
 
     /**

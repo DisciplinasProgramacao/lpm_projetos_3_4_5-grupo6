@@ -318,6 +318,22 @@ public class PlataformaStreaming {
     }
 
     /**
+     * Busca uma mídia pelo id.
+     *
+     * @param id O identificador da série a ser buscada.
+     * @return A série encontrada ou null caso não seja encontrada.
+     */
+    public Midia buscar(int id) {
+        for (HashMap.Entry<Integer, Midia> entry : this.midias.entrySet()) {
+            Midia midia = entry.getValue();
+            if (midia.getId() == id) {
+                return midia;
+            }
+        }
+        return null;
+    }
+
+    /**
      * Registra uma avaliação de um usuário para uma determinada mídia.
      *
      * @param userLogin O login do usuário que está fazendo a avaliação.
@@ -327,16 +343,11 @@ public class PlataformaStreaming {
      *                     avaliação.
      */
     public void registrarAvaliacao(String userLogin, int midiaId, int avaliacao) throws IOException {
-        String path_avaliacoes = "assets/Avaliacoes.csv";
-        StringBuilder auxCSV = new StringBuilder();
-        auxCSV.append(userLogin);
-        auxCSV.append(";");
-        auxCSV.append(midiaId);
-        auxCSV.append(";");
-        auxCSV.append(avaliacao);
 
-        DAO dao = new DAO();
-        dao.salvar(path_avaliacoes, auxCSV.toString());
+        Avaliacao novaAvaliacao = new Avaliacao(userLogin, avaliacao, midiaId);
+        Midia newMidia = this.buscar(midiaId);
+        newMidia.addAvaliacao(novaAvaliacao);
+        novaAvaliacao.salvar();
     }
 
     /**
