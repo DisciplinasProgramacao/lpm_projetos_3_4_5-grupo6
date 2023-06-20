@@ -195,6 +195,20 @@ public abstract class Midia {
         return new ArrayList<>(avaliacoes);
     }
 
+    /**
+     * Calcula a média das avaliações da mídia.
+     *
+     * @return a média das avaliações da mídia
+     */
+    public double mediaAvaliacoes() {
+        long totalAvaliacoes = avaliacoes.stream().count();
+        int somaAvaliacoes = avaliacoes.stream()
+                .mapToInt(Avaliacao::getPontuacao)
+                .sum();
+
+        return (double) somaAvaliacoes / totalAvaliacoes;
+    }
+
     protected abstract void salvar() throws IOException;
 
 }
