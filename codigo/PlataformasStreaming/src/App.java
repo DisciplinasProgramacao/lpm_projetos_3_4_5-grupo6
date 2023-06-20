@@ -137,11 +137,16 @@ public class App {
         System.out.println("Qual nome da midia deseja adicionar na lista: ");
         String nomeDaMidia = scanner.nextLine();
         Midia novaMidia = plataforma.buscar(nomeDaMidia);
+        if (novaMidia == null) {
+            System.out.println("Midia não existe, refaça a busca.");
+            adicionarMidiaNaListaParaVer();
+        }
         try {
             plataforma.adicionarNaListaParaVer(novaMidia);
         } catch (NullPointerException e) {
             System.out.println("Você deve estar logado para adicionar uma mídia na lista para ver!");
         }
+        System.out.println("Mídia adicionada com sucesso!");
     }
 
     /**
@@ -164,6 +169,7 @@ public class App {
             plataforma.registrarAudiencia(novaSerie);
         } catch (InvalidParameterSpecException e) {
             System.out.println(e.getMessage());
+            return;
         }
         System.out.println("Serie assistida com sucesso! Obrigado por escolher nossa plataforma!");
         subMenuAvaliacao(novaSerie);
@@ -195,6 +201,7 @@ public class App {
                     plataforma.registrarAvaliacao(userId, midiaId, avaliacao);
                 } catch (InvalidParameterException e) {
                     System.out.println(e.getMessage());
+                    return;
                 }
 
                 break;
@@ -203,6 +210,7 @@ public class App {
                     plataforma.registrarAvaliacao(userId, midiaId, 0);
                 } catch (InvalidParameterException e) {
                     System.out.println(e.getMessage());
+                    return;
                 }
 
                 break;
@@ -223,6 +231,7 @@ public class App {
         arrayList = plataforma.filtrarPorGenero(genero);
         if (arrayList.size() < 1) {
             System.out.println("Não há mídias com esse gênero.");
+            filtrarPorGenero();
         } else {
             for (Midia midia : arrayList) {
                 System.out.println(midia);
@@ -240,7 +249,8 @@ public class App {
         String idioma = scanner.nextLine();
         arrayList = plataforma.filtrarPorIdioma(idioma);
         if (arrayList.size() < 1) {
-            System.out.println("Não há mídias com esse gênero.");
+            System.out.println("Não há mídias com esse idioma.");
+            filtrarPorIdioma();
         } else {
             for (Midia midia : arrayList) {
                 System.out.println(midia);
@@ -257,7 +267,8 @@ public class App {
         int qtd = Integer.parseInt(scanner.nextLine());
         arrayList = plataforma.filtrarPorQtdEpisodios(qtd);
         if (arrayList.size() < 1) {
-            System.out.println("Não há mídias com esse gênero.");
+            System.out.println("Não há mídias com essa quantidade de episódios.");
+            filtrarPorQuantidadeEpisodios();
         } else {
             for (Midia midia : arrayList) {
                 System.out.println(midia);
@@ -327,7 +338,6 @@ public class App {
             e.printStackTrace();
             cadastrarCliente();
         }
-
     }
 
     /*
@@ -377,6 +387,7 @@ public class App {
         System.out.println("4 - Filtrar a mídia por gênero, idioma ou quantidade de episódios");
         System.out.println("5 - Cadastrar Serie");
         System.out.println("6 - Cadastrar filme");
+        System.out.println("7 - Ver média de avaliações de uma mídia");
         System.out.println("Sua opção:");
         opcao = Integer.parseInt(scanner.nextLine());
         return opcao;
@@ -547,9 +558,32 @@ public class App {
             case 6:
                 cadastrarFilme();
                 break;
+            case 7:
+                verMediaAvaliacoesMidia();
+                break;
             default:
                 break;
         }
+    }
+
+    private static void verMediaAvaliacoesMidia() {
+        System.out.println();
+        System.out.println("==========================");
+        System.out.println("Digite o nome da mídia:");
+        String nomeDaMidia = scanner.nextLine();
+        Midia novaMidia = plataforma.buscar(nomeDaMidia);
+        if (novaMidia == null) {
+            System.out.println("Midia não existe, refaça a busca.");
+            verMediaAvaliacoesMidia();
+        }
+        try {
+            double avaliacaoDaMidia = novaMidia.mediaAvaliacoes();
+            System.out.println("Midia: " + novaMidia.getNome() + ", sua média de avaliações: " + avaliacaoDaMidia);
+        } catch (Exception e) {
+            System.out.println("Avaliação não encontrada, refaça a busca.");
+            verMediaAvaliacoesMidia();
+        }
+
     }
 
     /*
