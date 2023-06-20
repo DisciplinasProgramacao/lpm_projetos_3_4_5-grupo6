@@ -325,16 +325,20 @@ public class App {
 
         try {
             plataforma.cadastrarCliente(nome, login, senha);
+            efetuarLogin();
         } catch (IllegalArgumentException e) {
             System.out.println("Erro ao cadastrar cliente: Dados inválidos!");
             e.printStackTrace();
+            cadastrarCliente();
         } catch (SenhaFracaException e) {
             System.out.println("Erro ao cadastrar cliente: Senha fraca!");
             cadastrarCliente();
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+            cadastrarCliente();
         }
+
     }
 
     /*
@@ -589,8 +593,34 @@ public class App {
         }
     }
 
-    public static void main(String[] args) throws IOException {
+    public static int subMenuLoginCadastrar() {
+        int opcao = -1;
+        System.out.println("==========================");
+        System.out.println("Escolha uma opção: ");
+        System.out.println("1 - Fazer Login");
+        System.out.println("2 - Cadastrar como Cliente");
+
+        System.out.println("Sua opção:");
+        opcao = Integer.parseInt(scanner.nextLine());
+        return opcao;
+    }
+
+    public static void init() {
         carregarDados();
+        int opcao = subMenuLoginCadastrar();
+        switch (opcao) {
+            case 1:
+                efetuarLogin();
+                break;
+            case 2:
+                cadastrarCliente();
+            default:
+                break;
+        }
+    }
+
+    public static void main(String[] args) throws IOException {
+        init();
         int opcao;
         do {
             opcao = subMenuPrincipal();
