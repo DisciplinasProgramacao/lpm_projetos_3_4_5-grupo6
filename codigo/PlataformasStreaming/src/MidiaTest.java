@@ -1,7 +1,4 @@
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -29,7 +26,7 @@ public class MidiaTest {
         Double duracao = 60d;
 
         Assert.assertThrows(IllegalArgumentException.class, () -> {
-            Midia midia = new Filme(nome, idioma, genero, duracao);
+           new Filme(nome, idioma, genero, duracao);
             ;
         });
 
