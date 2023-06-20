@@ -1,12 +1,15 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Relatorio {
 
@@ -158,4 +161,43 @@ public class Relatorio {
 
         return (double) soma / avaliacoes.size();
     }
+
+    public List<Integer> midiasMaisVistas() {
+
+        String arquivoCSV = "assets/Audiencia.csv";
+        List<String> maioresMidias = encontrarMaioresMidias(arquivoCSV, "A", 10);
+        List<Integer> idsMidiaMaisVizualizadas = new ArrayList<>();
+
+        if (maioresMidias.isEmpty()) {
+            System.out.println("Não há mídias com lista de destino 'A'.");
+        } else {
+            System.out.println("IDs das 10 mídias mais frequentes com lista de destino 'A':");
+            for (String midia : maioresMidias) {
+                idsMidiaMaisVizualizadas.add(Integer.valueOf(midia));
+            }
+        }
+        return idsMidiaMaisVizualizadas;
+    }
+
+    public static List<String> encontrarMaioresMidias(String arquivoCSV, String destino, int quantidade) {
+        try {
+            Map<String, Long> contagemPorMidia = Files.lines(Paths.get(arquivoCSV))
+                    .map(linha -> linha.split(";"))
+                    .filter(colunas -> colunas[1].equals(destino))
+                    .collect(Collectors.groupingBy(colunas -> colunas[2], Collectors.counting()));
+
+            List<String> maioresMidias = contagemPorMidia.entrySet()
+                    .stream()
+                    .sorted(Map.Entry.<String, Long>comparingByValue().reversed())
+                    .limit(quantidade)
+                    .map(Map.Entry::getKey)
+                    .collect(Collectors.toList());
+
+            return maioresMidias;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+    }
+
 }
