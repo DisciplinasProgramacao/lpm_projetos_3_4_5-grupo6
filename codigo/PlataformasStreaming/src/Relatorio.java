@@ -6,7 +6,13 @@ import java.util.*;
 public class Relatorio {
 
     public void relatoriosPorParametro (int relatorio) {
-        String caminho = "C:\\Users\\gustavo.riegert_evol\\IdeaProjects\\plf-es-2023-1-ti3-6654100-concreta\\Codigo\\teste\\src\\audincia.txt"; // Nome do arquivo a ser lido
+
+        String caminho;
+        if (relatorio == 1){
+            caminho = "assets/Audiencia.csv";
+        } else {
+            caminho = "assets/Avaliacoes.csv";
+        }
 
         Map<String, Integer> coluna1 = new HashMap<>();
         Map<String, Integer> coluna3 = new HashMap<>();
