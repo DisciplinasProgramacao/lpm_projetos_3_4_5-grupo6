@@ -174,13 +174,13 @@ public class App {
 
         switch (res) {
             case 1:
-                int avalacao = -1;
+                int avaliacao = -1;
                 do {
                     System.out.println("Qual a nota entre 1 a 5?");
-                    avalacao = Integer.parseInt(scanner.nextLine());
-                } while (avalacao < 1 || avalacao > 5);
+                    avaliacao = Integer.parseInt(scanner.nextLine());
+                } while (avaliacao < 1 || avaliacao > 5);
                 try {
-                    plataforma.registrarAvaliacao(userId, midiaId, avalacao);
+                    plataforma.registrarAvaliacao(userId, midiaId, avaliacao);
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
@@ -289,48 +289,6 @@ public class App {
     }
 
     /*
-     * Metodo para realizar uma avaliação de uma midia
-     */
-    private static void realizarUmaAvaliacao() {
-        Midia novaMidia = null;
-        System.out.println("==========================");
-        System.out.println("Selecione a midia para fazer a avaliação:");
-        String nome = scanner.nextLine();
-        novaMidia = plataforma.buscar(nome);
-        System.out.println("Faça a avaliação:");
-        int avaliacao = Integer.parseInt(scanner.nextLine());
-        try {
-            plataforma.registrarAvaliacao(plataforma.getLoginClienteAtual(), novaMidia.getId(), avaliacao);
-        } catch (IOException e) {
-            realizarUmaAvaliacao();
-            e.printStackTrace();
-        }
-    }
-
-    /*
-     * Metodo para realizar um comentario em uma midia
-     */
-    private static void realizarUmComentario() {
-        Midia novaMidia = null;
-        System.out.println("==========================");
-        System.out.println("Selecione a midia para fazer o comentário:");
-        String nome = scanner.nextLine();
-        novaMidia = plataforma.buscar(nome);
-        System.out.println("Faça o comentário:");
-        String cmt = scanner.nextLine();
-        // plataforma.fazerComentario(novaMidia, cmt);
-        System.out.println("Obrigado por contribuir!");
-    }
-
-    /*
-     * Metodo para salvar dados
-     */
-    private static void salvarDados() {
-        // TODO: Salvar Dados
-        System.out.println("Em breve...");
-    }
-
-    /*
      * Metodo para cadastrar um Cliente na plataforma
      */
     private static void cadastrarCliente() {
@@ -387,7 +345,6 @@ public class App {
         System.out.println("1 - Fazer Login");
         System.out.println("2 - Fazer Logout");
         System.out.println("3 - Cadastrar Cliente");
-        System.out.println("4 - Salvar Dados");
 
         System.out.println("Sua opção:");
         opcao = Integer.parseInt(scanner.nextLine());
@@ -406,10 +363,8 @@ public class App {
         System.out.println("2 - Adicionar mídia na lista para ver");
         System.out.println("3 - Assistir a uma mídia");
         System.out.println("4 - Filtrar a mídia por gênero, idioma ou quantidade de episódios");
-        System.out.println("5 - Avaliar uma mídia");
-        System.out.println("6 - Comentar em uma mídia");
-        System.out.println("7 - Cadastrar Serie");
-        System.out.println("8 - Cadastrar filme");
+        System.out.println("5 - Cadastrar Serie");
+        System.out.println("6 - Cadastrar filme");
         System.out.println("Sua opção:");
         opcao = Integer.parseInt(scanner.nextLine());
         return opcao;
@@ -449,9 +404,6 @@ public class App {
                 break;
             case 3:
                 cadastrarCliente();
-                break;
-            case 4:
-                salvarDados();
                 break;
             default:
                 break;
@@ -556,15 +508,9 @@ public class App {
                 filtrarMidia();
                 break;
             case 5:
-                realizarUmaAvaliacao();
-                break;
-            case 6:
-                realizarUmComentario();
-                break;
-            case 7:
                 cadastrarSerie();
                 break;
-            case 8:
+            case 6:
                 cadastrarFilme();
                 break;
             default:
