@@ -231,6 +231,7 @@ public class App {
         arrayList = plataforma.filtrarPorGenero(genero);
         if (arrayList.size() < 1) {
             System.out.println("Não há mídias com esse gênero.");
+            filtrarPorGenero();
         } else {
             for (Midia midia : arrayList) {
                 System.out.println(midia);
@@ -248,7 +249,7 @@ public class App {
         String idioma = scanner.nextLine();
         arrayList = plataforma.filtrarPorIdioma(idioma);
         if (arrayList.size() < 1) {
-            System.out.println("Não há mídias com esse gênero.");
+            System.out.println("Não há mídias com esse idioma.");
             filtrarPorIdioma();
         } else {
             for (Midia midia : arrayList) {
@@ -266,7 +267,8 @@ public class App {
         int qtd = Integer.parseInt(scanner.nextLine());
         arrayList = plataforma.filtrarPorQtdEpisodios(qtd);
         if (arrayList.size() < 1) {
-            System.out.println("Não há mídias com esse gênero.");
+            System.out.println("Não há mídias com essa quantidade de episódios.");
+            filtrarPorQuantidadeEpisodios();
         } else {
             for (Midia midia : arrayList) {
                 System.out.println(midia);
@@ -336,7 +338,6 @@ public class App {
             e.printStackTrace();
             cadastrarCliente();
         }
-
     }
 
     /*
