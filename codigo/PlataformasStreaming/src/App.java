@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.security.InvalidParameterException;
 import java.security.spec.InvalidParameterSpecException;
 import java.util.ArrayList;
 import java.util.List;
@@ -112,8 +113,10 @@ public class App {
             System.out.println("Bem-vindo(a), " + cliente.getNome() + "!");
         } catch (NameNotFoundException e) {
             System.out.println("Erro ao fazer login: Usuário não cadastrado!");
+            efetuarLogin();
         } catch (SenhaIncorretaException e) {
             System.out.println("Erro ao fazer login: Senha incorreta!");
+            efetuarLogin();
         }
     }
 
@@ -143,8 +146,11 @@ public class App {
 
     /**
      * Metodo para assistir uma midia
+     *
+     * @throws IOException
+     * @throws IllegalArgumentException
      */
-    private static void registrarAudienciaDaMidia() {
+    private static void registrarAudienciaDaMidia() throws IllegalArgumentException, IOException {
         // NAO DEIXAR O CLIENTE ATUAL ASSISTIR 2X
         Midia novaSerie = null;
         System.out.println("Qual nome da midia deseja assistir?");
@@ -162,8 +168,11 @@ public class App {
 
     /**
      * Metodo de subMenu de Avaliação
+     *
+     * @throws IOException
+     * @throws IllegalArgumentException
      */
-    public static void subMenuAvaliacao(Midia novaSerie) {
+    public static void subMenuAvaliacao(Midia novaSerie) throws IllegalArgumentException, IOException {
         String userId = plataforma.getLoginClienteAtual();
         int midiaId = novaSerie.getId();
 
@@ -181,7 +190,7 @@ public class App {
                 } while (avaliacao < 1 || avaliacao > 5);
                 try {
                     plataforma.registrarAvaliacao(userId, midiaId, avaliacao);
-                } catch (Exception e) {
+                } catch (InvalidParameterException e) {
                     System.out.println(e.getMessage());
                 }
 
@@ -189,7 +198,7 @@ public class App {
             case 2:
                 try {
                     plataforma.registrarAvaliacao(userId, midiaId, 0);
-                } catch (Exception e) {
+                } catch (InvalidParameterException e) {
                     System.out.println(e.getMessage());
                 }
 
