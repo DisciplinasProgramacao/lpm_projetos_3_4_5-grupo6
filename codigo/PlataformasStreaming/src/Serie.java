@@ -75,6 +75,9 @@ public class Serie extends Midia {
 
     @Override
     public String toString() {
-        return super.toString();
+        StringBuilder aux = new StringBuilder();
+        aux.append("SÉRIE >>>");
+        aux.append(super.toString());
+        return aux.toString();
     }
 }

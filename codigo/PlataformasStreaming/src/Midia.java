@@ -165,6 +165,8 @@ public abstract class Midia {
         aux.append(this.nome);
         aux.append(Util.SEPARADOR_CSV);
         aux.append(this.data);
+        aux.append(Util.SEPARADOR_CSV);
+        aux.append(this.mediaAvaliacoes() + " pontos");
         return aux.toString();
     }
 
@@ -206,7 +208,11 @@ public abstract class Midia {
                 .mapToInt(Avaliacao::getPontuacao)
                 .sum();
 
-        return (double) somaAvaliacoes / totalAvaliacoes;
+        if (totalAvaliacoes == 0) {
+            return 0;
+        } else {
+            return (double) somaAvaliacoes / totalAvaliacoes;
+        }
     }
 
     protected abstract void salvar() throws IOException;
