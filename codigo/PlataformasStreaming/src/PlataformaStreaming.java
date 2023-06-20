@@ -280,7 +280,7 @@ public class PlataformaStreaming {
         for (String AudienciaCSV : todosOsDados) {
             String[] audiencia = AudienciaCSV.split(";");
             String usuario = audiencia[0];
-            //String algumaCoisa = audiencia[1];
+            // String algumaCoisa = audiencia[1];
             int id = Integer.parseInt(audiencia[2]);
             Midia midiaNoMapa;
             Cliente clienteNoMapa;

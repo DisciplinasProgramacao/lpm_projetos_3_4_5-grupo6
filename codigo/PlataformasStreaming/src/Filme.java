@@ -81,10 +81,9 @@ public class Filme extends Midia {
     @Override
     public String toString() {
         StringBuilder filmeParaCSV = new StringBuilder();
-        filmeParaCSV.append("FILME >>>");
         filmeParaCSV.append(super.toString());
         filmeParaCSV.append(Util.SEPARADOR_CSV);
-        filmeParaCSV.append((int) this.duracao / 60 + "duração");
+        filmeParaCSV.append((int) this.duracao / 60);
         return filmeParaCSV.toString();
     }
 

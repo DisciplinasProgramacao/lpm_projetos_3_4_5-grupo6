@@ -165,8 +165,6 @@ public abstract class Midia {
         aux.append(this.nome);
         aux.append(Util.SEPARADOR_CSV);
         aux.append(this.data);
-        aux.append(Util.SEPARADOR_CSV);
-        aux.append(this.mediaAvaliacoes() + " pontos");
         return aux.toString();
     }
 
