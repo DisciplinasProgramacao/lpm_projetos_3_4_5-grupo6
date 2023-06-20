@@ -342,10 +342,25 @@ public class PlataformaStreaming {
      * @throws IOException Se ocorrer um erro durante o processo de registro da
      *                     avaliação.
      */
-    public void registrarAvaliacao(String userLogin, int midiaId, int avaliacao) throws IOException {
+    public void registrarAvaliacao(String userLogin, int midiaId, int avaliacao)
+            throws IOException, IllegalArgumentException {
+        Midia newMidia = this.buscar(midiaId);
+
+        // Validação do userLogin
+        if (userLogin == null || userLogin.isEmpty()) {
+            throw new IllegalArgumentException("O login do usuário não pode ser nulo ou vazio.");
+        }
+
+        if (newMidia == null) {
+            throw new IllegalArgumentException("O identificador da mídia está incorreto ou não existe.");
+        }
+
+        // Validação da avaliacao
+        if (avaliacao < 1 || avaliacao > 5) {
+            throw new IllegalArgumentException("A avaliação deve ser um valor entre 1 e 5.");
+        }
 
         Avaliacao novaAvaliacao = new Avaliacao(userLogin, avaliacao, midiaId);
-        Midia newMidia = this.buscar(midiaId);
         newMidia.addAvaliacao(novaAvaliacao);
         novaAvaliacao.salvar();
     }
