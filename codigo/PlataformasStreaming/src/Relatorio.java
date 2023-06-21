@@ -1,9 +1,7 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.PriorityQueue;
+import java.util.*;
 
 public class Relatorio {
 
@@ -112,6 +110,11 @@ public class Relatorio {
         System.out.println("Porcentagem: " + porcentagem);
     }
 
+    /**
+     * Calcula o relatório das 10 mídias com melhor avaliação, considerando apenas aquelas com pelo menos 100 avaliações.
+     *
+     * @return
+     */
     public static void calculaRelatorio4() {
         String nomeArquivo = "assets/Avaliacoes.csv";
         int minAvaliacoes = 100;
@@ -160,6 +163,14 @@ public class Relatorio {
         }
     }
 
+    /**
+     * Obtém a média de avaliações para uma determinada mídia.
+     *
+     * @param midiaId            ID da mídia
+     * @param midiasAvaliacoes   Mapa que armazena as avaliações das mídias
+     * @param midiasQuantidades  Mapa que armazena a quantidade de avaliações das mídias
+     * @return a média de avaliações da mídia especificada
+     */
     private static double getMediaAvaliacoes(String midiaId, Map<String, Integer> midiasAvaliacoes,
             Map<String, Integer> midiasQuantidades) {
         int somaAvaliacoes = midiasAvaliacoes.getOrDefault(midiaId, 0);
@@ -167,6 +178,11 @@ public class Relatorio {
         return (double) somaAvaliacoes / totalAvaliacoes;
     }
 
+    /**
+     * Calcula o relatório das 10 mídias com mais visualizações, considerando apenas aquelas cuja letra é 'A'.
+     *
+     * @return
+     */
     public static void relatorio5() {
         String nomeArquivo = "assets/Audiencia.csv";
         int numTopMidias = 10;
