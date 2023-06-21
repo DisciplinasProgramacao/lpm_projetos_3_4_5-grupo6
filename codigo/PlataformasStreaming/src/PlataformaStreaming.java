@@ -194,9 +194,10 @@ public class PlataformaStreaming {
      * @param quantidadeEpisodios episódios da nova série
      * @param data                data de lançamento da nova série
      * @throws IOException
+     * @throws IllegalArgumentException
      */
     public void cadastrarSerie(int id, String nome, String idioma, String genero, int quantidadeEpisodios,
-            String data) throws IOException {
+            String data) throws IOException, IllegalArgumentException {
         Midia midia = new Serie(id, nome, idioma, genero, quantidadeEpisodios, data);
         midia.salvar();
         midias.put(id, midia);
@@ -212,9 +213,10 @@ public class PlataformaStreaming {
      * @param duracao Duração em minutos do novo filme
      * @param data    Data de lançamento do novo filme
      * @throws IOException
+     * @throws IllegalArgumentException
      */
     public void cadastrarFilme(int id, String nome, String idioma, String genero, int duracao, String data)
-            throws IOException {
+            throws IOException, IllegalArgumentException {
         Midia midia = new Filme(id, nome, idioma, genero, duracao, data);
         midia.salvar();
         midias.put(id, midia);
@@ -402,8 +404,6 @@ public class PlataformaStreaming {
         newMidia.addAvaliacao(novaAvaliacao);
         novaAvaliacao.salvar();
     }
-
-    
 
     /**
      * Registra uma avaliação de um usuário para uma determinada mídia.
