@@ -636,29 +636,18 @@ public class App {
         int opcao = subMenuRelatorios();
         switch (opcao) {
             case 1:
-                // TODO: Cliente com mais mídias assistidas
                 relatorio.relatoriosPorParametro(1);
                 break;
             case 2:
-                // TODO: Cliente com mais avaliações
                 relatorio.relatoriosPorParametro(2);
                 break;
             case 3:
-                // TODO: Porcentagem de Clientes com >= 15 avaliações
                 relatorio.relatoriosPorParametro(3);
                 break;
             case 4:
-                // TODO: As 10 mídias mais vistas do Pucflix
-                List<Integer> listaRelatorio = new ArrayList();
-                Midia encontrada;
-                listaRelatorio = relatorio.midiasMaisVistas();
-                for (Integer cadaMidia : listaRelatorio) {
-                    encontrada = plataforma.buscar(cadaMidia);
-                    System.out.println(encontrada.toString());
-                }
+                midiasMaisVistas();
                 break;
             case 5:
-                // TODO: As 10 mídias com melhor avaliação do Pucflix
                 relatorio.relatorioMediaAvaliacao();
                 break;
             case 6:
@@ -673,6 +662,16 @@ public class App {
                 break;
             default:
                 break;
+        }
+    }
+
+    private static void midiasMaisVistas() {
+        List<Integer> listaRelatorio = new ArrayList();
+        Midia encontrada;
+        listaRelatorio = relatorio.midiasMaisVistas();
+        for (Integer cadaMidia : listaRelatorio) {
+            encontrada = plataforma.buscar(cadaMidia);
+            System.out.println(encontrada.toString());
         }
     }
 
