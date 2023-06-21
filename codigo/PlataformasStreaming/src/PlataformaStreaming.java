@@ -380,7 +380,7 @@ public class PlataformaStreaming {
      * @throws IllegalArgumentException Se algum dos parâmetros fornecidos for
      *                                  inválido.
      */
-    public void registrarAvaliacao(String userLogin, int midiaId, int avaliacao)
+    public void registrarAvaliacao(String userLogin, int midiaId, int avaliacao, String comentario)
             throws IOException, IllegalArgumentException {
         Midia newMidia = this.buscar(midiaId);
 
@@ -398,10 +398,12 @@ public class PlataformaStreaming {
             throw new IllegalArgumentException("A avaliação deve ser um valor entre 1 e 5.");
         }
 
-        Avaliacao novaAvaliacao = new Avaliacao(userLogin, avaliacao, midiaId);
+        Avaliacao novaAvaliacao = new Avaliacao(userLogin, avaliacao, midiaId, comentario);
         newMidia.addAvaliacao(novaAvaliacao);
         novaAvaliacao.salvar();
     }
+
+    
 
     /**
      * Registra uma avaliação de um usuário para uma determinada mídia.
@@ -473,5 +475,9 @@ public class PlataformaStreaming {
 
     public String getNome() {
         return nome;
+    }
+
+    public Cliente getClienteAtual() {
+        return this.clienteAtual;
     }
 }

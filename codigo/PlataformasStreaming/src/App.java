@@ -197,6 +197,7 @@ public class App {
     public static void subMenuAvaliacao(Midia novaSerie) throws IllegalArgumentException, IOException {
         String userId = plataforma.getLoginClienteAtual();
         int midiaId = novaSerie.getId();
+        Cliente cliente = plataforma.getClienteAtual();
 
         System.out.println("Deseja realizar uma avaliação");
         System.out.println("1 - Sim");
@@ -206,12 +207,19 @@ public class App {
         switch (res) {
             case 1:
                 int avaliacao = -1;
+                String comentario = "";
                 do {
                     System.out.println("Qual a nota entre 1 a 5?");
                     avaliacao = Integer.parseInt(scanner.nextLine());
                 } while (avaliacao < 1 || avaliacao > 5);
+
+                if (cliente.ehComentarista()) {
+                    System.out.println("Deixa um comentário, se não quiser, aperte enter");
+                    comentario = scanner.nextLine();
+                }
+
                 try {
-                    plataforma.registrarAvaliacao(userId, midiaId, avaliacao);
+                    plataforma.registrarAvaliacao(userId, midiaId, avaliacao, comentario);
                 } catch (InvalidParameterException e) {
                     System.out.println(e.getMessage());
                     return;
@@ -219,12 +227,12 @@ public class App {
 
                 break;
             case 2:
-                try {
-                    plataforma.registrarAvaliacao(userId, midiaId, 0);
-                } catch (InvalidParameterException e) {
-                    System.out.println(e.getMessage());
-                    return;
-                }
+                // try {
+                // plataforma.registrarAvaliacao(userId, midiaId, 0);
+                // } catch (InvalidParameterException e) {
+                // System.out.println(e.getMessage());
+                // return;
+                // }
 
                 break;
             default:

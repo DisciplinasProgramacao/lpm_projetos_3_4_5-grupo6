@@ -65,7 +65,7 @@ public class Util {
             writer.write(dadosParaAcrescentar);
             writer.newLine();
             writer.close();
-            System.out.println("Dados salvos com sucesso no final do arquivo.");
+            //System.out.println("Dados salvos com sucesso no final do arquivo.");
         } catch (IOException e) {
             System.err.println("Erro ao salvar os dados no arquivo: " + e.getMessage());
         }

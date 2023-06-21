@@ -12,6 +12,7 @@ public class Avaliacao {
     private Date dataDaAvaliacao;
     private int pontuacao;
     private int midiaIdAvaliada;
+    private String comentario;
 
     /**
      * 
@@ -23,7 +24,8 @@ public class Avaliacao {
      * @throws InvalidParameterException se o login for nulo ou a pontuação estiver
      *                                   fora do intervalo válido
      */
-    public Avaliacao(String login, int avaliacao, int midiaIdAvaliada) throws InvalidParameterException {
+    public Avaliacao(String login, int avaliacao, int midiaIdAvaliada)
+            throws InvalidParameterException {
         validarLogin(login);
         validarPontuacao(avaliacao);
         validarIdMidia(midiaIdAvaliada);
@@ -31,6 +33,31 @@ public class Avaliacao {
         this.pontuacao = avaliacao;
         this.dataDaAvaliacao = new Date();
         this.midiaIdAvaliada = midiaIdAvaliada;
+        this.comentario = comentario;
+    }
+
+    /**
+     * 
+     * Constrói um novo objeto Avaliacao com o login e pontuação especificados e com
+     * um comentário.
+     * 
+     * @param login           o login do usuário que fez a avaliação
+     * @param avaliacao       a pontuação da avaliação (entre 1 e 5)
+     * @param midiaIdAvaliada o identificador da mídia avaliada
+     * @param comentario      o comentário do cliente
+     * @throws InvalidParameterException se o login for nulo ou a pontuação estiver
+     *                                   fora do intervalo válido
+     */
+    public Avaliacao(String login, int avaliacao, int midiaIdAvaliada, String comentario)
+            throws InvalidParameterException {
+        validarLogin(login);
+        validarPontuacao(avaliacao);
+        validarIdMidia(midiaIdAvaliada);
+        this.login = login;
+        this.pontuacao = avaliacao;
+        this.dataDaAvaliacao = new Date();
+        this.midiaIdAvaliada = midiaIdAvaliada;
+        this.comentario = comentario;
     }
 
     /**
@@ -64,6 +91,10 @@ public class Avaliacao {
         auxCSV.append(pontuacao);
         auxCSV.append(";");
         auxCSV.append(dataDaAvaliacao);
+        if (comentario.length() > 1) {
+            auxCSV.append(";");
+            auxCSV.append(comentario);
+        }
         DAO dao = new DAO();
         dao.salvar(path_avaliacoes, auxCSV.toString());
     }
