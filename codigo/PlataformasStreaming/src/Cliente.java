@@ -1,7 +1,9 @@
 
 import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidParameterException;
 import java.security.spec.InvalidParameterSpecException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +15,7 @@ public class Cliente {
     private String senha;
     private List<Midia> listaParaVer;
     private List<Midia> listaJaVistas;
+    private ArvoreAnosMeses arvoreDeRegistroAssitidaPorData;
 
     /**
      * Construtor da classe Cliente.
@@ -34,6 +37,7 @@ public class Cliente {
         this.senha = senha;
         this.listaParaVer = new ArrayList<>();
         this.listaJaVistas = new ArrayList<>();
+        this.arvoreDeRegistroAssitidaPorData = new ArvoreAnosMeses();
     }
 
     // #region Validação de dados
@@ -144,17 +148,106 @@ public class Cliente {
      * Se a Mídia não estiver na lista de assistida, ela é adicionada.
      *
      * @param midia A mídia para a qual será registrada a audiência.
+     * @throws IOException                        caso ocorra erro ao salvar os
+     *                                            dados
+     * @throws InvalidParameterException          caso a mídia apresente algum
+     *                                            problema
      * @throws InvalidAlgorithmParameterException
      */
     public void registrarAudiencia(Midia midia) throws InvalidParameterSpecException {
-        if (listaJaVistas.contains(midia))
-            throw new InvalidParameterSpecException("Não é possível assistir uma mídia mais de uma vez");
+        if (listaJaVistas.contains(midia)) {
+            throw new InvalidParameterException("Não é possível assistir uma mídia mais de uma vez");
+        }
 
-        if (listaParaVer.contains(midia))
+        if (listaParaVer.contains(midia)) {
             listaParaVer.remove(midia);
-
+        }
         listaJaVistas.add(midia);
         midia.registrarAudiencia();
+        adicinarNaArvore(midia.getId());
+
+        // try {
+        // salvarAudiencia(this.login, "A", midia.getId());
+        // } catch (InvalidParameterException | IOException e) {
+        // throw new InvalidParameterSpecException("erro ao salvar a audiência " +
+        // e.getMessage());
+        // }
+    }
+
+    private void adicinarNaArvore(int idMidia) {
+        LocalDate now = LocalDate.now();
+        int ano = now.getYear();
+        int mes = now.getMonthValue();
+        arvoreDeRegistroAssitidaPorData.inserirValor(ano, mes, idMidia);
+    }
+
+    public boolean ehComentarista() throws NullPointerException {
+        LocalDate now = LocalDate.now();
+        int anoDoMesAtual = now.getYear();
+        int mesAtual = now.getMonthValue();
+        int mesPassado;
+        int anoDoMesPassado;
+
+        if (mesAtual == 1) {
+            mesPassado = 12;
+            anoDoMesPassado = anoDoMesAtual - 1;
+        } else {
+            mesPassado = mesAtual - 1;
+            anoDoMesPassado = anoDoMesAtual;
+        }
+
+        int totalMidiaAssistidaMesAtual;
+        int totalMidiaAssistidaMesPassado;
+
+        try {
+            totalMidiaAssistidaMesAtual = arvoreDeRegistroAssitidaPorData.obterValor(anoDoMesAtual, mesAtual).length;
+
+        } catch (NullPointerException e) {
+            totalMidiaAssistidaMesAtual = 0;
+        }
+
+        try {
+            totalMidiaAssistidaMesPassado = arvoreDeRegistroAssitidaPorData.obterValor(anoDoMesPassado,
+                    mesPassado).length;
+        } catch (NullPointerException e) {
+            totalMidiaAssistidaMesPassado = 0;
+        }
+
+        if (totalMidiaAssistidaMesAtual >= 5 || totalMidiaAssistidaMesPassado >= 5) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    /**
+     * Método para registrar uma audiência no CSV.
+     * 
+     * @param userId         id do usuário
+     * @param listaDeDestino F representa lista futura, A representa lista de
+     *                       assistidas.
+     * @param idMidia        identificador da mídia
+     * @throws IOException               caso ocorra um erro de E/S
+     * @throws InvalidParameterException caso algum parametro seja inválido
+     */
+    public void salvarAudiencia(String userId, String listaDeDestino, int idMidia)
+            throws IOException, InvalidParameterException {
+        // user;listaDeDestino;idMidia
+        listaDeDestino.toUpperCase();
+        if (!listaDeDestino.equals("F") && !listaDeDestino.equals("A")) {
+            throw new InvalidParameterException("Opção inválida");
+        }
+
+        String path = "assets/Audiencia.csv";
+        StringBuilder aux = new StringBuilder();
+        aux.append(userId);
+        aux.append(Util.SEPARADOR_CSV);
+        aux.append(listaDeDestino);
+        aux.append(Util.SEPARADOR_CSV);
+        aux.append(idMidia);
+        Util.salvarNoArquivo(path, aux.toString());
+
     }
 
     /**
