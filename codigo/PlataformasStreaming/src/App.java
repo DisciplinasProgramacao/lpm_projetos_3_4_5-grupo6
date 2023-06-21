@@ -427,29 +427,6 @@ public class App {
     }
 
     /*
-     * Metodo com sub menu do sub menu, o cliente pode verificar os relatórios
-     */
-    public static int subMenuRelatorios() {
-        int opcao = -1;
-        do {
-            System.out.println("==========================");
-            System.out.println("Veja as opções: ");
-            System.out.println("0 - Retornar ao menu principal");
-            System.out.println("1 - Cliente com mais mídias assistidas");
-            System.out.println("2 - Cliente com mais avaliações");
-            System.out.println("3 - Porcentagem de Clientes com >= 15 avaliações");
-            System.out.println("4 - As 10 mídias mais vistas do Pucflix");
-            System.out.println("5 - As 10 mídias com melhor avaliação do Pucflix");
-            System.out.println("6 - As 10 mídias mais vistas do Pucflix em cada gênero");
-            System.out.println("7 - As 10 mídias com melhor avaliação do Pucflix em cada gênero");
-
-            System.out.println("Sua opção:");
-            opcao = Integer.parseInt(scanner.nextLine());
-        } while (opcao < 0 || opcao > 7);
-        return opcao;
-    }
-
-    /*
      * Switch com os metodos de tarefas relacionadas ao cliente
      */
     public static void subSwitchLoginLogoutRegistrar() {
@@ -638,48 +615,74 @@ public class App {
     }
 
     /*
+     * Metodo com sub menu do sub menu, o cliente pode verificar os relatórios
+     */
+    public static int subMenuRelatorios() {
+        int opcao = -1;
+        do {
+            System.out.println("==========================");
+            System.out.println("Veja as opções: ");
+            System.out.println("0 - Retornar ao menu principal");
+            System.out.println("1 - Cliente com mais mídias assistidas");
+            System.out.println("2 - Cliente com mais avaliações");
+            System.out.println("3 - Porcentagem de Clientes com >= 15 avaliações");
+            System.out.println("4 - As 10 mídias mais vistas do Pucflix");
+            System.out.println("5 - As 10 mídias com melhor avaliação do Pucflix");
+            System.out.println("6 - As 10 mídias mais vistas do Pucflix em cada gênero");
+            System.out.println("7 - As 10 mídias com melhor avaliação do Pucflix em cada gênero");
+
+            System.out.println("Sua opção:");
+            opcao = Integer.parseInt(scanner.nextLine());
+        } while (opcao < 0 || opcao > 7);
+        return opcao;
+    }
+
+    /*
      * Switch com os metodos de tarefas relacionadas aos relatórios
+     */
+    /*
+     * Qual cliente assistiu mais mídias, e quantas mídias;
+     * • Qual cliente tem mais avaliações, e quantas avaliações;
+     * • Qual a porcentagem dos clientes com pelo menos 15 avaliações;
+     * • Quais são as 10 mídias de melhor avaliação, com pelo menos 100 avaliações,
+     * em ordem decrescente;
+     * • Quais são as 10 mídias com mais visualizações, em ordem decrescente;
+     * • Estes mesmos dois últimos relatórios, porém com as mídias separadas por
+     * gênero.
      */
     public static void subSwitchRelatorios() {
         int opcao = subMenuRelatorios();
         switch (opcao) {
             case 1:
-                relatorio.relatoriosPorParametro(1);
+                // Cliente com mais mídias assistidas
+                relatorio.contabilizarClienteMaisMidias();
                 break;
             case 2:
-                relatorio.relatoriosPorParametro(2);
+                // Cliente com mais avaliações
+                relatorio.relatorioClienteMaisAvaliacoes();
                 break;
             case 3:
-                relatorio.relatoriosPorParametro(3);
+                // Porcentagem de Clientes com >= 15 avaliações
+                relatorio.relatorioPorcentagemClientesMais15Avaliacoes();
                 break;
             case 4:
-                midiasMaisVistas();
+                // As 10 mídias mais vistas do Pucflix
+                relatorio.calculaRelatorio4();
                 break;
             case 5:
-                relatorio.relatorioMediaAvaliacao();
+                // As 10 mídias com melhor avaliação do Pucflix
+                relatorio.relatorio5();
                 break;
             case 6:
-                // TODO: As 10 mídias mais vistas do Pucflix em cada gênero
-                // relatorio.relatoriosPorParametro(6);
+                // As 10 mídias mais vistas do Pucflix em cada gênero
                 break;
             case 7:
-                // TODO: As 10 mídias com melhor avaliação do Pucflix em cada gênero
-                // relatorio.relatoriosPorParametro(7);
+                // As 10 mídias com melhor avaliação do Pucflix em cada gênero
                 break;
             case 0:
                 break;
             default:
                 break;
-        }
-    }
-
-    private static void midiasMaisVistas() {
-        List<Integer> listaRelatorio = new ArrayList();
-        Midia encontrada;
-        listaRelatorio = relatorio.midiasMaisVistas();
-        for (Integer cadaMidia : listaRelatorio) {
-            encontrada = plataforma.buscar(cadaMidia);
-            System.out.println(encontrada.toString());
         }
     }
 

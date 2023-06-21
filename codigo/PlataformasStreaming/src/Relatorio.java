@@ -1,7 +1,9 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.PriorityQueue;
 
 public class Relatorio {
 
@@ -136,8 +138,7 @@ public class Relatorio {
 
         PriorityQueue<String> topMidias = new PriorityQueue<>(
                 (midia1, midia2) -> (int) (getMediaAvaliacoes(midia2, midiasAvaliacoes, midiasQuantidades)
-                        - getMediaAvaliacoes(midia1, midiasAvaliacoes, midiasQuantidades))
-        );
+                        - getMediaAvaliacoes(midia1, midiasAvaliacoes, midiasQuantidades)));
 
         for (String midiaId : midiasAvaliacoes.keySet()) {
             int totalAvaliacoes = midiasQuantidades.get(midiaId);
@@ -160,7 +161,7 @@ public class Relatorio {
     }
 
     private static double getMediaAvaliacoes(String midiaId, Map<String, Integer> midiasAvaliacoes,
-                                             Map<String, Integer> midiasQuantidades) {
+            Map<String, Integer> midiasQuantidades) {
         int somaAvaliacoes = midiasAvaliacoes.getOrDefault(midiaId, 0);
         int totalAvaliacoes = midiasQuantidades.getOrDefault(midiaId, 0);
         return (double) somaAvaliacoes / totalAvaliacoes;
@@ -188,8 +189,7 @@ public class Relatorio {
         }
 
         PriorityQueue<Map.Entry<String, Integer>> topMidias = new PriorityQueue<>(
-                (m1, m2) -> m2.getValue().compareTo(m1.getValue())
-        );
+                (m1, m2) -> m2.getValue().compareTo(m1.getValue()));
 
         for (Map.Entry<String, Integer> entry : midiasVisualizacoes.entrySet()) {
             topMidias.offer(entry);
@@ -199,7 +199,7 @@ public class Relatorio {
             }
         }
 
-        System.out.println("As 10 mídias com mais visualizações (com a letra 'A'):");
+        System.out.println("As 10 mídias com mais visualizações:");
         while (!topMidias.isEmpty()) {
             Map.Entry<String, Integer> entry = topMidias.poll();
             String midiaId = entry.getKey();
