@@ -662,11 +662,10 @@ public class App {
         try {
             novaMidia = plataforma.buscar(midiaSendoBuscada);
         } catch (Exception e) {
-            System.out.println("Mídia não encontrada, refaça a busca!");
+            System.out.println(e.getMessage());
             return;
         }
         subMenuAvaliacoes(novaMidia, cliente, userId);
-
     }
 
     public static void subMenuAvaliacoes(Midia novaMidia, Cliente cliente, String userId) {
@@ -691,11 +690,15 @@ public class App {
     }
 
     public static void verMinhaListaParaVer() {
+        List<Midia> listaParaVer = new ArrayList<>();
         System.out.println();
         System.out.println("==========================");
         System.out.println("Minha lista: ");
         cliente = plataforma.getClienteAtual();
-        cliente.getListaParaVer();
+        listaParaVer = cliente.getListaParaVer();
+        for (Midia cadaMidia : listaParaVer) {
+            System.out.println(cadaMidia);
+        }
     }
 
     private static void verMediaAvaliacoesMidia() {
@@ -761,7 +764,11 @@ public class App {
             System.out.println("2 - Cadastrar como Cliente");
 
             System.out.println("Sua opção:");
-            opcao = Integer.parseInt(scanner.nextLine());
+            try {
+                opcao = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println(e.getMessage());
+            }
         } while (opcao < 1 || opcao > 2);
         return opcao;
     }
