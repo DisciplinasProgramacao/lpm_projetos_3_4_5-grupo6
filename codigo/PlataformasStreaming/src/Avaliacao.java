@@ -161,4 +161,8 @@ public class Avaliacao {
     public int getPontuacao() {
         return pontuacao;
     }
+
+    public int getMidiaIdAvaliada() {
+        return midiaIdAvaliada;
+    }
 }
