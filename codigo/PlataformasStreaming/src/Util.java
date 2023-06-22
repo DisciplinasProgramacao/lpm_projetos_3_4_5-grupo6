@@ -73,9 +73,17 @@ public class Util {
 
     public static String gerarNovoGenero() {
         EnumGeneros[] generos = EnumGeneros.values();
+        Random random = new Random();
 
-        int numeroAleatorio = random.nextInt(0, generos.length);
-        return generos[numeroAleatorio].getDescricao();
+        int numeroAleatorio = random.nextInt(generos.length);
+        String generoAleatorio = generos[numeroAleatorio].toString();
+
+        while (!EnumGeneros.verificarGenero(generoAleatorio)) {
+            numeroAleatorio = random.nextInt(generos.length);
+            generoAleatorio = generos[numeroAleatorio].toString();
+        }
+
+        return generoAleatorio;
     }
 
     public static String gerarNovoIdioma() {

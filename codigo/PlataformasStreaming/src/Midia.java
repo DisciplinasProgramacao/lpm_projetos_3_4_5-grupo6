@@ -92,9 +92,7 @@ public abstract class Midia {
         if (genero == null || genero.trim().isEmpty()) {
             throw new IllegalArgumentException("O gênero não pode ser vazio ou nulo.");
         }
-        boolean existeGenero = Arrays.stream(GENEROS)
-                .map(EnumGeneros::getDescricao)
-                .anyMatch(descricao -> descricao.equals(genero));
+        boolean existeGenero = EnumGeneros.verificarGenero(genero);
 
         if (!existeGenero) {
             throw new IllegalArgumentException("O gênero não está cadastrado na plataforma.");

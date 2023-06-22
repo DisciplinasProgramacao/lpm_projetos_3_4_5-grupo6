@@ -539,7 +539,7 @@ public class App {
         EnumGeneros[] generos = EnumGeneros.values();
         System.out.println();
         for (EnumGeneros enumGeneros : generos) {
-            System.out.println(enumGeneros.getDescricao());
+            System.out.println(enumGeneros);
         }
         System.out.println();
         String genero = scanner.nextLine();
@@ -590,7 +590,7 @@ public class App {
         EnumGeneros[] generos = EnumGeneros.values();
         System.out.println();
         for (EnumGeneros enumGeneros : generos) {
-            System.out.println(enumGeneros.getDescricao());
+            System.out.println(enumGeneros);
         }
         System.out.println();
         String genero = scanner.nextLine();

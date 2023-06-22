@@ -1,21 +1,20 @@
 public enum EnumGeneros {
-    ACAO("Ação"),
-    ANIME("Anime"),
-    AVENTURA("Aventura"),
-    COMEDIA("Comédia"),
-    DOCUMENTARIO("Documentário"),
-    DRAMA("Drama"),
-    POLICIAL("Policial"),
-    ROMANCE("Romance"),
-    SUSPENSE("Suspense");
+    ACAO,
+    ANIME,
+    AVENTURA,
+    COMEDIA,
+    DOCUMENTARIO,
+    DRAMA,
+    POLICIAL,
+    ROMANCE,
+    SUSPENSE;
 
-    String descricao;
-
-    EnumGeneros(String descricao) {
-        this.descricao = descricao;
-    };
-
-    public String getDescricao(){
-        return this.descricao;
-    };
+    public static boolean verificarGenero(String genero) {
+        for (EnumGeneros valor : EnumGeneros.values()) {
+            if (valor.name().equalsIgnoreCase(genero)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
