@@ -33,7 +33,7 @@ public class Avaliacao {
         this.pontuacao = avaliacao;
         this.dataDaAvaliacao = new Date();
         this.midiaIdAvaliada = midiaIdAvaliada;
-        this.comentario = comentario;
+
     }
 
     /**
@@ -41,22 +41,22 @@ public class Avaliacao {
      * Constrói um novo objeto Avaliacao com o login e pontuação especificados e com
      * um comentário.
      * 
-     * @param login           o login do usuário que fez a avaliação
-     * @param avaliacao       a pontuação da avaliação (entre 1 e 5)
-     * @param midiaIdAvaliada o identificador da mídia avaliada
-     * @param comentario      o comentário do cliente
+     * @param login             o login do usuário que fez a avaliação
+     * @param avaliacao         a pontuação da avaliação (entre 1 e 5)
+     * @param idDaMidiaAvaliada o identificador da mídia avaliada
+     * @param comentario        o comentário do cliente
      * @throws InvalidParameterException se o login for nulo ou a pontuação estiver
      *                                   fora do intervalo válido
      */
-    public Avaliacao(String login, int avaliacao, int midiaIdAvaliada, String comentario)
+    public Avaliacao(String login, int avaliacao, int idDaMidiaAvaliada, String comentario)
             throws InvalidParameterException {
         validarLogin(login);
         validarPontuacao(avaliacao);
-        validarIdMidia(midiaIdAvaliada);
+        validarIdMidia(idDaMidiaAvaliada);
         this.login = login;
         this.pontuacao = avaliacao;
         this.dataDaAvaliacao = new Date();
-        this.midiaIdAvaliada = midiaIdAvaliada;
+        this.midiaIdAvaliada = idDaMidiaAvaliada;
         this.comentario = comentario;
     }
 
@@ -165,4 +165,33 @@ public class Avaliacao {
     public int getMidiaIdAvaliada() {
         return midiaIdAvaliada;
     }
+  
+    /**
+     * 
+     * Obtém o ia da mídia avaliada.
+     * 
+     * @return id da midia avaliada
+     */
+    public int getIdAvaliado() {
+        return this.midiaIdAvaliada;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder aux = new StringBuilder();
+        aux.append("Id do avaliador: " + this.login);
+        aux.append(System.lineSeparator());
+        aux.append("Id da mídia avaliada: " + this.midiaIdAvaliada);
+        aux.append(System.lineSeparator());
+        aux.append("Pontuação" + this.pontuacao);
+        aux.append(System.lineSeparator());
+
+        if (comentario.length() > 0) {
+            aux.append("Comentário do usuário" + this.comentario);
+            aux.append(System.lineSeparator());
+        }
+
+        return aux.toString();
+    }
+
 }

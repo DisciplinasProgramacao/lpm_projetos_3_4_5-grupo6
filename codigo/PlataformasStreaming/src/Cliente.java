@@ -289,7 +289,7 @@ public class Cliente {
      */
     public void salvar() throws IOException {
         DAO dao = new DAO();
-        dao.salvar(Util.CAMINHO_ARQUIVO_ESPECTADORES, this.toString());
+        dao.salvar(Util.CAMINHO_ARQUIVO_ESPECTADORES, this.toStringCSV());
     }
 
     /**
@@ -297,11 +297,22 @@ public class Cliente {
      * 
      * @return os dados do cliente no formato: nome;login;senha
      */
-    @Override
-    public String toString() {
+
+    public String toStringCSV() {
         StringBuilder clienteParaCSV = new StringBuilder();
         clienteParaCSV.append(this.nome).append(";").append(this.login).append(";").append(this.senha);
         return clienteParaCSV.toString();
+    }
+
+    @Override
+    public String toString(){
+
+        StringBuilder aux = new StringBuilder();
+        aux.append("Nome de usuário: " + this.nome);
+        aux.append(System.lineSeparator());
+        aux.append("ID / Login: " + login);
+
+        return aux.toString();
     }
 
     // #region Getters
