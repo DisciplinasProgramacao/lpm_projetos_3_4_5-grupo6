@@ -1,227 +1,135 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.*;
 
 public class Relatorio {
 
-    public static void contabilizarClienteMaisMidias() {
-        Map<String, Integer> clientes = new HashMap<>();
+    public static void obterClienteComMaisMidias(HashMap<String, Cliente> clientes) {
+        Cliente clienteComMaisMidias = null;
+        int maiorQuantidade = 0;
 
-        try (BufferedReader br = new BufferedReader(new FileReader("assets/Audiencia.csv"))) {
-            String linha;
-            br.readLine(); // Ignora a primeira linha (cabeçalho)
+        for (Cliente cliente : clientes.values()) {
+            int quantidadeMidiasAssistidas = cliente.getListaJaVistas().size();
 
-            while ((linha = br.readLine()) != null) {
-                String[] dados = linha.split(";");
-                String cliente = dados[0];
-                String tipoMidia = dados[1];
-
-                if (tipoMidia.equals("A")) {
-                    clientes.put(cliente, clientes.getOrDefault(cliente, 0) + 1);
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        String clienteMaisMidias = "";
-        int maxMidias = 0;
-
-        for (Map.Entry<String, Integer> entry : clientes.entrySet()) {
-            String cliente = entry.getKey();
-            int midiasAssistidas = entry.getValue();
-
-            if (midiasAssistidas > maxMidias) {
-                clienteMaisMidias = cliente;
-                maxMidias = midiasAssistidas;
+            if (quantidadeMidiasAssistidas > maiorQuantidade) {
+                maiorQuantidade = quantidadeMidiasAssistidas;
+                clienteComMaisMidias = cliente;
             }
         }
 
-        System.out.println("Relatório: Cliente que assistiu mais mídias");
-        System.out.println("Cliente: " + clienteMaisMidias);
-        System.out.println("Quantidade de mídias assistidas: " + maxMidias);
+        int quantidadeMidiasAssistidas = clienteComMaisMidias.getListaJaVistas().size();
+        System.out.println("O cliente que assistiu mais mídias é: " + clienteComMaisMidias.getNome());
+        System.out.println("Quantidade de mídias assistidas: " + quantidadeMidiasAssistidas);
     }
 
-    public static void relatorioClienteMaisAvaliacoes() {
-        Map<String, Integer> clientes = new HashMap<>();
+    public static void gerarRelatorioAvaliacoes(Map<Integer, Midia> hashMidias) {
+        Map<String, Integer> avaliacoesPorCliente = new HashMap<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader("assets/Avaliacoes.csv"))) {
-            String linha;
-            br.readLine(); // Ignora a primeira linha (cabeçalho)
+        // Percorre todas as mídias e suas avaliações
+        for (Map.Entry<Integer, Midia> entry : hashMidias.entrySet()) {
+            Midia midia = entry.getValue();
+            List<Avaliacao> avaliacoes = midia.getTodasAvaliacoes();
 
-            while ((linha = br.readLine()) != null) {
-                String[] dados = linha.split(";");
-                String cliente = dados[0];
-
-                clientes.put(cliente, clientes.getOrDefault(cliente, 0) + 1);
+            // Atualiza a contagem de avaliações para cada cliente
+            for (Avaliacao avaliacao : avaliacoes) {
+                String cliente = avaliacao.getLogin();
+                avaliacoesPorCliente.put(cliente, avaliacoesPorCliente.getOrDefault(cliente, 0) + 1);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
-        String clienteMaisAvaliacoes = "";
-        int maxAvaliacoes = 0;
+        String clienteComMaisAvaliacoes = null;
+        int quantidadeAvaliacoes = 0;
 
-        for (Map.Entry<String, Integer> entry : clientes.entrySet()) {
+        // Encontra o cliente com mais avaliações
+        for (Map.Entry<String, Integer> entry : avaliacoesPorCliente.entrySet()) {
             String cliente = entry.getKey();
             int avaliacoes = entry.getValue();
 
-            if (avaliacoes > maxAvaliacoes) {
-                clienteMaisAvaliacoes = cliente;
-                maxAvaliacoes = avaliacoes;
+            if (avaliacoes > quantidadeAvaliacoes) {
+                clienteComMaisAvaliacoes = cliente;
+                quantidadeAvaliacoes = avaliacoes;
             }
         }
 
-        System.out.println("Relatório: Cliente com mais avaliações");
-        System.out.println("Cliente: " + clienteMaisAvaliacoes);
-        System.out.println("Número de avaliações: " + maxAvaliacoes);
+        System.out.println("Cliente com mais avaliações: " + clienteComMaisAvaliacoes);
+        System.out.println("Quantidade de avaliações: " + quantidadeAvaliacoes);
     }
 
-    public static void relatorioPorcentagemClientesMais15Avaliacoes() {
-        Map<String, Integer> clientes = new HashMap<>();
+    public static void gerarRelatorioMelhoresAvaliacoes(HashMap<Integer, Midia> midias) {
+        Map<Integer, Integer> midiaAvaliacoes = new HashMap<>();
+        Map<Integer, Double> midiaPontuacoes = new HashMap<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader("assets/Avaliacoes.csv"))) {
-            String linha;
-            br.readLine(); // Ignora a primeira linha (cabeçalho)
+        for (Map.Entry<Integer, Midia> entry : midias.entrySet()) {
+            Midia midia = entry.getValue();
+            List<Avaliacao> avaliacoes = midia.getTodasAvaliacoes();
 
-            while ((linha = br.readLine()) != null) {
-                String[] dados = linha.split(";");
-                String cliente = dados[0];
+            for (Avaliacao avaliacao : avaliacoes) {
+                int midiaId = midia.getId();
+                int totalAvaliacoes = midiaAvaliacoes.getOrDefault(midiaId, 0) + 1;
+                double somaPontuacoes = midiaPontuacoes.getOrDefault(midiaId, 0.0) + avaliacao.getPontuacao();
 
-                clientes.put(cliente, clientes.getOrDefault(cliente, 0) + 1);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        int totalClientes = clientes.size();
-        int clientesMais15Avaliacoes = 0;
-
-        for (int avaliacoes : clientes.values()) {
-            if (avaliacoes >= 15) {
-                clientesMais15Avaliacoes++;
+                midiaAvaliacoes.put(midiaId, totalAvaliacoes);
+                midiaPontuacoes.put(midiaId, somaPontuacoes);
             }
         }
 
-        double porcentagem = (double) clientesMais15Avaliacoes / totalClientes * 100;
-
-        System.out.println("Relatório: Porcentagem de clientes com pelo menos 15 avaliações");
-        System.out.println("Porcentagem: " + porcentagem);
-    }
-
-    /**
-     * Calcula o relatório das 10 mídias com melhor avaliação, considerando apenas aquelas com pelo menos 100 avaliações.
-     *
-     * @return
-     */
-    public static void calculaRelatorio4() {
-        String nomeArquivo = "assets/Avaliacoes.csv";
-        int minAvaliacoes = 100;
-        int numTopMidias = 10;
-
-        Map<String, Integer> midiasAvaliacoes = new HashMap<>();
-        Map<String, Integer> midiasQuantidades = new HashMap<>();
-
-        try (BufferedReader br = new BufferedReader(new FileReader(nomeArquivo))) {
-            String linha;
-            br.readLine(); // Ignorar a primeira linha (cabeçalho)
-
-            while ((linha = br.readLine()) != null) {
-                String[] dados = linha.split(";");
-                String midiaId = dados[1];
-                int avaliacao = Integer.parseInt(dados[2]);
-
-                midiasAvaliacoes.put(midiaId, midiasAvaliacoes.getOrDefault(midiaId, 0) + avaliacao);
-                midiasQuantidades.put(midiaId, midiasQuantidades.getOrDefault(midiaId, 0) + 1);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        PriorityQueue<String> topMidias = new PriorityQueue<>(
-                (midia1, midia2) -> (int) (getMediaAvaliacoes(midia2, midiasAvaliacoes, midiasQuantidades)
-                        - getMediaAvaliacoes(midia1, midiasAvaliacoes, midiasQuantidades)));
-
-        for (String midiaId : midiasAvaliacoes.keySet()) {
-            int totalAvaliacoes = midiasQuantidades.get(midiaId);
-
-            if (totalAvaliacoes >= minAvaliacoes) {
-                topMidias.offer(midiaId);
-
-                if (topMidias.size() > numTopMidias) {
-                    topMidias.poll();
-                }
+        List<Integer> midiasComMinimoAvaliacoes = new ArrayList<>();
+        for (Map.Entry<Integer, Integer> entry : midiaAvaliacoes.entrySet()) {
+            int midiaId = entry.getKey();
+            int totalAvaliacoes = entry.getValue();
+            if (totalAvaliacoes >= 1) {
+                midiasComMinimoAvaliacoes.add(midiaId);
             }
         }
 
-        System.out.println("As 10 mídias de melhor avaliação (com pelo menos 100 avaliações):");
-        while (!topMidias.isEmpty()) {
-            String midiaId = topMidias.poll();
-            double mediaAvaliacoes = getMediaAvaliacoes(midiaId, midiasAvaliacoes, midiasQuantidades);
-            System.out.println("Mídia: " + midiaId + ", Média de Avaliações: " + mediaAvaliacoes);
+        Collections.sort(midiasComMinimoAvaliacoes, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer midia1, Integer midia2) {
+                double pontuacao1 = midiaPontuacoes.get(midia1) / midiaAvaliacoes.get(midia1);
+                double pontuacao2 = midiaPontuacoes.get(midia2) / midiaAvaliacoes.get(midia2);
+                return Double.compare(pontuacao2, pontuacao1);
+            }
+        });
+
+        System.out.println("As 10 mídias de melhor avaliação com pelo menos 100 avaliações:");
+
+        int count = 0;
+        for (Integer midia : midiasComMinimoAvaliacoes) {
+            if (count == 10) {
+                break;
+            }
+            Midia midiaObj = midias.get(midia);
+            double pontuacaoMedia = midiaPontuacoes.get(midia) / midiaAvaliacoes.get(midia);
+            System.out.println("Mídia #" + midia + " - Nome: " + midiaObj.getNome() + " - Pontuação média: " + pontuacaoMedia);
+            count++;
         }
     }
 
-    /**
-     * Obtém a média de avaliações para uma determinada mídia.
-     *
-     * @param midiaId            ID da mídia
-     * @param midiasAvaliacoes   Mapa que armazena as avaliações das mídias
-     * @param midiasQuantidades  Mapa que armazena a quantidade de avaliações das mídias
-     * @return a média de avaliações da mídia especificada
-     */
-    private static double getMediaAvaliacoes(String midiaId, Map<String, Integer> midiasAvaliacoes,
-            Map<String, Integer> midiasQuantidades) {
-        int somaAvaliacoes = midiasAvaliacoes.getOrDefault(midiaId, 0);
-        int totalAvaliacoes = midiasQuantidades.getOrDefault(midiaId, 0);
-        return (double) somaAvaliacoes / totalAvaliacoes;
-    }
-
-    /**
-     * Calcula o relatório das 10 mídias com mais visualizações, considerando apenas aquelas cuja letra é 'A'.
-     *
-     * @return
-     */
-    public static void relatorio5() {
-        String nomeArquivo = "assets/Audiencia.csv";
-        int numTopMidias = 10;
-
-        Map<String, Integer> midiasVisualizacoes = new HashMap<>();
-
-        try (BufferedReader br = new BufferedReader(new FileReader(nomeArquivo))) {
-            String linha;
-            while ((linha = br.readLine()) != null) {
-                String[] dados = linha.split(";");
-                String midiaId = dados[2];
-                String letra = dados[1];
-
-                if (letra.equals("A")) {
-                    midiasVisualizacoes.put(midiaId, midiasVisualizacoes.getOrDefault(midiaId, 0) + 1);
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        PriorityQueue<Map.Entry<String, Integer>> topMidias = new PriorityQueue<>(
-                (m1, m2) -> m2.getValue().compareTo(m1.getValue()));
-
-        for (Map.Entry<String, Integer> entry : midiasVisualizacoes.entrySet()) {
-            topMidias.offer(entry);
-
-            if (topMidias.size() > numTopMidias) {
-                topMidias.poll();
+    public static void imprimirTop10MidiasMaisAudiencia(HashMap<Integer, Midia> midias) {
+        // Filtrar as mídias com audiência maior que 0
+        List<Midia> midiasComAudiencia = new ArrayList<>();
+        for (Map.Entry<Integer, Midia> entry : midias.entrySet()) {
+            Midia midia = entry.getValue();
+            if (midia.getAudiencia() > 0) {
+                midiasComAudiencia.add(midia);
             }
         }
 
-        System.out.println("As 10 mídias com mais visualizações:");
-        while (!topMidias.isEmpty()) {
-            Map.Entry<String, Integer> entry = topMidias.poll();
-            String midiaId = entry.getKey();
-            int visualizacoes = entry.getValue();
-            System.out.println("Mídia: " + midiaId + ", Visualizações: " + visualizacoes);
+        // Ordenar as mídias com base na audiência (em ordem decrescente)
+        Collections.sort(midiasComAudiencia, new Comparator<Midia>() {
+            @Override
+            public int compare(Midia m1, Midia m2) {
+                return Integer.compare(m2.getAudiencia(), m1.getAudiencia());
+            }
+        });
+
+        // Obter as 10 primeiras mídias
+        int tamanhoRelatorio = Math.min(midiasComAudiencia.size(), 10);
+        List<Midia> top10Midias = midiasComAudiencia.subList(0, tamanhoRelatorio);
+
+        // Imprimir as top 10 mídias
+        System.out.println("Top 10 Mídias com Mais Audiência:");
+        for (int i = 0; i < top10Midias.size(); i++) {
+            Midia midia = top10Midias.get(i);
+            System.out.println((i + 1) + ". " + midia.getNome() + " - Audiência: " + midia.getAudiencia());
         }
     }
-
 }
