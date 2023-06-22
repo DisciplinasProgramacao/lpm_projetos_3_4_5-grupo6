@@ -255,7 +255,7 @@ public class App {
                 String comentario = "";
                 try {
                    comentario = registrarComentario(cliente);
-                } catch (Exception e) {
+                } catch (NullPointerException e) {
                    System.out.println("Você ainda não pode fazer comentários");
                 }
 
