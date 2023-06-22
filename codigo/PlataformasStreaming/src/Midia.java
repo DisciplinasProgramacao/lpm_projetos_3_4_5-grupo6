@@ -3,6 +3,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.hamcrest.core.IsInstanceOf;
+
 public abstract class Midia {
 
     static int proximo_id = 100;
@@ -157,8 +159,7 @@ public abstract class Midia {
         return this.id;
     }
 
-    @Override
-    public String toString() {
+    public String toStringCSV() {
         StringBuilder aux = new StringBuilder();
         aux.append(this.id);
         aux.append(Util.SEPARADOR_CSV);
@@ -214,5 +215,29 @@ public abstract class Midia {
     }
 
     protected abstract void salvar() throws IOException;
+
+    @Override
+    public String toString() {
+        StringBuilder aux = new StringBuilder();
+
+        aux.append("Nome:" + this.nome);
+        aux.append(System.lineSeparator());
+        aux.append("ID:" + this.id);
+        aux.append(System.lineSeparator());
+        if (this.data != null) {
+            aux.append("Data lançamento:" + this.data);
+            aux.append(System.lineSeparator());
+        }
+        aux.append("Genero:" + this.genero);
+        aux.append(System.lineSeparator());
+        aux.append("Idioma:" + this.idioma);
+        aux.append(System.lineSeparator());
+        aux.append("Audiencia: reproduzido " + this.audiencia + " vezes");
+        aux.append(System.lineSeparator());
+        aux.append("Contém " + this.avaliacoes.size() + " avaliações");
+        aux.append(System.lineSeparator());
+        aux.append("===============================================================");
+        return aux.toString();
+    }
 
 }

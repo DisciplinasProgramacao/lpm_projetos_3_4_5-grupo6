@@ -75,16 +75,28 @@ public class Filme extends Midia {
      */
     public void salvar() throws IOException {
         DAO dao = new DAO();
-        dao.salvar(Util.CAMINHO_ARQUIVO_FILMES, this.toString());
+        dao.salvar(Util.CAMINHO_ARQUIVO_FILMES, this.toStringCSV());
+    }
+
+    @Override
+    public String toStringCSV() {
+        StringBuilder filmeParaCSV = new StringBuilder();
+        filmeParaCSV.append(super.toStringCSV());
+        filmeParaCSV.append(Util.SEPARADOR_CSV);
+        filmeParaCSV.append((int) this.duracao / 60);
+        return filmeParaCSV.toString();
     }
 
     @Override
     public String toString() {
-        StringBuilder filmeParaCSV = new StringBuilder();
-        filmeParaCSV.append(super.toString());
-        filmeParaCSV.append(Util.SEPARADOR_CSV);
-        filmeParaCSV.append((int) this.duracao / 60);
-        return filmeParaCSV.toString();
+        StringBuilder aux = new StringBuilder();
+
+        aux.append(System.lineSeparator());
+        aux.append("Filme");
+        aux.append(System.lineSeparator());
+        aux.append(super.toString());
+
+        return aux.toString();
     }
 
 }

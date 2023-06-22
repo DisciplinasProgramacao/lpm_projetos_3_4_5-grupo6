@@ -70,11 +70,23 @@ public class Serie extends Midia {
     @Override
     public void salvar() throws IOException {
         DAO dao = new DAO();
-        dao.salvar(Util.CAMINHO_ARQUIVO_SERIES, this.toString());
+        dao.salvar(Util.CAMINHO_ARQUIVO_SERIES, this.toStringCSV());
+    }
+
+    @Override
+    public String toStringCSV() {
+        return super.toStringCSV();
     }
 
     @Override
     public String toString() {
-        return super.toString();
+        StringBuilder aux = new StringBuilder();
+
+        aux.append(System.lineSeparator());
+        aux.append("Série");
+        aux.append(System.lineSeparator());
+        aux.append(super.toString());
+
+        return aux.toString();
     }
 }
