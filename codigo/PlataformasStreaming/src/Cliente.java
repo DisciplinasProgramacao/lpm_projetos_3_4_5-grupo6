@@ -152,11 +152,11 @@ public class Cliente {
      * Se a Mídia não estiver na lista de assistida, ela é adicionada.
      *
      * @param midia A mídia para a qual será registrada a audiência.
-     * @throws IOException                        caso ocorra erro ao salvar os
-     *                                            dados
-     * @throws InvalidParameterException          caso a mídia apresente algum
-     *                                            problema
-     * @throws InvalidAlgorithmParameterException
+     * @throws IOException               caso ocorra erro ao salvar os
+     *                                   dados
+     * @throws InvalidParameterException caso a mídia apresente algum
+     *                                   problema
+     * 
      */
     public void registrarAudiencia(Midia midia) throws InvalidParameterException {
         if (listaJaVistas.contains(midia)) {
@@ -180,11 +180,11 @@ public class Cliente {
     }
 
     public boolean ehComentarista() throws NullPointerException {
-       if(tipoClienteComentarista.verificarTipoCliente(arvoreDeRegistroAssitidaPorData)) {
-        return true;
-       }else{
-        throw new NullPointerException("Usuário não é comentarista");
-       }
+        if (tipoClienteComentarista.verificarTipoCliente(arvoreDeRegistroAssitidaPorData)) {
+            return true;
+        } else {
+            throw new NullPointerException("Usuário não é comentarista");
+        }
     }
 
     /**

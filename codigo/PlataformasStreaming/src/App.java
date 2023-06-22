@@ -88,7 +88,6 @@ public class App {
             plataforma.carregarFilmes();
             plataforma.carregarAudiencia();
             plataforma.carregarAvaliacoes();
-            System.out.println("Dados carregados com sucesso!");
         } catch (Exception e) {
             log.add(e.getMessage());
             System.out.println("Dados carregados com " + log.size() + " erro(s)");

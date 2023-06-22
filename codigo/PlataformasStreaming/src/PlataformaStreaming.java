@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import javax.naming.NameNotFoundException;
 
@@ -190,7 +192,8 @@ public class PlataformaStreaming {
         // id;nome;data
         String path = "assets/Series.csv";
         String[] todasSeries = Util.lerArquivo(path).split(System.lineSeparator());
-
+        ArrayList<String> log = new ArrayList<>();
+        int contador = 0;
         for (String SerieCSV : todasSeries) {
             String[] serie = SerieCSV.split(";");
             int id = Integer.parseInt(serie[0]);
@@ -199,9 +202,15 @@ public class PlataformaStreaming {
             String idioma = Util.gerarNovoIdioma();
             int ep = Util.gerarTotalEp();
             String genero = Util.gerarNovoGenero();
-            Midia novaSerie = new Serie(id, nome, idioma, genero, ep, data);
-            midias.put(id, novaSerie);
+            try {
+                Midia novaSerie = new Serie(id, nome, idioma, genero, ep, data);
+                midias.put(id, novaSerie);
+                contador++;
+            } catch (Exception e) {
+                log.add(e.getMessage());
+            }
         }
+        System.out.println("Foram carregados " + contador + " Séries com " + log.size() + " erros");
     }
 
     /**
@@ -252,6 +261,8 @@ public class PlataformaStreaming {
         // id;nome;data;duracao
         String path = "assets/Filmes.csv";
         String[] todosFilmes = Util.lerArquivo(path).split(System.lineSeparator());
+        ArrayList<String> log = new ArrayList<>();
+        int contador = 0;
 
         for (String FilmeCSV : todosFilmes) {
             String[] filme = FilmeCSV.split(";");
@@ -261,9 +272,15 @@ public class PlataformaStreaming {
             int duracao = Integer.parseInt(filme[3]);
             String idioma = Util.gerarNovoIdioma();
             String genero = Util.gerarNovoGenero();
-            Midia novoFilme = new Filme(id, nome, idioma, genero, duracao, data);
-            midias.put(id, novoFilme);
+            try {
+                Midia novoFilme = new Filme(id, nome, idioma, genero, duracao, data);
+                midias.put(id, novoFilme);
+                contador++;
+            } catch (IllegalArgumentException e) {
+                log.add(e.getMessage());
+            }
         }
+        System.out.println("Foram carregados " + contador + " Filmes com " + log.size() + " erros");
     }
 
     /**
@@ -279,16 +296,22 @@ public class PlataformaStreaming {
         // nome;login;senha
         String path = "assets/Espectadores.csv";
         String[] todosClientes = Util.lerArquivo(path).split(System.lineSeparator());
-
+        ArrayList<String> log = new ArrayList<>();
+        int contador = 0;
         for (String ClienteCSV : todosClientes) {
             String[] cliente = ClienteCSV.split(";");
             String nome = cliente[0];
             String login = cliente[1];
             String senha = cliente[2];
-            Cliente novoCliente = new Cliente(nome, login, senha);
-            clientes.put(login, novoCliente);
-
+            try {
+                Cliente novoCliente = new Cliente(nome, login, senha);
+                clientes.put(login, novoCliente);
+                contador++;
+            } catch (IllegalArgumentException | SenhaFracaException e) {
+                log.add(e.getMessage());
+            }
         }
+        System.out.println("Foram carregados " + contador + " Espectadores com " + log.size() + " erros");
     }
 
     /**
@@ -301,6 +324,8 @@ public class PlataformaStreaming {
     public void carregarAudiencia() throws IOException, InvalidParameterSpecException {
         String path = "assets/Audiencia.csv";
         String[] todosOsDados = Util.lerArquivo(path).split(System.lineSeparator());
+        int contador = 0;
+        ArrayList<String> log = new ArrayList<>();
 
         for (String audienciaCSV : todosOsDados) {
             String[] audiencia = audienciaCSV.split(";");
@@ -320,11 +345,23 @@ public class PlataformaStreaming {
             Cliente clienteNoMapa = clientes.get(usuario);
 
             if (listaDestino.equals("F")) {
-                clienteNoMapa.adicionarNaLista(midiaNoMapa);
+                try {
+                    clienteNoMapa.adicionarNaLista(midiaNoMapa);
+                } catch (InvalidParameterException e) {
+                    String erro = "linha " + contador + " -" + e.getMessage();
+                    log.add(erro);
+                }
             } else {
-                clienteNoMapa.registrarAudiencia(midiaNoMapa);
+                try {
+                    clienteNoMapa.registrarAudiencia(midiaNoMapa);
+                } catch (InvalidParameterException e) {
+                    String erro = "linha " + contador + " -" + e.getMessage();
+                    log.add(erro);
+                }
             }
+            contador++;
         }
+        System.out.println("Foram carregados " + contador + " registros de audiência com " + log.size() + " erros");
     }
 
     /**
@@ -338,26 +375,43 @@ public class PlataformaStreaming {
      *                                       arquivo de avaliações
      */
     public void carregarAvaliacoes() throws IOException, InvalidParameterSpecException {
+        // userId;MidiaId;nota;data;avaliacao
         String path = "assets/Avaliacoes.csv";
-        DateFormat formatoData = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
-        String[] todosOsDados = Util.lerArquivo(path).split(System.lineSeparator());
 
+        String[] todosOsDados = Util.lerArquivo(path).split(System.lineSeparator());
+        int contador = 0;
+        ArrayList<String> log = new ArrayList<>();
         for (String avaliacaoCSV : todosOsDados) {
             String[] avaliacao = avaliacaoCSV.split(";");
-
             String userID = avaliacao[0];
             int midiaId = Integer.parseInt(avaliacao[1]);
             int pontuacao = Integer.parseInt(avaliacao[2]);
             String dataString = avaliacao[3];
-            String comentario = avaliacao[4];
-            Date data;
-            try {
-                data = formatoData.parse(dataString);
-            } catch (ParseException e) {
-                throw new IOException("Erro ao carregar a data");
+            String comentario = "";
+
+            if (avaliacao.length == 5) {
+                comentario = avaliacao[4];
             }
-            registrarAvaliacao(userID, midiaId, pontuacao, data, comentario);
+
+            SimpleDateFormat formato = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
+            Date data = null;
+            try {
+                formato.setTimeZone(TimeZone.getTimeZone("GMT-03:00"));
+                data = formato.parse(dataString);
+            } catch (ParseException e) {
+                String erro = "Erro ao carregar a data" + e.getMessage();
+                log.add(erro);
+            }
+
+            try {
+                registrarAvaliacao(userID, midiaId, pontuacao, data, comentario);
+                contador++;
+            } catch (Exception e) {
+                String erro = "Erro ao registrar avaliação" + e.getMessage();
+                log.add(erro);
+            }
         }
+        System.out.println("Foram carregados " + contador + " Avaliações com " + log.size() + " erros");
     }
 
     /**
@@ -462,7 +516,7 @@ public class PlataformaStreaming {
      * @param novaMidia A nova mídia a ser adicionada.
      * @throws InvalidParameterException se a mídia já estivar na lista do usuário
      */
-    public void adicionarNaListaParaVer(Midia novaMidia) throws InvalidParameterException{
+    public void adicionarNaListaParaVer(Midia novaMidia) throws InvalidParameterException {
         clienteAtual.adicionarNaLista(novaMidia);
     }
 
