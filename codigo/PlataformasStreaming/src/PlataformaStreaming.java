@@ -506,7 +506,6 @@ public class PlataformaStreaming {
 
         Avaliacao novaAvaliacao = new Avaliacao(userLogin, avaliacao, midiaId, data, comentario);
         newMidia.addAvaliacao(novaAvaliacao);
-        novaAvaliacao.salvar();
     }
 
     /**
