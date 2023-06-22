@@ -1,6 +1,5 @@
 import java.io.IOException;
 import java.security.InvalidParameterException;
-import java.security.spec.InvalidParameterSpecException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -15,6 +14,8 @@ public class App {
     static Scanner scanner = new Scanner(System.in);
     static PlataformaStreaming plataforma = new PlataformaStreaming("pucflix");
     static Relatorio relatorio = new Relatorio();
+    static Cliente cliente;
+    static String userId;
     static Cliente cliente;
     static String userId;
 
@@ -175,6 +176,9 @@ public class App {
         cliente = plataforma.getClienteAtual();
         userId = plataforma.getLoginClienteAtual();
         Midia novaMidia = null;
+        cliente = plataforma.getClienteAtual();
+        userId = plataforma.getLoginClienteAtual();
+        Midia novaMidia = null;
         System.out.println("Qual nome da midia deseja assistir?");
         String nome = scanner.nextLine();
         novaMidia = plataforma.buscar(nome);
@@ -187,9 +191,43 @@ public class App {
         } catch (InvalidParameterException e) {
             System.out.println(e.getMessage());
             pausar();
+            pausar();
             return;
         }
         System.out.println("Serie assistida com sucesso! Obrigado por escolher nossa plataforma!");
+        subSwitchParaAvaliar(novaMidia);
+
+    }
+
+    public static void subSwitchParaAvaliar(Midia novaMidia) {
+        System.out.println("");
+        int res = subMenuQuerAvaliar();
+        switch (res) {
+            case 1:
+                subMenuAvaliacoes(novaMidia, cliente, userId);
+                break;
+            case 2:
+                return;
+            default:
+                break;
+        }
+    }
+
+    public static int subMenuQuerAvaliar() {
+        int res = -1;
+        do {
+            System.out.println("");
+            System.out.println("Deseja deixar uma avaliação?");
+            System.out.println("1 - Sim");
+            System.out.println("2 - Não");
+            try {
+                res = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Número incorreto (Digite um valor dentre os apresentados)");
+                res = -1;
+            }
+        } while (res < 1 || res > 3);
+        return res;
         subSwitchParaAvaliar(novaMidia);
 
     }
@@ -244,6 +282,13 @@ public class App {
             System.out.println("Número incorreto");
             subMenuAvaliacao(novaSerie);
         }
+        int res = -1;
+        try {
+            res = Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("Número incorreto");
+            subMenuAvaliacao(novaSerie);
+        }
 
         switch (res) {
             case 1:
@@ -253,6 +298,7 @@ public class App {
                     avaliacao = Integer.parseInt(scanner.nextLine());
                 } while (avaliacao < 1 || avaliacao > 5);
 
+                String comentario = registrarComentario(cliente);
                 String comentario = registrarComentario(cliente);
 
                 try {
@@ -278,6 +324,15 @@ public class App {
         }
 
     };
+
+    public static String registrarComentario(Cliente clienteatual) {
+        String resultado = "";
+        if (clienteatual.ehComentarista()) {
+            System.out.println("Faça seu comentario: ");
+            resultado = scanner.nextLine();
+        }
+        return resultado;
+    }
 
     public static String registrarComentario(Cliente clienteatual) {
         String resultado = "";
@@ -382,6 +437,12 @@ public class App {
                 System.out.println("Por gentileza, digite um valor válido (número inteiro entre os apresentados)");
                 opcao = -1;
             }
+            try {
+                opcao = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Por gentileza, digite um valor válido (número inteiro entre os apresentados)");
+                opcao = -1;
+            }
         } while (opcao < 1 || opcao > 3);
         return opcao;
     }
@@ -433,6 +494,12 @@ public class App {
                 System.out.println("Por gentileza, digite um valor válido (número inteiro entre os apresentados)");
                 opcao = -1;
             }
+            try {
+                opcao = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Por gentileza, digite um valor válido (número inteiro entre os apresentados)");
+                opcao = -1;
+            }
         } while (opcao < 1 || opcao > 3);
         return opcao;
     }
@@ -452,6 +519,12 @@ public class App {
             System.out.println("3 - Cadastrar Cliente");
 
             System.out.println("Sua opção:");
+            try {
+                opcao = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Por gentileza, digite um valor válido (número inteiro entre os apresentados)");
+                opcao = -1;
+            }
             try {
                 opcao = Integer.parseInt(scanner.nextLine());
             } catch (NumberFormatException e) {
@@ -481,6 +554,7 @@ public class App {
             System.out.println("7 - Ver média de avaliações de uma mídia");
             System.out.println("8 - Ver minhas mídias da lista para ver");
             System.out.println("9 - Avalie uma mídia");
+            System.out.println("9 - Avalie uma mídia");
 
             System.out.println("Sua opção:");
             try {
@@ -490,7 +564,14 @@ public class App {
                 opcao = -1;
             }
         } while (opcao < 0 || opcao > 9);
-        return opcao;
+            try {
+                opcao = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Por gentileza, digite um valor válido (número inteiro entre os apresentados)");
+                opcao = -1;
+            }
+        }while(opcao<0||opcao>9);return opcao;
+
     }
 
     /*
@@ -651,11 +732,49 @@ public class App {
             case 9:
                 queroAvaliar();
                 break;
+            case 9:
+                queroAvaliar();
+                break;
             case 0:
                 break;
             default:
                 break;
         }
+    }
+
+    public static void queroAvaliar() {
+        Midia novaMidia;
+        System.out.println("Qual mídia deseja avaliar: ");
+        String midiaSendoBuscada = scanner.nextLine();
+        try {
+            novaMidia = plataforma.buscar(midiaSendoBuscada);
+        } catch (Exception e) {
+            System.out.println("Mídia não encontrada, refaça a busca!");
+            return;
+        }
+        subMenuAvaliacoes(novaMidia, cliente, userId);
+
+    }
+
+    public static void subMenuAvaliacoes(Midia novaMidia, Cliente cliente, String userId) {
+        int midiaId = novaMidia.getId();
+        int nota = darNotaParaMidia();
+        String comentario = registrarComentario(cliente);
+        try {
+            plataforma.registrarAvaliacao(userId, midiaId, nota, comentario);
+        } catch (IllegalArgumentException | IOException e) {
+            System.out.println("Não foi possível concluir, refaça a avaliação");
+            return;
+        }
+    }
+
+    public static int darNotaParaMidia() {
+        int avaliacao = -1;
+        do {
+            System.out.println("Qual a nota entre 1 a 5?");
+            avaliacao = Integer.parseInt(scanner.nextLine());
+        } while (avaliacao < 1 || avaliacao > 5);
+        return avaliacao;
     }
 
     public static void queroAvaliar() {
@@ -699,6 +818,8 @@ public class App {
         System.out.println("Minha lista: ");
         cliente = plataforma.getClienteAtual();
         cliente.getListaParaVer();
+        cliente = plataforma.getClienteAtual();
+        cliente.getListaParaVer();
     }
 
     private static void verMediaAvaliacoesMidia() {
@@ -733,9 +854,16 @@ public class App {
             System.out.println("1 - Cliente com mais mídias assistidas");
             System.out.println("2 - Cliente com mais avaliações");
             System.out.println("3 - As 10 mídias com melhor avaliação do Pucflix");
+            System.out.println("3 - As 10 mídias com melhor avaliação do Pucflix");
             System.out.println("4 - As 10 mídias mais vistas do Pucflix");
 
             System.out.println("Sua opção:");
+            try {
+                opcao = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Por gentileza, digite um valor válido (número inteiro entre os apresentados)");
+                opcao = -1;
+            }
             try {
                 opcao = Integer.parseInt(scanner.nextLine());
             } catch (NumberFormatException e) {
@@ -764,11 +892,11 @@ public class App {
         switch (opcao) {
             case 1:
                 // Cliente com mais mídias assistidas
-                relatorio.contabilizarClienteMaisMidias();
+                relatorio.obterClienteComMaisMidias(plataforma.getClientes());
                 break;
             case 2:
                 // Cliente com mais avaliações
-                relatorio.relatorioClienteMaisAvaliacoes();
+                relatorio.gerarRelatorioAvaliacoes(plataforma.getMidias());
                 break;
             case 3:
                 // As 10 mídias com melhor avaliação do Pucflix

@@ -3,7 +3,7 @@ import java.security.InvalidParameterException;
 import java.util.Date;
 
 /**
- * 
+ *
  * Representa uma avaliação feita por um usuário.
  */
 public class Avaliacao {
@@ -15,9 +15,9 @@ public class Avaliacao {
     private String comentario;
 
     /**
-     * 
+     *
      * Constrói um novo objeto Avaliacao com o login e pontuação especificados.
-     * 
+     *
      * @param login           o login do usuário que fez a avaliação
      * @param avaliacao       a pontuação da avaliação (entre 1 e 5)
      * @param midiaIdAvaliada o identificador da mídia avaliada
@@ -37,10 +37,10 @@ public class Avaliacao {
     }
 
     /**
-     * 
+     *
      * Constrói um novo objeto Avaliacao com o login e pontuação especificados e com
      * um comentário.
-     * 
+     *
      * @param login             o login do usuário que fez a avaliação
      * @param avaliacao         a pontuação da avaliação (entre 1 e 5)
      * @param idDaMidiaAvaliada o identificador da mídia avaliada
@@ -61,9 +61,9 @@ public class Avaliacao {
     }
 
     /**
-     * 
+     *
      * Constrói um novo objeto Avaliacao com o login e pontuação especificados.
-     * 
+     *
      * @param login           o login do usuário que fez a avaliação
      * @param avaliacao       a pontuação da avaliação (entre 1 e 5)
      * @param midiaIdAvaliada o identificador da mídia avaliada
@@ -71,7 +71,8 @@ public class Avaliacao {
      * @throws InvalidParameterException se o login for nulo ou a pontuação estiver
      *                                   fora do intervalo válido
      */
-    public Avaliacao(String login, int avaliacao, int midiaIdAvaliada, Date data, String comentario) throws InvalidParameterException {
+    public Avaliacao(String login, int avaliacao, int midiaIdAvaliada, Date data, String comentario)
+            throws InvalidParameterException {
         validarLogin(login);
         validarPontuacao(avaliacao);
         validarIdMidia(midiaIdAvaliada);
@@ -107,9 +108,9 @@ public class Avaliacao {
     }
 
     /**
-     * 
+     *
      * Valida o parâmetro de login.
-     * 
+     *
      * @param login o login a ser validado
      * @throws InvalidParameterException se o login for nulo
      */
@@ -120,9 +121,9 @@ public class Avaliacao {
     }
 
     /**
-     * 
+     *
      * Valida o parâmetro de pontuação.
-     * 
+     *
      * @param pontuacao a pontuação a ser validada
      * @throws InvalidParameterException se a pontuação estiver fora do intervalo
      *                                   válido
@@ -134,9 +135,9 @@ public class Avaliacao {
     }
 
     /**
-     * 
+     *
      * Obtém o login do usuário que fez a avaliação.
-     * 
+     *
      * @return o login do usuário
      */
     public String getLogin() {
@@ -144,9 +145,9 @@ public class Avaliacao {
     }
 
     /**
-     * 
+     *
      * Obtém a data da avaliação.
-     * 
+     *
      * @return a data da avaliação
      */
     public Date getDataDaAvaliacao() {
@@ -154,9 +155,9 @@ public class Avaliacao {
     }
 
     /**
-     * 
+     *
      * Obtém a pontuação da avaliação.
-     * 
+     *
      * @return a pontuação da avaliação
      */
     public int getPontuacao() {
@@ -165,12 +166,15 @@ public class Avaliacao {
 
     public int getMidiaIdAvaliada() {
         return midiaIdAvaliada;
+
+    public int getMidiaIdAvaliada() {
+        return midiaIdAvaliada;
     }
-  
+
     /**
-     * 
+     *
      * Obtém o ia da mídia avaliada.
-     * 
+     *
      * @return id da midia avaliada
      */
     public int getIdAvaliado() {
