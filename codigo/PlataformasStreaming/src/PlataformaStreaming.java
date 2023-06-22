@@ -460,8 +460,9 @@ public class PlataformaStreaming {
      * Adiciona uma mídia à lista do cliente para ser vista posteriormente.
      *
      * @param novaMidia A nova mídia a ser adicionada.
+     * @throws InvalidParameterException se a mídia já estivar na lista do usuário
      */
-    public void adicionarNaListaParaVer(Midia novaMidia) {
+    public void adicionarNaListaParaVer(Midia novaMidia) throws InvalidParameterException{
         clienteAtual.adicionarNaLista(novaMidia);
     }
 

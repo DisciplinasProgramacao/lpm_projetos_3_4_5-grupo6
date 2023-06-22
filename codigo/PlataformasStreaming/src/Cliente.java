@@ -87,11 +87,14 @@ public class Cliente {
      * Adiciona uma mídia na lista de mídias para ver do cliente.
      *
      * @param midia A mídia a ser adicionada (obrigatório).
+     * @throws InvalidParameterException se a mídia já tiver na lista
      */
-    public void adicionarNaLista(Midia midia) {
-        if (!listaParaVer.contains(midia)) {
-            listaParaVer.add(midia);
+    public void adicionarNaLista(Midia midia) throws InvalidParameterException {
+        if (listaParaVer.contains(midia)) {
+           throw new InvalidParameterException("Esta mídia já está na sua lista!");
         }
+
+         listaParaVer.add(midia);
     }
 
     /**

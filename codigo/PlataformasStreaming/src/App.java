@@ -156,10 +156,13 @@ public class App {
         }
         try {
             plataforma.adicionarNaListaParaVer(novaMidia);
+            System.out.println("Mídia adicionada com sucesso!");
         } catch (NullPointerException e) {
             System.out.println("Você deve estar logado para adicionar uma mídia na lista para ver!");
+        } catch (InvalidParameterException e) {
+            System.out.println(e.getMessage());
         }
-        System.out.println("Mídia adicionada com sucesso!");
+
     }
 
     /**
