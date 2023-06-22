@@ -646,7 +646,7 @@ public class App {
                 verMinhaListaParaVer();
                 break;
             case 9:
-                queroAvaliar();
+                realizarAvaliacao();
                 break;
             case 0:
                 break;
@@ -655,7 +655,7 @@ public class App {
         }
     }
 
-    public static void queroAvaliar() {
+    public static void realizarAvaliacao() {
         Midia novaMidia;
         System.out.println("Qual mídia deseja avaliar: ");
         String midiaSendoBuscada = scanner.nextLine();
@@ -665,7 +665,9 @@ public class App {
             System.out.println(e.getMessage());
             return;
         }
-        subMenuAvaliacoes(novaMidia, cliente, userId);
+        if (novaMidia != null) {
+            subMenuAvaliacoes(novaMidia, cliente, userId);
+        }
     }
 
     public static void subMenuAvaliacoes(Midia novaMidia, Cliente cliente, String userId) {
