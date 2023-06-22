@@ -2,7 +2,6 @@
 import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidParameterException;
-import java.security.spec.InvalidParameterSpecException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +15,7 @@ public class Cliente {
     private List<Midia> listaParaVer;
     private List<Midia> listaJaVistas;
     private ArvoreAnosMeses arvoreDeRegistroAssitidaPorData;
+    IClienteComentarista tipoClienteComentarista;
 
     /**
      * Construtor da classe Cliente.
@@ -38,6 +38,7 @@ public class Cliente {
         this.listaParaVer = new ArrayList<>();
         this.listaJaVistas = new ArrayList<>();
         this.arvoreDeRegistroAssitidaPorData = new ArvoreAnosMeses();
+        this.tipoClienteComentarista = new ClienteComentarista();
     }
 
     // #region Validação de dados
@@ -91,10 +92,10 @@ public class Cliente {
      */
     public void adicionarNaLista(Midia midia) throws InvalidParameterException {
         if (listaParaVer.contains(midia)) {
-           throw new InvalidParameterException("Esta mídia já está na sua lista!");
+            throw new InvalidParameterException("Esta mídia já está na sua lista!");
         }
 
-         listaParaVer.add(midia);
+        listaParaVer.add(midia);
     }
 
     /**
@@ -179,43 +180,7 @@ public class Cliente {
     }
 
     public boolean ehComentarista() throws NullPointerException {
-        LocalDate now = LocalDate.now();
-        int anoDoMesAtual = now.getYear();
-        int mesAtual = now.getMonthValue();
-        int mesPassado;
-        int anoDoMesPassado;
-
-        if (mesAtual == 1) {
-            mesPassado = 12;
-            anoDoMesPassado = anoDoMesAtual - 1;
-        } else {
-            mesPassado = mesAtual - 1;
-            anoDoMesPassado = anoDoMesAtual;
-        }
-
-        int totalMidiaAssistidaMesAtual;
-        int totalMidiaAssistidaMesPassado;
-
-        try {
-            totalMidiaAssistidaMesAtual = arvoreDeRegistroAssitidaPorData.obterValor(anoDoMesAtual, mesAtual).length;
-
-        } catch (NullPointerException e) {
-            totalMidiaAssistidaMesAtual = 0;
-        }
-
-        try {
-            totalMidiaAssistidaMesPassado = arvoreDeRegistroAssitidaPorData.obterValor(anoDoMesPassado,
-                    mesPassado).length;
-        } catch (NullPointerException e) {
-            totalMidiaAssistidaMesPassado = 0;
-        }
-
-        if (totalMidiaAssistidaMesAtual >= 5 || totalMidiaAssistidaMesPassado >= 5) {
-            return true;
-        } else {
-            return false;
-        }
-
+        return tipoClienteComentarista.verificarTipoCliente(arvoreDeRegistroAssitidaPorData);
     }
 
     /**
@@ -302,7 +267,7 @@ public class Cliente {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
 
         StringBuilder aux = new StringBuilder();
         aux.append("Nome de usuário: " + this.nome);
