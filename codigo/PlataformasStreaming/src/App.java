@@ -522,7 +522,11 @@ public class App {
      * "cadastrarSerie" da instância da classe
      * "plataforma" para efetuar o cadastro da série no sistema.
      *
-     * @throws IOException se ocorrer um erro durante o cadastro da série.
+     * @throws IOException              se ocorrer um erro durante o cadastro da
+     *                                  série.
+     * @throws IllegalArgumentException se ocorrer um erro durante o cadastro da
+     *                                  série.
+     *
      */
     private static void cadastrarSerie() throws IOException {
         System.out.println();
@@ -573,7 +577,10 @@ public class App {
      * instância da classe "plataforma" para
      * efetuar o cadastro do filme no sistema.
      *
-     * @throws IOException se ocorrer um erro durante o cadastro do filme.
+     * @throws IOException              se ocorrer um erro durante o cadastro do
+     *                                  filme.
+     * @throws IllegalArgumentException se ocorrer um erro durante o cadastro do
+     *                                  filme.
      */
     private static void cadastrarFilme() throws IOException {
         System.out.println();
