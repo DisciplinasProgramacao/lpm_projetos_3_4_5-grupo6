@@ -1,6 +1,5 @@
 
 import java.io.IOException;
-import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidParameterException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -44,7 +43,7 @@ public class Cliente {
     // #region Validação de dados
     /**
      * Valida o nome passado como parâmetro.
-     * 
+     *
      * @param nome
      * @throws IllegalArgumentException
      */
@@ -56,7 +55,7 @@ public class Cliente {
 
     /**
      * Valida o login passado como parâmetro.
-     * 
+     *
      * @param login
      * @throws IllegalArgumentException
      */
@@ -68,7 +67,7 @@ public class Cliente {
 
     /**
      * Valida a senha passada como parâmetro.
-     * 
+     *
      * @param senha
      * @throws IllegalArgumentException
      * @throws SenhaFracaException
@@ -156,7 +155,7 @@ public class Cliente {
      *                                   dados
      * @throws InvalidParameterException caso a mídia apresente algum
      *                                   problema
-     * 
+     *
      */
     public void registrarAudiencia(Midia midia) throws InvalidParameterException {
         if (listaJaVistas.contains(midia)) {
@@ -189,7 +188,7 @@ public class Cliente {
 
     /**
      * Método para registrar uma audiência no CSV.
-     * 
+     *
      * @param userId         id do usuário
      * @param listaDeDestino F representa lista futura, A representa lista de
      *                       assistidas.
@@ -250,7 +249,7 @@ public class Cliente {
 
     /**
      * Salva o cliente no armazenamento de dados do projeto
-     * 
+     *
      * @throws IOException
      */
     public void salvar() throws IOException {
@@ -260,7 +259,7 @@ public class Cliente {
 
     /**
      * Transforma os dados do cliente para o formato de texto.
-     * 
+     *
      * @return os dados do cliente no formato: nome;login;senha
      */
 
@@ -292,7 +291,7 @@ public class Cliente {
     }
 
     /**
-     * 
+     *
      * @return o nome do cliente
      */
     public String getNome() {
