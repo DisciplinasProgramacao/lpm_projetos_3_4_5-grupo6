@@ -14,12 +14,10 @@ public class FiltroGenero implements IFiltro {
      * @param a o gênero a ser usado como critério de comparação
      * @return uma nova lista contendo as mídias que possuem o gênero correspondente
      */
-    @Override
     public List<Midia> comparar(List<Midia> t, String a) {
         return t.stream()
-                .filter(midia -> midia.getGenero().equals(a))
+                .filter(midia -> EnumGeneros.verificarGenero(a) && midia.getGenero().equals(a))
                 .collect(Collectors.toList());
-
     }
 
 }

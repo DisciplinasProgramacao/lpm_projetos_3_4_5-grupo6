@@ -127,9 +127,10 @@ public class PlataformaStreaming {
      *         especificado.
      */
     public List<Midia> filtrarPorGenero(String genero) {
+        String generoComparativo = genero.toUpperCase();
         FiltroGenero filtro = new FiltroGenero();
         List<Midia> arrayList = new ArrayList<>(midias.values());
-        return filtro.comparar(arrayList, genero);
+        return filtro.comparar(arrayList, generoComparativo);
     }
 
     /**
