@@ -1,6 +1,5 @@
 import java.io.IOException;
 import java.security.InvalidParameterException;
-import java.security.spec.InvalidParameterSpecException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -14,7 +13,6 @@ public class App {
 
     static Scanner scanner = new Scanner(System.in);
     static PlataformaStreaming plataforma = new PlataformaStreaming("pucflix");
-    static Relatorio relatorio = new Relatorio();
     static Cliente cliente;
     static String userId;
 
@@ -186,7 +184,6 @@ public class App {
             plataforma.registrarAudiencia(novaMidia);
         } catch (InvalidParameterException e) {
             System.out.println(e.getMessage());
-            pausar();
             return;
         }
         System.out.println("Serie assistida com sucesso! Obrigado por escolher nossa plataforma!");
@@ -721,9 +718,7 @@ public class App {
 
     }
 
-  
-
-     /*
+    /*
      * Metodo com sub menu do sub menu, o cliente pode verificar os relatórios
      */
     public static int subMenuRelatorios() {
@@ -821,6 +816,43 @@ public class App {
      *             programa).
      * @throws IOException se ocorrer um erro durante a execução do programa.
      */
+
+    /*
+     * Switch com os metodos de tarefas relacionadas aos relatórios
+     */
+    /*
+     * Qual cliente assistiu mais mídias, e quantas mídias;
+     * • Qual cliente tem mais avaliações, e quantas avaliações;
+     * • Qual a porcentagem dos clientes com pelo menos 15 avaliações;
+     * • Quais são as 10 mídias de melhor avaliação, com pelo menos 100 avaliações,
+     * em ordem decrescente;
+     * • Quais são as 10 mídias com mais visualizações, em ordem decrescente;
+     * • Estes mesmos dois últimos relatórios, porém com as mídias separadas por
+     * gênero.
+     */
+    public static void subSwitchRelatorios() {
+        Relatorio relatorio = new Relatorio();
+        int opcao = subMenuRelatorios();
+        switch (opcao) {
+            case 1:
+                relatorio.obterClienteComMaisMidias(plataforma.getClientes());
+                break;
+            case 2:
+                relatorio.gerarRelatorioAvaliacoes(plataforma.getMidias());
+                break;
+            case 3:
+                relatorio.gerarRelatorioMelhoresAvaliacoes(plataforma.getMidias());
+                break;
+            case 4:
+                relatorio.imprimirTop10MidiasMaisAudiencia(plataforma.getMidias());
+                break;
+            case 0:
+                break;
+            default:
+                break;
+        }
+    }
+
     public static void main(String[] args) throws IOException {
         init();
         int opcao;
@@ -835,7 +867,7 @@ public class App {
                     subSwitchMidias();
                     break;
                 case 3:
-                    subMenuRelatorios();
+                    subSwitchRelatorios();
                     break;
                 default:
                     System.out.println("Opção inválida!");
