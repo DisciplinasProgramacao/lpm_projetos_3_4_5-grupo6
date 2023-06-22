@@ -180,7 +180,11 @@ public class Cliente {
     }
 
     public boolean ehComentarista() throws NullPointerException {
-        return tipoClienteComentarista.verificarTipoCliente(arvoreDeRegistroAssitidaPorData);
+       if(tipoClienteComentarista.verificarTipoCliente(arvoreDeRegistroAssitidaPorData)) {
+        return true;
+       }else{
+        throw new NullPointerException("Usuário não é comentarista");
+       }
     }
 
     /**
