@@ -252,7 +252,12 @@ public class App {
                     avaliacao = Integer.parseInt(scanner.nextLine());
                 } while (avaliacao < 1 || avaliacao > 5);
 
-                String comentario = registrarComentario(cliente);
+                String comentario = "";
+                try {
+                   comentario = registrarComentario(cliente);
+                } catch (Exception e) {
+                   System.out.println("Você ainda não pode fazer comentários");
+                }
 
                 try {
                     plataforma.registrarAvaliacao(userId, midiaId, avaliacao, comentario);
@@ -682,11 +687,17 @@ public class App {
     public static void subMenuAvaliacoes(Midia novaMidia, Cliente cliente, String userId) {
         int midiaId = novaMidia.getId();
         int nota = darNotaParaMidia();
-        String comentario = registrarComentario(cliente);
+        String comentario = ""; 
+        try {
+            comentario =  registrarComentario(cliente);
+        } catch (NullPointerException e) {
+            System.out.println("Você ainda não pode fazer comentários");
+        }
+       
         try {
             plataforma.registrarAvaliacao(userId, midiaId, nota, comentario);
         } catch (IllegalArgumentException | IOException e) {
-            System.out.println("Não foi possível concluir, refaça a avaliação");
+            System.out.println(e.getMessage());
             return;
         }
     }
