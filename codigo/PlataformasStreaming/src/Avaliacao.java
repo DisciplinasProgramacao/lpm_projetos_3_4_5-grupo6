@@ -71,7 +71,7 @@ public class Avaliacao {
      * @throws InvalidParameterException se o login for nulo ou a pontuação estiver
      *                                   fora do intervalo válido
      */
-    public Avaliacao(String login, int avaliacao, int midiaIdAvaliada, Date data) throws InvalidParameterException {
+    public Avaliacao(String login, int avaliacao, int midiaIdAvaliada, Date data, String comentario) throws InvalidParameterException {
         validarLogin(login);
         validarPontuacao(avaliacao);
         validarIdMidia(midiaIdAvaliada);
@@ -79,6 +79,7 @@ public class Avaliacao {
         this.pontuacao = avaliacao;
         this.dataDaAvaliacao = data;
         this.midiaIdAvaliada = midiaIdAvaliada;
+        this.comentario = comentario;
     }
 
     public void salvar() throws IOException {

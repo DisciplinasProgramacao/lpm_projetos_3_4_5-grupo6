@@ -329,13 +329,14 @@ public class PlataformaStreaming {
             int midiaId = Integer.parseInt(avaliacao[1]);
             int pontuacao = Integer.parseInt(avaliacao[2]);
             String dataString = avaliacao[3];
+            String comentario = avaliacao[4];
             Date data;
             try {
                 data = formatoData.parse(dataString);
             } catch (ParseException e) {
                 throw new IOException("Erro ao carregar a data");
             }
-            registrarAvaliacao(userID, midiaId, pontuacao, data);
+            registrarAvaliacao(userID, midiaId, pontuacao, data,comentario);
         }
     }
 
@@ -417,7 +418,7 @@ public class PlataformaStreaming {
      * @throws IllegalArgumentException Se algum dos parâmetros fornecidos for
      *                                  inválido.
      */
-    public void registrarAvaliacao(String userLogin, int midiaId, int avaliacao, Date data)
+    public void registrarAvaliacao(String userLogin, int midiaId, int avaliacao, Date data, String comentario)
             throws IOException, IllegalArgumentException {
         Midia newMidia = this.buscar(midiaId);
 
@@ -440,7 +441,7 @@ public class PlataformaStreaming {
             throw new IllegalArgumentException("A data da avaliação não pode ser nula.");
         }
 
-        Avaliacao novaAvaliacao = new Avaliacao(userLogin, avaliacao, midiaId, data);
+        Avaliacao novaAvaliacao = new Avaliacao(userLogin, avaliacao, midiaId, data, comentario);
         newMidia.addAvaliacao(novaAvaliacao);
         novaAvaliacao.salvar();
     }
