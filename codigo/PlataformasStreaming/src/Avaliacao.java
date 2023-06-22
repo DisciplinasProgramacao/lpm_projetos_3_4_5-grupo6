@@ -163,6 +163,10 @@ public class Avaliacao {
         return pontuacao;
     }
 
+    public int getMidiaIdAvaliada() {
+        return midiaIdAvaliada;
+    }
+  
     /**
      * 
      * Obtém o ia da mídia avaliada.

@@ -20,6 +20,14 @@ public class PlataformaStreaming {
     private HashMap<String, Cliente> clientes;
     private Cliente clienteAtual;
 
+    public HashMap<Integer, Midia> getMidias() {
+        return midias;
+    }
+
+    public HashMap<String, Cliente> getClientes() {
+        return clientes;
+    }
+
     /**
      * Cria uma nova instância da plataforma de streaming.
      *
