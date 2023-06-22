@@ -555,7 +555,7 @@ public class App {
 
         try {
             plataforma.cadastrarSerie(id, nome, idioma, genero, qtdEp, data);
-        } catch (IOException e) {
+        } catch (IOException | IllegalArgumentException e) {
             System.out.println("Tente novamente, erro ao cadastrar a serie.");
             System.out.println("Problema encontrado: " + e.getMessage());
 
@@ -606,7 +606,7 @@ public class App {
 
         try {
             plataforma.cadastrarFilme(id, nome, idioma, genero, duracao, data);
-        } catch (IOException e) {
+        } catch (IOException | IllegalArgumentException e) {
             System.out.println("Tente novamente, erro ao cadastrar o filme.");
             System.out.println("Problema encontrado: " + e.getMessage());
             return;
