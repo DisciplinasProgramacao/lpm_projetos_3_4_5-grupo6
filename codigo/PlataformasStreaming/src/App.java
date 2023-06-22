@@ -184,7 +184,7 @@ public class App {
         }
         try {
             plataforma.registrarAudiencia(novaMidia);
-        } catch (InvalidParameterSpecException e) {
+        } catch (InvalidParameterException e) {
             System.out.println(e.getMessage());
             pausar();
             return;

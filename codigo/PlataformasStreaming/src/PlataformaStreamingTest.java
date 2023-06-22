@@ -141,8 +141,27 @@ public class PlataformaStreamingTest {
     }
 
     @Test
-    public void deveSerPossivelAssistirUmaMidia() throws NameNotFoundException, SenhaIncorretaException, InvalidParameterSpecException{
+    public void deveSerPossivelAssistirUmaMidia()
+            throws NameNotFoundException, SenhaIncorretaException, InvalidParameterSpecException {
         plataforma.login("johndoe", "password123");
         plataforma.registrarAudiencia(serie1);
     }
+
+    @Test
+    public void deveSerBuscarUmaMidiaPorID() throws IOException {
+        plataforma.cadastrarFilme(12092000, "Jason Bourne", "Inglês", "Ação", 180, "10/11/2005");
+        String[] vetorDeFilmesCSV = Util.lerArquivo(Util.CAMINHO_ARQUIVO_FILMES).split(Util.SEPARADOR_LINHA);
+        String CSVultimoFilme = vetorDeFilmesCSV[vetorDeFilmesCSV.length - 1];
+        assertEquals("12092000;Jason Bourne;10/11/2005;180", CSVultimoFilme);
+    }
+
+        @Test
+    public void deveSerBuscarUmaMidiaPorNome() throws IOException {
+        plataforma.cadastrarFilme(12092000, "Jason Bourne", "Inglês", "Ação", 180, "10/11/2005");
+        String[] vetorDeFilmesCSV = Util.lerArquivo(Util.CAMINHO_ARQUIVO_FILMES).split(Util.SEPARADOR_LINHA);
+        String CSVultimoFilme = vetorDeFilmesCSV[vetorDeFilmesCSV.length - 1];
+        assertEquals("12092000;Jason Bourne;10/11/2005;180", CSVultimoFilme);
+    }
+
+
 }

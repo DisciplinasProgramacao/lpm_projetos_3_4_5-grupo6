@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.security.InvalidParameterException;
 import java.security.spec.InvalidParameterSpecException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -62,11 +63,21 @@ public class PlataformaStreaming {
     }
 
     /**
+     * Adiciona uma série ao banco de dados da plataforma.
+     * 
+     * @deprecated
+     * @param novMidia A série a ser adicionada.
+     */
+    public void adicionarSerie(Midia novMidia) {
+        adicionarMidia(novMidia);
+    }
+
+    /**
      * Adiciona uma mídia ao banco de dados da plataforma.
      *
      * @param novMidia A série a ser adicionada.
      */
-    public void adicionarSerie(Midia novMidia) {
+    public void adicionarMidia(Midia novMidia) {
         if (!midias.containsValue(novMidia))
             this.midias.put(novMidia.getId(), novMidia);
     }
@@ -144,9 +155,9 @@ public class PlataformaStreaming {
      * Registra a audiência de uma midia para o cliente atual.
      *
      * @param novaMidia A midia para a qual a audiência será registrada.
-     * @throws InvalidParameterSpecException
+     * @throws InvalidParameterException
      */
-    public void registrarAudiencia(Midia novaMidia) throws InvalidParameterSpecException {
+    public void registrarAudiencia(Midia novaMidia) throws InvalidParameterException {
         if (this.clienteAtual != null) {
             this.clienteAtual.registrarAudiencia(novaMidia);
         }
@@ -336,7 +347,7 @@ public class PlataformaStreaming {
             } catch (ParseException e) {
                 throw new IOException("Erro ao carregar a data");
             }
-            registrarAvaliacao(userID, midiaId, pontuacao, data,comentario);
+            registrarAvaliacao(userID, midiaId, pontuacao, data, comentario);
         }
     }
 
@@ -347,13 +358,8 @@ public class PlataformaStreaming {
      * @return A série encontrada ou null caso não seja encontrada.
      */
     public Midia buscar(String referencia) {
-        for (HashMap.Entry<Integer, Midia> entry : this.midias.entrySet()) {
-            Midia midia = entry.getValue();
-            if (midia.getNome().equals(referencia)) {
-                return midia;
-            }
-        }
-        return null;
+        return midias.values().stream().filter(midia -> midia.getNome().equals(referencia))
+                .findAny().orElse(null);
     }
 
     /**
@@ -363,13 +369,7 @@ public class PlataformaStreaming {
      * @return A série encontrada ou null caso não seja encontrada.
      */
     public Midia buscar(int id) {
-        for (HashMap.Entry<Integer, Midia> entry : this.midias.entrySet()) {
-            Midia midia = entry.getValue();
-            if (midia.getId() == id) {
-                return midia;
-            }
-        }
-        return null;
+        return midias.get(id);
     }
 
     /**

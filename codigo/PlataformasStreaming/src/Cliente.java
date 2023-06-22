@@ -154,7 +154,7 @@ public class Cliente {
      *                                            problema
      * @throws InvalidAlgorithmParameterException
      */
-    public void registrarAudiencia(Midia midia) throws InvalidParameterSpecException {
+    public void registrarAudiencia(Midia midia) throws InvalidParameterException {
         if (listaJaVistas.contains(midia)) {
             throw new InvalidParameterException("Não é possível assistir uma mídia mais de uma vez");
         }
@@ -166,12 +166,6 @@ public class Cliente {
         midia.registrarAudiencia();
         adicinarNaArvore(midia.getId());
 
-        // try {
-        // salvarAudiencia(this.login, "A", midia.getId());
-        // } catch (InvalidParameterException | IOException e) {
-        // throw new InvalidParameterSpecException("erro ao salvar a audiência " +
-        // e.getMessage());
-        // }
     }
 
     private void adicinarNaArvore(int idMidia) {
